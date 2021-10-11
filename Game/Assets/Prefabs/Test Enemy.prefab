@@ -139,8 +139,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 8215537497472630613, guid: dbe8fcb21e12e4c4a9df4e8e56316c89, type: 3}
   playerLoc: {fileID: 0}
-  minDamage: 0
-  maxDamage: 0
+  minDamage: 1
+  maxDamage: 2
   projectileSpeed: 3
   attackCooldown: 3
   removeDelay: 4
