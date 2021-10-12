@@ -5,7 +5,7 @@ using UnityEngine;
 public class TestEnemyRangedAttack : MonoBehaviour
 {
     public GameObject projectile;
-    public Transform playerLoc;
+    private GameObject player;
     public float minDamage;
     public float maxDamage;
     public float projectileSpeed;
@@ -17,20 +17,24 @@ public class TestEnemyRangedAttack : MonoBehaviour
     void Start()
     {
         StartCoroutine(ShootPlayer());
-        
+        player = FindObjectOfType<PlayerMovement>().gameObject;
     }
 
     IEnumerator ShootPlayer()
     {
         yield return new WaitForSeconds(attackCooldown);
-        if (playerLoc != null)
+        if (player != null)
         {
             GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
             Vector2 enemyPos = transform.position;
-            Vector2 targetPos = playerLoc.position;
+            Vector2 targetPos = player.transform.position;
             Vector2 direction = (targetPos - enemyPos).normalized;
 
             spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
+
+            // I am going to overhaul the damage system later, and there will be randomization for the damage
+            // Most of the damage will be based on the stats of the Enemy 
+            // The enemies will not critically hit, except maybe bosses, but they will have strength and base damage
             spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
 
             StartCoroutine(ShootPlayer());
