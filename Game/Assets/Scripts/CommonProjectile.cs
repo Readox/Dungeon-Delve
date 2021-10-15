@@ -9,7 +9,7 @@ public class CommonProjectile : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.tag != "Player")
+        if (collision.tag != "Player" && collision.tag != "PlayerProjectile")
         {
             if (collision.GetComponent<EnemyDamageReception>() != null)
             {
