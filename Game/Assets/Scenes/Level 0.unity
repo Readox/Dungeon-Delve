@@ -532,6 +532,8 @@ MonoBehaviour:
   abilityBarSlider: {fileID: 2016325595}
   abilityText: {fileID: 1533181305}
   playerClass: fighter
+  abilityPoolMax: 10
+  currentAbilityPool: 0
   currentHealth: 0
   maxHealth: 10
   defense: 0
@@ -2144,6 +2146,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: fighterDashSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: script_PlayerStats
+      value: 
+      objectReference: {fileID: 378433349}
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_RootOrder
       value: 1

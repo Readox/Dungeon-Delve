@@ -23,6 +23,7 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+        currentAbilityPool = abilityPoolMax;
     }
 
     // Update is called once per frame
@@ -58,6 +59,11 @@ public class PlayerStats : MonoBehaviour
         currentHealth += healAmount;
         CheckHealthMax();
         SetHealthInfo();
+    }
+
+    public string GetClass()
+    {
+        return playerClass;
     }
 
 
@@ -112,11 +118,15 @@ public class PlayerStats : MonoBehaviour
     }
 
 
-    
+
 
 
 
     // All this stuff is down here, because there is a lot
+
+    public float abilityPoolMax;
+    public float currentAbilityPool;
+
 
     // Current Health that the player has
     public float currentHealth;

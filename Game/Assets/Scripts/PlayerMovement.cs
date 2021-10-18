@@ -4,11 +4,18 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+
+    // To make things easier for me, I think what I will do is also do abilities in this script for now
+    // I can move things around later when I make abilities for other class
+    // public PlayerAbilities script_PlayerAbilities = GameObject.FindObjectOfType(typeof(PlayerAbilities)) as PlayerAbilities; 
+
+    public PlayerStats script_PlayerStats;
+
     // Entity Values
     public float playerSpeed;
 
     // Move Vector
-    private Vector2 moveVec;
+    private static Vector2 moveVec;
 
     public Animator animator;
 
@@ -45,7 +52,17 @@ public class PlayerMovement : MonoBehaviour
         {
             moveVec += Vector2.right;
         }
+        if (Input.GetKey(KeyCode.Space))
+        {
+
+            /*
+            script_PlayerAbilities instPlayerAbilities = new script_PlayerAbilities(); 
+            instPlayerAbilities.PreUseAbility();
+            */
+            UseFighterAbility();
+        }
     }
+
 
     void Move()
     {
@@ -85,6 +102,26 @@ public class PlayerMovement : MonoBehaviour
         animator = GetComponent<Animator>();
 
     }
+
+
+
+    public float fighterDashSpeed;
+
+    private void UseFighterAbility()
+    {
+        if (script_PlayerStats.currentAbilityPool !<= 0)
+        {
+            transform.Translate(moveVec * fighterDashSpeed * Time.deltaTime);
+            script_PlayerStats.currentAbilityPool -= 5;
+        }
+        //moveVec = PlayerMovement.GetPlayerMoveVec();
+        
+    }
+
+
+
+
+
 
 }
 
