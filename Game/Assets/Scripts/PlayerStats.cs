@@ -24,7 +24,28 @@ public class PlayerStats : MonoBehaviour
     {
         currentHealth = maxHealth;
         currentAbilityPool = abilityPoolMax;
+
+        StartCoroutine(HealthRegeneration());
+        StartCoroutine(AbilityRegeneration());
+
     }
+    IEnumerator HealthRegeneration()
+    {
+        yield return new WaitForSeconds(1);
+        currentHealth += maxHealth * healthRegenerationRate;
+        CheckHealthMax();
+        SetHealthInfo();
+        StartCoroutine(HealthRegeneration());
+    }
+    IEnumerator AbilityRegeneration()
+    {
+        yield return new WaitForSeconds(1);
+        currentAbilityPool += abilityPoolMax * abilityRegenerationRate;
+        CheckAbilityMax();
+        SetAbilityInfo();
+        StartCoroutine(AbilityRegeneration());
+    }
+
 
     // Update is called once per frame
     void Update()
@@ -42,9 +63,13 @@ public class PlayerStats : MonoBehaviour
         PlayerClassSetup();
 
         currentHealth = maxHealth;
+        currentAbilityPool = abilityPoolMax;
 
         healthBarSlider.value = 1;
         healthText.text = Mathf.Ceil(currentHealth).ToString() + " / " + Mathf.Ceil(maxHealth).ToString();
+
+        abilityBarSlider.value = 1;
+        abilityText.text = Mathf.Ceil(currentAbilityPool).ToString() + " / " + Mathf.Ceil(abilityPoolMax).ToString();
     }
 
     public void DealDamage(float damage)
@@ -53,25 +78,47 @@ public class PlayerStats : MonoBehaviour
         CheckDeath();
         SetHealthInfo();
     }
+    public void AbilityExpend(float abilityCost)
+    {
+        currentAbilityPool -= abilityCost;
+        CheckAbilityMax();
+        SetAbilityInfo();
 
+    }
+    public void CheckAbilityMax()
+    {
+        if (currentAbilityPool > abilityPoolMax)
+        {
+            currentAbilityPool = abilityPoolMax;
+        }
+        if (currentAbilityPool < 0)
+        {
+            currentAbilityPool = 0;
+        }
+    }
     public void HealCharacter(float healAmount)
     {
         currentHealth += healAmount;
         CheckHealthMax();
         SetHealthInfo();
     }
-
     public string GetClass()
     {
         return playerClass;
     }
-
-
+    private float CalculateAbilityPercentage()
+    {
+        return currentAbilityPool / abilityPoolMax;
+    }
     private float CalculateHealthPercentage()
     {
         return currentHealth / maxHealth;
     }
-
+    private void SetAbilityInfo()
+    {
+        abilityBarSlider.value = CalculateAbilityPercentage();
+        abilityText.text = Mathf.Ceil(currentAbilityPool).ToString() + " / " + Mathf.Ceil(abilityPoolMax).ToString();
+    }
     private void SetHealthInfo()
     {
         healthBarSlider.value = CalculateHealthPercentage();
@@ -83,6 +130,10 @@ public class PlayerStats : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        if (currentHealth < 0)
+        {
+            currentHealth = 0;
+        }
     }
     public void CheckDeath()
     {
@@ -90,6 +141,10 @@ public class PlayerStats : MonoBehaviour
         {
             Destroy(player);
         }
+    }
+    public float getCurrentAbilityPool()
+    {
+        return currentAbilityPool;
     }
 
 
@@ -157,8 +212,12 @@ public class PlayerStats : MonoBehaviour
     public float fero;
 
     // Percentage of MaxHealth regenerated every second
-    // Base Value: 1%
-    public float regenerationRate;
+    // Base Value: 1% = 0.01
+    public float healthRegenerationRate;
+
+    // Percentage of ability energy regenerated every second
+    // Base value 2% = 0.02
+    public float abilityRegenerationRate;
 
     // Chance for rare drops from boss chests and monsters
     // Base Value: 0%

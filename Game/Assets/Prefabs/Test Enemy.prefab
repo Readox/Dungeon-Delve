@@ -372,8 +372,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 8215537497472630613, guid: dbe8fcb21e12e4c4a9df4e8e56316c89, type: 3}
-  minDamage: 1
-  maxDamage: 2
+  minDamage: 10
+  maxDamage: 15
   projectileSpeed: 3
   attackCooldown: 3
   removeDelay: 4
@@ -390,7 +390,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 0
-  maxHealth: 10
+  maxHealth: 100
   healthBar: {fileID: 5660751259698905182}
   healthBarSlider: {fileID: 7543141925274292966}
 --- !u!1 &3624068809622173871

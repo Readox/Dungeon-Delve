@@ -9,7 +9,9 @@ public class PlayerMovement : MonoBehaviour
     // I can move things around later when I make abilities for other class
     // public PlayerAbilities script_PlayerAbilities = GameObject.FindObjectOfType(typeof(PlayerAbilities)) as PlayerAbilities; 
 
-    public PlayerStats script_PlayerStats;
+    //private PlayerStats script_PlayerStats;
+
+    public GameObject gameManagerObject;
 
     // Entity Values
     public float playerSpeed;
@@ -106,13 +108,16 @@ public class PlayerMovement : MonoBehaviour
 
 
     public float fighterDashSpeed;
+    public float fighterDashCost; 
 
     private void UseFighterAbility()
     {
-        if (script_PlayerStats.currentAbilityPool !<= 0)
+        //Debug.Log("Current Ability Pool: " + gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool());
+        gameManagerObject.GetComponent<PlayerStats>().AbilityExpend(fighterDashCost);
+        if (gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool() > 0)
         {
             transform.Translate(moveVec * fighterDashSpeed * Time.deltaTime);
-            script_PlayerStats.currentAbilityPool -= 5;
+            //Debug.Log("Current Ability Pool: " + gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool());
         }
         //moveVec = PlayerMovement.GetPlayerMoveVec();
         
