@@ -39,7 +39,11 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
+        Time.timeScale = 1f;
         SceneManager.LoadScene(1);
+        mainMenuPanel.SetActive(false);
+        settingsPanel.SetActive(false);
+        playerMenuPanel.SetActive(false);
     }
 
     public void ExitGame()
@@ -55,6 +59,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 0f;
         mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
         playerMenuPanel.SetActive(false);

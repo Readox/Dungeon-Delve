@@ -16,7 +16,7 @@ public class TestEnemyRangedAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ShootPlayer());
+        StartCoroutine(ShootPlayer());  
         player = FindObjectOfType<PlayerMovement>().gameObject;
     }
 
@@ -38,7 +38,7 @@ public class TestEnemyRangedAttack : MonoBehaviour
             spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
 
             StartCoroutine(ShootPlayer());
-            StartCoroutine(SpellTimeout(spell));
+            //StartCoroutine(SpellTimeout(spell));  // Moved to TestEnemyProjectile
 
 
 
@@ -46,13 +46,13 @@ public class TestEnemyRangedAttack : MonoBehaviour
 
     }
 
-    ///*
+    /*
     IEnumerator SpellTimeout(GameObject spell)
     {
         yield return new WaitForSeconds(removeDelay);
         Destroy(spell);
     }
-    //*/
+    */
 
     // Update is called once per frame
     void Update()

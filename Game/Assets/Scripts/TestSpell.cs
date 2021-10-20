@@ -41,7 +41,7 @@ public class TestSpell : MonoBehaviour
             spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
             spell.GetComponent<CommonProjectile>().damage = (int) Random.Range(minDamage, maxDamage);
             
-            Destroy(spell, removeDelay);
+            //Destroy(spell, removeDelay);
 
         }
              

@@ -6,6 +6,12 @@ public class TestEnemyProjectile : MonoBehaviour
 {
 
     public float damage;
+    public float removeDelay;
+
+    void Start()
+    {
+        StartCoroutine(RemoveObject());
+    }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -21,5 +27,12 @@ public class TestEnemyProjectile : MonoBehaviour
     }
 
 
-    
+    IEnumerator RemoveObject()
+    {
+        yield return new WaitForSeconds(removeDelay);
+        Destroy(gameObject);
+    }
+
+
+
 }
