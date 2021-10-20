@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 5082268277408502053}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -2.52, y: -1.85, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalScale: {x: 400, y: 400, z: 400}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -144,9 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerObject: {fileID: 0}
-  playerSpeed: 5
+  playerSpeed: 200
   animator: {fileID: 5082268277408502058}
-  fighterDashSpeed: 15
+  fighterDashSpeed: 400
   fighterDashCost: 3
 --- !u!114 &5082268277408502054
 MonoBehaviour:
@@ -164,5 +164,5 @@ MonoBehaviour:
   minDamage: 20
   maxDamage: 25
   criticalHit: 0
-  projectileSpeed: 5
+  projectileSpeed: 200
   removeDelay: 1.5
