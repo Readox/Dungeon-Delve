@@ -57,7 +57,8 @@ public class PlayerStats : MonoBehaviour
     {
         playerStats = this;
         // For safeties:
-        DontDestroyOnLoad(this);
+        // Actually, dont have this on anything except for _game in the preload scene
+        // DontDestroyOnLoad(this);
 
 
         PlayerClassSetup();

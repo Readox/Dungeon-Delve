@@ -5,10 +5,15 @@ using UnityEngine;
 public class CameraFollowPlayer : MonoBehaviour
 {
 
-    public Transform playerLoc;
+    private Transform playerLoc;
     public float smoothing;
     public Vector3 offset;
 
+
+    public void Awake()
+    {
+        playerLoc = GameObject.Find("Player").transform;
+    }
 
     void FixedUpdate()
     {

@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -40,10 +39,17 @@ public class MainMenu : MonoBehaviour
     public void StartGame()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene(1);
+
+        SceneSwitching ssw = GameObject.FindObjectOfType(typeof(SceneSwitching)) as SceneSwitching;
+        ssw.GoToGameLevel(2);
+        ssw.UnloadSceneAsync(1);
+        
+
+        /*
         mainMenuPanel.SetActive(false);
         settingsPanel.SetActive(false);
         playerMenuPanel.SetActive(false);
+        */
     }
 
     public void ExitGame()
@@ -52,17 +58,18 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
+    public void Awake()
     {
         Time.timeScale = 0f;
         mainMenuPanel.SetActive(true);
         settingsPanel.SetActive(false);
         playerMenuPanel.SetActive(false);
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
