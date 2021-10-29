@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuScript : MonoBehaviour
 {
@@ -11,9 +12,10 @@ public class PauseMenuScript : MonoBehaviour
     public GameObject playerUpgradesPanel;
     public GameObject pauseMenuPanel;
     public GameObject settingsMenuPanel;
+    public Transform player;
 
-
-    private GameObject player;
+    //Set camera offset (to -10z)
+    [SerializeField] Vector3 offset;
 
     bool isPauseActive;
 
@@ -26,7 +28,9 @@ public class PauseMenuScript : MonoBehaviour
 
     public void Resume()
     {
-        mainCam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10);
+        mainCam.transform.position = player.position + offset;
+        //mainCam.position = player.position + offset;
+        //mainCam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10);
         pauseMenuPanel.SetActive(false);
         playerUpgradesPanel.SetActive(false);
         settingsMenuPanel.SetActive(false);
@@ -41,11 +45,16 @@ public class PauseMenuScript : MonoBehaviour
 
     public void MainMenu()
     {
+        Time.timeScale = 0f;
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+        StartCoroutine(SceneSwitch());
+    }
 
-        SceneSwitching ssw = GameObject.FindObjectOfType(typeof(SceneSwitching)) as SceneSwitching;
-        ssw.GoToMainMenu();
-        ssw.UnloadSceneAsync(2);
-
+    IEnumerator SceneSwitch()
+    {
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
+        yield return null;
+        SceneManager.UnloadSceneAsync("Level 0");
     }
 
 
@@ -53,9 +62,6 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenPlayerUpgrades()
     {
         playerUpgradesPanel.SetActive(true);
-
-
-
     }
 
 
@@ -76,16 +82,14 @@ public class PauseMenuScript : MonoBehaviour
 
     public void Awake()
     {
-        mainCam = GameObject.Find("MainCamera").GetComponent<Camera>();
         pauseMenuPanel.SetActive(false);
         playerUpgradesPanel.SetActive(false);
         settingsMenuPanel.SetActive(false);
-        player = FindObjectOfType<PlayerMovement>().gameObject;
     }
 
     void Start()
     {
-        
+        mainCam = Camera.main;
     }
 
 }

@@ -11,7 +11,8 @@ public class StartGame : MonoBehaviour
     void Start()
     {
         mainCam.transform.position = new Vector3(960, 540, -10);
-        GetComponent<SceneSwitching>().GoToMainMenu();
+        //SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+        SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
     }
 
     // Update is called once per frame

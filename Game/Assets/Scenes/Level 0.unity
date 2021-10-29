@@ -396,7 +396,7 @@ RectTransform:
   m_GameObject: {fileID: 238009042}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children: []
   m_Father: {fileID: 1454650967}
   m_RootOrder: 1
@@ -1534,7 +1534,7 @@ RectTransform:
   m_GameObject: {fileID: 911951950}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children:
   - {fileID: 744073652}
   - {fileID: 480286507}
@@ -2358,7 +2358,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1454650964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2458,6 +2458,8 @@ MonoBehaviour:
   playerUpgradesPanel: {fileID: 2017154479}
   pauseMenuPanel: {fileID: 911951950}
   settingsMenuPanel: {fileID: 238009042}
+  player: {fileID: 2018586247}
+  offset: {x: 0, y: 0, z: -10}
 --- !u!1 &1533181303
 GameObject:
   m_ObjectHideFlags: 0
@@ -3224,7 +3226,7 @@ RectTransform:
   m_GameObject: {fileID: 2017154479}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.05, y: 1.05, z: 1.05}
   m_Children:
   - {fileID: 1148686785}
   - {fileID: 529678623}
@@ -3277,6 +3279,11 @@ CanvasRenderer:
 --- !u!1 &2018586241 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5082268277408502053, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+  m_PrefabInstance: {fileID: 8644193270402261332}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2018586247 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
   m_PrefabInstance: {fileID: 8644193270402261332}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2081537823

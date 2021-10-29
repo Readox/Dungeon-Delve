@@ -9,10 +9,18 @@ public class CameraFollowPlayer : MonoBehaviour
     public float smoothing;
     public Vector3 offset;
 
-
+    void Start()
+    {
+        GetPlayerLoc();
+    }
     public void Awake()
     {
-        playerLoc = GameObject.Find("Player").transform;
+        
+    }
+
+    public void GetPlayerLoc()
+    {
+        playerLoc = GameObject.FindWithTag("Player").transform;
     }
 
     void FixedUpdate()

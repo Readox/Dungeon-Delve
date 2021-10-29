@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
@@ -38,18 +39,38 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
+        //SceneManager.LoadScene("Level 0", LoadSceneMode.Additive);
+        //SceneManager.UnloadSceneAsync("MainMenu");
+        
         Time.timeScale = 1f;
+        
+        StartCoroutine(SceneSwitch());
+    }
 
-        SceneSwitching ssw = GameObject.FindObjectOfType(typeof(SceneSwitching)) as SceneSwitching;
-        ssw.GoToGameLevel(2);
-        ssw.UnloadSceneAsync(1);
+    IEnumerator SceneSwitch()
+    {
+        
+        
         
 
-        /*
-        mainMenuPanel.SetActive(false);
-        settingsPanel.SetActive(false);
-        playerMenuPanel.SetActive(false);
-        */
+        if (SceneManager.GetSceneByName("Level 0").IsValid())
+        {
+            SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level 0"));
+
+            GameObject mainCam = GameObject.FindWithTag("MainCamera");
+            CameraFollowPlayer camFollow_Script = mainCam.GetComponent<CameraFollowPlayer>();
+            camFollow_Script.GetPlayerLoc();
+
+            yield return null;
+            SceneManager.UnloadSceneAsync("MainMenu");
+        }
+        else
+        {
+            SceneManager.LoadScene("Level 0", LoadSceneMode.Additive);
+            yield return null;
+            StartCoroutine(SceneSwitch());
+        }
+        
     }
 
     public void ExitGame()

@@ -33,7 +33,7 @@ public class TestSpell : MonoBehaviour
     void Update()
     {
         // 0 is for left click
-        if (Input.GetMouseButtonDown(0) && SceneManager.GetActiveScene().name.Equals("Level 0"))
+        if (Input.GetMouseButtonDown(0) /*&& SceneManager.GetActiveScene().name.Equals("Level 0")*/ && Time.timeScale != 0)
         {
             GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
             Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
