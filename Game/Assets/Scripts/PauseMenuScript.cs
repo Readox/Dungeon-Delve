@@ -41,7 +41,15 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenSettings()
     {
         settingsMenuPanel.SetActive(true);
+        pauseMenuPanel.SetActive(false);
     }
+
+    public void ReturnFromSettings()
+    {
+        pauseMenuPanel.SetActive(true);
+        settingsMenuPanel.SetActive(false);
+    }
+
 
     public void MainMenu()
     {
@@ -62,6 +70,13 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenPlayerUpgrades()
     {
         playerUpgradesPanel.SetActive(true);
+        pauseMenuPanel.SetActive(false);
+    }
+
+    public void ReturnFromPlayerUpgrades()
+    {
+        pauseMenuPanel.SetActive(true);
+        playerUpgradesPanel.SetActive(false);
     }
 
 
