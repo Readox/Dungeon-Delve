@@ -50,7 +50,8 @@ public class PlayerSkills : MonoBehaviour
     public void AddPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
-        SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID() == nameOfSkill); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
+        SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
+        Debug.Log(result.GetSkillID());
         if (result.GetCurrencyCost() > playerSkillCurrency)
         {
             Debug.Log("Not enough currency!");

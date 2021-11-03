@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Reflection;
+using System;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -176,8 +178,38 @@ public class PlayerStats : MonoBehaviour
 
     public void SetStat(ref string skillType, float modifyBy)
     {
-         
+
+        float currentVal = (float)this.GetType().GetField(skillType).GetValue(this);
+        this.GetType().GetField(skillType).SetValue(this, currentVal + modifyBy);
+
+        /*
+        Type myClassType = typeof(PlayerStats);
+        FieldInfo myFieldInfo = myClassType.GetField(skillType);
+        //SmyFieldInfo.GetValue(this);
+        //myFieldInfo.SetValue(this, 50, null, null, null);
+        */
+
+
+
+        //object value = typeof(float).GetProperty(skillType).GetValue(this);
+        //typeof(float).GetProperty(skillType).SetValue(this, value);
+
+        /*
+        var propInfo = typeof(this).object p = GetProperty(skillType); // Gets the property with the name skillType
+        if (propInfo != null)
+        {
+            propInfo.SetValue(skillType, 50, null);
+        }
+        else
+        {
+            Debug.Log("You shouldn't be here, there is no property with name of skillType in this class"); 
+        }
+        */
     }
+
+    
+
+    
 
 
 
