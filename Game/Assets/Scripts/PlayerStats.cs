@@ -32,7 +32,7 @@ public class PlayerStats : MonoBehaviour
     IEnumerator HealthRegeneration()
     {
         yield return new WaitForSeconds(1);
-        currentHealth += maxHealth * healthRegenerationRate;
+        currentHealth += maxHealth * HealthRegen;
         CheckHealthMax();
         SetHealthInfo();
         StartCoroutine(HealthRegeneration());
@@ -40,7 +40,7 @@ public class PlayerStats : MonoBehaviour
     IEnumerator AbilityRegeneration()
     {
         yield return new WaitForSeconds(1);
-        currentAbilityPool += abilityPoolMax * abilityRegenerationRate;
+        currentAbilityPool += abilityPoolMax * AbilityRegen;
         CheckAbilityMax();
         SetAbilityInfo();
         StartCoroutine(AbilityRegeneration());
@@ -174,7 +174,10 @@ public class PlayerStats : MonoBehaviour
     }
 
 
-
+    public void SetStat(ref string skillType, float modifyBy)
+    {
+         
+    }
 
 
 
@@ -193,36 +196,36 @@ public class PlayerStats : MonoBehaviour
 
     // Amount that damage is reduced by (eg. player has 2 def, takes a 3 damage hit, the damage is reduced by the defense so the player only takes 1 damage)
     // Base Value: 0
-    public float defense;
+    public float Defense;
 
     // Amount that base damage is multiplied by (regardless of critical hit)
     // Base Value: 1
-    public float strength;
+    public float Strength;
 
     // Percent Chance to critically hit
     // Base Value: 25%
-    public float critChance;
+    public float CritChance;
 
     // Damage multiplier (percentage) on critical hits
     // Base Value: 50%
-    public float critDamage;
+    public float CritDamage;
 
     // Chance for double hits
     // Percentages above 100% (and there will be) will overflow into triple hits, then quadruple hits, and oh boy this is going to be hard to balance
     // Base Value: 0%
-    public float fero;
+    public float Ferocity;
 
     // Percentage of MaxHealth regenerated every second
     // Base Value: 1% = 0.01
-    public float healthRegenerationRate;
+    public float HealthRegen;
 
     // Percentage of ability energy regenerated every second
     // Base value 2% = 0.02
-    public float abilityRegenerationRate;
+    public float AbilityRegen;
 
     // Chance for rare drops from boss chests and monsters
     // Base Value: 0%
-    public float magicFind;
+    public float MagicFind;
 
     // Base Damage is given by the weapon being used, and is what is being multiplied by strength and crit damage,
     //      then increased by other percentages and fero
