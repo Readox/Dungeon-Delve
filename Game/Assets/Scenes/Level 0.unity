@@ -776,8 +776,8 @@ MonoBehaviour:
   CritChance: 0
   CritDamage: 0
   Ferocity: 0
-  HealthRegen: 0
-  AbilityRegen: 0
+  HealthRegen: 0.01
+  AbilityRegen: 0.01
   MagicFind: 0
 --- !u!4 &378433350
 Transform:
