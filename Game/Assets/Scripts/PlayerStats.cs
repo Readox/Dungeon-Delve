@@ -27,9 +27,9 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
         currentAbilityPool = abilityPoolMax;
 
+
         StartCoroutine(HealthRegeneration());
         StartCoroutine(AbilityRegeneration());
-
     }
     IEnumerator HealthRegeneration()
     {
@@ -52,7 +52,7 @@ public class PlayerStats : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+            
     }
 
     void Awake()
@@ -77,7 +77,10 @@ public class PlayerStats : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        currentHealth -= damage;
+        float dmgredper = Defense / (Defense + 100);
+        if (dmgredper == 0) { dmgredper = 1; }
+        float finalDamage = damage * dmgredper;
+        currentHealth -= finalDamage;
         CheckDeath();
         SetHealthInfo();
     }
@@ -126,6 +129,11 @@ public class PlayerStats : MonoBehaviour
     {
         healthBarSlider.value = CalculateHealthPercentage();
         healthText.text = Mathf.Ceil(currentHealth).ToString() + " / " + Mathf.Ceil(maxHealth).ToString();
+    }
+    public void UpdateHealthAbilityBars()
+    {
+        SetAbilityInfo();
+        SetHealthInfo();
     }
     public void CheckHealthMax()
     {
@@ -178,33 +186,9 @@ public class PlayerStats : MonoBehaviour
 
     public void SetStat(ref string skillType, float modifyBy)
     {
-
+        // ngl, didnt think that this would work first try, especially because it looks kinda wack, but alr
         float currentVal = (float)this.GetType().GetField(skillType).GetValue(this);
         this.GetType().GetField(skillType).SetValue(this, currentVal + modifyBy);
-
-        /*
-        Type myClassType = typeof(PlayerStats);
-        FieldInfo myFieldInfo = myClassType.GetField(skillType);
-        //SmyFieldInfo.GetValue(this);
-        //myFieldInfo.SetValue(this, 50, null, null, null);
-        */
-
-
-
-        //object value = typeof(float).GetProperty(skillType).GetValue(this);
-        //typeof(float).GetProperty(skillType).SetValue(this, value);
-
-        /*
-        var propInfo = typeof(this).object p = GetProperty(skillType); // Gets the property with the name skillType
-        if (propInfo != null)
-        {
-            propInfo.SetValue(skillType, 50, null);
-        }
-        else
-        {
-            Debug.Log("You shouldn't be here, there is no property with name of skillType in this class"); 
-        }
-        */
     }
 
     
@@ -227,6 +211,8 @@ public class PlayerStats : MonoBehaviour
     public float maxHealth;
 
     // Amount that damage is reduced by (eg. player has 2 def, takes a 3 damage hit, the damage is reduced by the defense so the player only takes 1 damage)
+    // Hypixel Skyblock Formula: Damage Reduction (%)  = Def / (Def + 100)
+    // My Formula: Damage Reduction (%)  = Def / (Def + 100)
     // Base Value: 0
     public float Defense;
 

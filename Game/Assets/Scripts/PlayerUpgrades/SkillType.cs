@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SkillType
 {
-
+    public GameObject dropdown;
     public string skillType;
     public int skillLevel;
     public int skillTreeTier;
@@ -14,19 +15,29 @@ public class SkillType
 
     private GameObject gameManager;
 
-    public SkillType(string skillType, int skillLevel, int skillTreeTier, string skillID)
+    public SkillType(GameObject dropdown, int skillLevel, int skillTreeTier, string skillID)
     {
-        this.skillType = skillType;
+        this.dropdown = dropdown;
+        this.skillType = dropdown.GetComponent<Dropdown>().captionText.text;
         this.skillLevel = skillLevel;
         this.skillTreeTier = skillTreeTier;
         this.skillID = skillID;
-        gameManager = GameObject.FindWithTag("GameController");
+
+        //gameManager = GameObject.FindWithTag("GameController");
     }
 
     public SkillType()
     {
 
     }
+
+    public string UpdateDropdownText()
+    {
+        string newText = dropdown.GetComponent<Dropdown>().captionText.text;
+        this.skillType = newText;
+        return newText;
+    }
+
 
     public string GetSkillID()
     {

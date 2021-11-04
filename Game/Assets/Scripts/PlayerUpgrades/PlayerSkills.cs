@@ -20,7 +20,13 @@ public class PlayerSkills : MonoBehaviour
 
         foreach (SkillType currentClass in unlockedSkillLevels)
         {
-            skillType = currentClass.GetSkillType();
+            //skillType = currentClass.GetSkillType();
+            // I need to check to see if dropdown has changed here:
+
+            skillType = currentClass.UpdateDropdownText();
+
+
+
             if (skillType.Equals("Health"))
             {
                 skillType = "maxHealth";
@@ -29,29 +35,28 @@ public class PlayerSkills : MonoBehaviour
             //float playerStatValue = gameManager.GetComponent<PlayerStats>().FindFromClassType(skillType);
             gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
         }
-        Debug.Log("Player Stat Values Updated");
+
+        gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars(); // Update the health and ability bars now before the player exits the menu so that they are ready
     }
 
     private void PopulateList()
     {
-        Debug.Log("Dropdown value: " + tier1Dropdown.GetComponent<Dropdown>().captionText.text);
+        // Format for adding new skill types is: (Dropdown GameObject, skill level, skill tree tier, Name of GameObject in editor)
 
-        SkillType tier1HealthDef = new SkillType(tier1Dropdown.GetComponent<Dropdown>().captionText.text, 1, 1, "tier1HealthDef");
-        unlockedSkillLevels.Add(tier1HealthDef);       // Tier 1 (HP/D)
-        /*
-        unlockedSkillLevels.Add(new SkillType(tier1Dropdown.GetComponent<Dropdown>().value));       // Tier 1 (HP/D)
-        unlockedSkillLevels.Add(new SkillType());
-        unlockedSkillLevels.Add(new SkillType());
-        unlockedSkillLevels.Add(new SkillType());
-        */
+        SkillType Tier1HealthDef = new SkillType(tier1Dropdown, 0, 1, "Tier1HealthDef");
+        unlockedSkillLevels.Add(Tier1HealthDef);       // Tier 1 (HP/D)
+        
+
+
+
+
     }
 
     // get parent of gameobject, then find the name of the dropdown, then find the tier of the dropdown, then go into List and change class instance
     public void AddPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
-        SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID().Equals("tier1HealthDef")); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
-        //Debug.Log(result.GetSkillID());
+        SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
         if (result.GetCurrencyCost() > playerSkillCurrency)
         {
             Debug.Log("Not enough currency!");
@@ -74,7 +79,7 @@ public class PlayerSkills : MonoBehaviour
         }
         else
         {
-            int currencyCost = result.AddSkillLevel(-1); // Have to get the currency cost of the operation
+            int currencyCost = result.AddSkillLevel(-1); // function returns the currency cost of the operation
             playerSkillCurrency += currencyCost;
         }
 
@@ -83,10 +88,17 @@ public class PlayerSkills : MonoBehaviour
 
     public void Awake()
     {
+        // I think I have to clear the list of everything when the game restarts, because it is saving values
+        ClearList();
+
         PopulateList();
         UpdateValues();
     }
 
+    private void ClearList()
+    {
+        unlockedSkillLevels.Clear();
+    }
 
 
     // Start is called before the first frame update
