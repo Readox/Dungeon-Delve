@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     public float playerSpeed;
 
     // Move Vector
-    private static Vector2 moveVec;
+    private Vector2 moveVec;
 
     public Animator animator;
 

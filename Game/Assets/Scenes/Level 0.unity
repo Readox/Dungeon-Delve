@@ -2728,6 +2728,7 @@ MonoBehaviour:
   playerSkillTokens: 10
   playerSkillCurrency: 2147483647
   tier1Dropdown: {fileID: 1680740072}
+  gameManager: {fileID: 378433348}
 --- !u!1 &1533181303
 GameObject:
   m_ObjectHideFlags: 0
@@ -3861,7 +3862,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056332, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056332, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -3873,15 +3874,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056332, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: UpdateValues
+      value: SwitchedDropdown
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056332, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PlayerSkills, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056332, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgument
+      value: 
+      objectReference: {fileID: 1680740072}
+    - target: {fileID: 1485151544030056332, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      value: UnityEngine.GameObject, UnityEngine
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}

@@ -11,6 +11,7 @@ public class SkillType
     public int skillTreeTier;
     public string skillID;
 
+    public float skillAmountIncreased;
     private int currencyCostIncrease = 10;
 
     private GameObject gameManager;
@@ -22,7 +23,7 @@ public class SkillType
         this.skillLevel = skillLevel;
         this.skillTreeTier = skillTreeTier;
         this.skillID = skillID;
-
+        this.skillAmountIncreased = 0; // Starts at 0
         //gameManager = GameObject.FindWithTag("GameController");
     }
 
@@ -31,13 +32,20 @@ public class SkillType
 
     }
 
+    // Changes the skillType based on the dropdown text
     public string UpdateDropdownText()
     {
         string newText = dropdown.GetComponent<Dropdown>().captionText.text;
         this.skillType = newText;
+        skillAmountIncreased = 0; // Makes the amount skill has been increased by 0 because the dropdown has switched to a new type
         return newText;
     }
 
+
+    public float GetSkillAmountIncreased()
+    {
+        return skillAmountIncreased; // Gets the amount that the skill has been increased by
+    }
 
     public string GetSkillID()
     {
@@ -57,12 +65,7 @@ public class SkillType
         return skillTreeTier;
     }
 
-    // Also returns the cost in currency
-    public int AddSkillLevel(int x)
-    {
-        this.skillLevel += x;
-        return GetCurrencyCost();
-    }
+
 
     public int GetCurrencyCost()
     {
@@ -70,18 +73,36 @@ public class SkillType
         return currencyCost;
     }
 
+    // Also returns the cost in currency
+    public int AddSkillLevel(int x)
+    {
+        this.skillLevel += x;
+        return GetCurrencyCost();
+    }
+    public int SubtractSkillLevel(int x)
+    {
+        this.skillLevel -= x;
+        return GetCurrencyCost();
+    }
+
+
     
     public float GetModifyValue()
     {
         float finalVal = 0f;
         if (skillType.Equals("Health"))
         {
-            finalVal += skillLevel * 10;
+            finalVal += 10;
         }
         else if (skillType.Equals("Defense"))
         {
-            finalVal += skillLevel;
+            finalVal += 1;
         }
+        // add to the amount skill has been increased by
+        skillAmountIncreased += finalVal;
+
+        Debug.Log(finalVal + " Final Val");
+        Debug.Log(skillAmountIncreased + " Skill Amount INcreased");
         return finalVal;
     }
 

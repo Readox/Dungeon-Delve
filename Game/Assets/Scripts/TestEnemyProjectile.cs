@@ -7,6 +7,7 @@ public class TestEnemyProjectile : MonoBehaviour
 
     public float damage;
     public float removeDelay;
+    //public GameObject gameManager;
 
     void Start()
     {
@@ -20,6 +21,7 @@ public class TestEnemyProjectile : MonoBehaviour
         {
             if (collision.tag == "Player")
             {
+                //gameManager.GetComponent<PlayerStats>().DealDamage(damage);
                 PlayerStats.playerStats.DealDamage(damage);
             }
             Destroy(gameObject);

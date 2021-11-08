@@ -8,6 +8,7 @@ using System;
 public class PlayerStats : MonoBehaviour
 {
 
+    // Because Domain and Scene reloading is off, I need to be wary about this being static, but it appears to be fine for now
     public static PlayerStats playerStats;
 
     public GameObject player;
@@ -58,6 +59,7 @@ public class PlayerStats : MonoBehaviour
     void Awake()
     {
         playerStats = this;
+
         // For safeties:
         // Actually, dont have this on anything except for _game in the preload scene
         // DontDestroyOnLoad(this);
@@ -186,6 +188,8 @@ public class PlayerStats : MonoBehaviour
 
     public void SetStat(ref string skillType, float modifyBy)
     {
+        // Subtraction doesn't work and the problem might be here
+
         // ngl, didnt think that this would work first try, especially because it looks kinda wack, but alr
         float currentVal = (float)this.GetType().GetField(skillType).GetValue(this);
         this.GetType().GetField(skillType).SetValue(this, currentVal + modifyBy);
