@@ -7,7 +7,7 @@ public class SkillType
 {
     public GameObject dropdown;
     public string skillType;
-    public int skillLevel;
+    public int skillLevel; // Skills will have base level of zero
     public int skillTreeTier;
     public string skillID;
 
@@ -36,9 +36,15 @@ public class SkillType
     public string UpdateDropdownText()
     {
         string newText = dropdown.GetComponent<Dropdown>().captionText.text;
-        this.skillType = newText;
-        skillAmountIncreased = 0; // Makes the amount skill has been increased by 0 because the dropdown has switched to a new type
-        return newText;
+        // Make if statement here to check whether dropdown has changed
+        if (!this.skillType.Equals(newText))
+        {
+            this.skillType = newText;
+            this.skillAmountIncreased = 0;
+            this.skillLevel = 0; // Resets the level of the skill, which might be important if I change costs based on skill type
+        }
+
+        return this.skillType;
     }
 
 
@@ -66,7 +72,6 @@ public class SkillType
     }
 
 
-
     public int GetCurrencyCost()
     {
         int currencyCost = GetSkillLevel() * currencyCostIncrease;
@@ -86,23 +91,23 @@ public class SkillType
     }
 
 
-    
+    // Just a note, but the += used below increases the amount by that the first time, and then by that + that next time (pretty sure its exponential, but I'm tired)
     public float GetModifyValue()
     {
         float finalVal = 0f;
-        if (skillType.Equals("Health"))
+        if (skillType.Equals("Health")) // Health modifier = 10
         {
-            finalVal += 10;
+            finalVal = 10 * skillLevel;
         }
-        else if (skillType.Equals("Defense"))
+        else if (skillType.Equals("Defense")) // Defense modifier = 1
         {
-            finalVal += 1;
+            finalVal = 1 * skillLevel;
         }
         // add to the amount skill has been increased by
         skillAmountIncreased += finalVal;
 
         Debug.Log(finalVal + " Final Val");
-        Debug.Log(skillAmountIncreased + " Skill Amount INcreased");
+        Debug.Log(skillAmountIncreased + " Skill Amount Increased");
         return finalVal;
     }
 

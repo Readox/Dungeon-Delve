@@ -74,6 +74,8 @@ public class PlayerSkills : MonoBehaviour
 
         Debug.Log(modifyBy + "Switched Dropdown");
 
+        playerSkillCurrency += result.GetCurrencyCost(); // Gives back currency, because skill level is reset as well
+
         gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
 
         UpdateValues();
