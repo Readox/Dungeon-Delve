@@ -13,6 +13,8 @@ public class PlayerStats : MonoBehaviour
 
     public GameObject player;
 
+    public GameObject statsScrollRect;
+
     public Slider healthBarSlider;
     public Text healthText;
 
@@ -66,6 +68,13 @@ public class PlayerStats : MonoBehaviour
 
 
         PlayerClassSetup();
+        UpdateScrollRectStats(statsScrollRect);
+
+        Color color;
+        ColorUtility.TryParseHtmlString(abilityPoolColor, out color);
+
+        abilityBarSlider.gameObject.transform.Find("Fill Area").Find("Fill").GetComponent<Image>().color = color; // Sets ability pool color to: x
+        abilityBarSlider.gameObject.transform.Find("Text").GetComponent<Text>().color = color; // Sets ability pool text to x:
 
         currentHealth = maxHealth;
         currentAbilityPool = abilityPoolMax;
@@ -165,19 +174,19 @@ public class PlayerStats : MonoBehaviour
     {
         if (playerClass.Equals("fighter"))
         {
-
+            abilityPoolColor = "#FF2800";
         }
         else if (playerClass.Equals("mage"))
         {
-
+            abilityPoolColor = "#43FFF8";
         }
         else if (playerClass.Equals("archer"))
         {
-
+            abilityPoolColor = "#02F805";
         }
         else if (playerClass.Equals("tank"))
         {
-
+            abilityPoolColor = "#335E2C";
         }
         else
         {
@@ -185,7 +194,7 @@ public class PlayerStats : MonoBehaviour
         }
     }
 
-
+    // Everytime that SetStat is called, I will also call a method that updates the scroll rect containing player stats
     public void SetStat(ref string skillType, float modifyBy)
     {
         // Subtraction doesn't work and the problem might be here
@@ -193,15 +202,44 @@ public class PlayerStats : MonoBehaviour
         // ngl, didnt think that this would work first try, especially because it looks kinda wack, but alr
         float currentVal = (float)this.GetType().GetField(skillType).GetValue(this);
         this.GetType().GetField(skillType).SetValue(this, currentVal + modifyBy);
+        UpdateScrollRectStats(statsScrollRect);
     }
 
-    
+    public void UpdateScrollRectStats(GameObject scrollRect)
+    {
+        Text childText = scrollRect.GetComponentInChildren<Text>();
+        // The curly bracket parts are working, as well as assignment but not the <> areas
+        string outputString =
+            $" <color=#9D0000>Health: {maxHealth}</color> \n" +
+            $" <color=#00C803>Defense: {Defense}</color> \n" +
+            $" <color=#C80800>Strength: {Strength}</color> \n" +
+            $" <color=#0009FF>Critical Chance: {CritChance}</color> \n" +
+            $" <color=#0046FF>Critical Damage: {CritDamage}</color> \n" +
+            $" <color=#FF5F00>Ferocity: {Ferocity}</color> \n" +
+            $" <color=#9D0000>Health Regeneration: {HealthRegen}</color> \n" +
+            $" <color={abilityPoolColor}>Ability Regeneration: {AbilityRegen}</color> \n" +
+            $" <color={abilityPoolColor}>Ability Pool: {abilityPoolMax}</color> \n" +
+            $" <color=#FF00D0>Magic Find: {MagicFind}</color> \n";
+        childText.text = outputString;
+    }
 
-    
+
+    /*
+<color = #9D0000>Health</color>:
+<color = #9D0000>Health</color>:
+<color = #9D0000>Health</color>:
+<color = #9D0000>Health</color>:
+<color = #9D0000>Health</color>:
+<color = #9D0000>Health</color>:
+<color = #9D0000>Health</color>:
+<color = #9D0000>Health</color>:
+    */
+
 
 
 
     // All this stuff is down here, because there is a lot
+    public string abilityPoolColor;
 
     public float abilityPoolMax;
     public float currentAbilityPool;

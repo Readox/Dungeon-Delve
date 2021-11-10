@@ -86,7 +86,9 @@ public class SkillType
     }
     public int SubtractSkillLevel(int x)
     {
+        Debug.Log(skillLevel);
         this.skillLevel -= x;
+        Debug.Log(skillLevel);
         return GetCurrencyCost();
     }
 
@@ -105,9 +107,6 @@ public class SkillType
         }
         // add to the amount skill has been increased by
         skillAmountIncreased += finalVal;
-
-        Debug.Log(finalVal + " Final Val");
-        Debug.Log(skillAmountIncreased + " Skill Amount Increased");
         return finalVal;
     }
 

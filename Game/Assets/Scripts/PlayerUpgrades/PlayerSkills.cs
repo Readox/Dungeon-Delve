@@ -22,12 +22,7 @@ public class PlayerSkills : MonoBehaviour
 
         foreach (SkillType currentClass in unlockedSkillLevels)
         {
-            //skillType = currentClass.GetSkillType();
-            // I need to check to see if dropdown has changed here:
-
             skillType = currentClass.UpdateDropdownText();
-
-
 
             if (skillType.Equals("Health"))
             {
@@ -44,11 +39,40 @@ public class PlayerSkills : MonoBehaviour
         gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars(); // Update the health and ability bars now before the player exits the menu so that they are ready
     }
 
+
+    // Use substring to get name of GameObject that we are adding with name format: "Unlock Tier2Combat" or "Unlock Tier3Special" so substring(7)
+    // Try to make it so that I use code to find the dropdown that I want instead of linking in editor later? Maybe not though, because using Find() is slow af
+
+    // Unfortunately, Unity doesnt seem to accept assignment of functions that have two arguments, so I'm going to have to hack a little (maybe I can call two functions from one button)
+    public void UnlockSkill(GameObject parentButton)
+    {
+        if (playerSkillTokens > 0)
+        {
+            playerSkillTokens -= 1; // Subtract from skill tokens
+            GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
+            string skillID = dropdown.name; // Get skill ID from above dropdown, which is the name of the GameObject
+            SkillType newSkill = new SkillType(dropdown, 0, 1, skillID); 
+            unlockedSkillLevels.Add(newSkill);
+            parentButton.SetActive(true);
+        }
+        else
+        {
+            Debug.Log("Not enough tokens!");
+        }
+        
+    }
+    // Extension of UnlockSkill() bc/ I needed two functions to accomplish one thing
+    public void SetInactiveUnlockButton(GameObject caller)
+    {
+        caller.SetActive(false);
+    }
+
+
     private void PopulateList()
     {
         // Format for adding new skill types is: (Dropdown GameObject, skill level, skill tree tier, Name of GameObject in editor)
-
-        SkillType Tier1HealthDef = new SkillType(tier1Dropdown, 0, 1, "Tier1HealthDef");
+        
+        SkillType Tier1HealthDef = new SkillType(tier1Dropdown, 0, 1, "Tier1HealthDef"); // It does not matter whether the name is this or that, it is not used, more for reference in code
         unlockedSkillLevels.Add(Tier1HealthDef);       // Tier 1 (HP/D)
         
 
@@ -71,20 +95,13 @@ public class PlayerSkills : MonoBehaviour
         }
 
         float modifyBy = result.GetSkillAmountIncreased() * -1;
-
-        Debug.Log(modifyBy + "Switched Dropdown");
-
         playerSkillCurrency += result.GetCurrencyCost(); // Gives back currency, because skill level is reset as well
-
         gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
 
         UpdateValues();
 
     }
        
-
-
-
 
 
     // get parent of gameobject, then find the name of the dropdown, then find the tier of the dropdown, then go into List and change class instance
@@ -108,7 +125,7 @@ public class PlayerSkills : MonoBehaviour
     {
         string nameOfSkill = childButton.transform.parent.name;
         SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID() == nameOfSkill);
-        if (result.GetSkillLevel() < 2)
+        if (result.GetSkillLevel() < 1)
         {
             Debug.Log("Skill at Lowest Level");
         }
@@ -135,6 +152,11 @@ public class PlayerSkills : MonoBehaviour
     {
         unlockedSkillLevels.Clear();
     }
+
+
+
+
+
 
 
     // Start is called before the first frame update
