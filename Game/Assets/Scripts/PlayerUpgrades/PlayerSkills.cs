@@ -8,14 +8,17 @@ public class PlayerSkills : MonoBehaviour
 
     //private List<SkillType> unlockedSkillList;
     public List<SkillType> unlockedSkillLevels = new List<SkillType>();
-    public int playerSkillTokens;
-    public int playerSkillCurrency;
+
+    public int playerUpgradeCurrency;
+    public int playerUpgradeTokens;
 
     public GameObject tier1Dropdown;
 
 
     public GameObject gameManager;
 
+
+    // Transitioning this so that it only occurs on + and - and switched dropdown, but will still exist for when Awake() happens
     public void UpdateValues()
     {
         string skillType = "";
@@ -28,7 +31,7 @@ public class PlayerSkills : MonoBehaviour
             {
                 skillType = "maxHealth";
             }
-            float modifyBy = currentClass.GetModifyValue();
+            float modifyBy = currentClass.GetModifyValue(false);
 
             //Debug.Log(modifyBy);
 
@@ -46,9 +49,9 @@ public class PlayerSkills : MonoBehaviour
     // Unfortunately, Unity doesnt seem to accept assignment of functions that have two arguments, so I'm going to have to hack a little (maybe I can call two functions from one button)
     public void UnlockSkill(GameObject parentButton)
     {
-        if (playerSkillTokens > 0)
+        if (playerUpgradeTokens > 0)
         {
-            playerSkillTokens -= 1; // Subtract from skill tokens
+            playerUpgradeTokens -= 1; // Subtract from skill tokens
             GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
             string skillID = dropdown.name; // Get skill ID from above dropdown, which is the name of the GameObject
             SkillType newSkill = new SkillType(dropdown, 0, 1, skillID); 
@@ -60,6 +63,7 @@ public class PlayerSkills : MonoBehaviour
             Debug.Log("Not enough tokens!");
         }
         
+        UpdateUIElements();
     }
     // Extension of UnlockSkill() bc/ I needed two functions to accomplish one thing
     public void SetInactiveUnlockButton(GameObject caller)
@@ -85,21 +89,20 @@ public class PlayerSkills : MonoBehaviour
     public void SwitchedDropdown(GameObject dropdown)
     {
         // Find the skill that the dropdown is associated with in unlockeSkillLevels
-        SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(dropdown.name));
+        SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(dropdown.name));
 
-        string skillType = result.GetSkillType(); // Gets the skillType which has not been updated yet, but will be when UpdateValues() is called below
+        string skillType = currentClass.GetSkillType(); // Gets the skillType which has not been updated yet, but will be when UpdateValues() is called below
 
         if (skillType.Equals("Health"))
         {
             skillType = "maxHealth";
         }
 
-        float modifyBy = result.GetSkillAmountIncreased() * -1;
-        playerSkillCurrency += result.GetCurrencyCost(); // Gives back currency, because skill level is reset as well
+        float modifyBy = currentClass.GetSkillAmountIncreased() * -1;
+        playerUpgradeCurrency += currentClass.GetTotalCurrencyCost(); // Gives back currency, because skill level is reset as well
         gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
 
-        UpdateValues();
-
+        UpdateUIElements();
     }
        
 
@@ -108,34 +111,52 @@ public class PlayerSkills : MonoBehaviour
     public void AddPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
-        SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
-        if (result.GetCurrencyCost() > playerSkillCurrency)
+        SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
+        if (currentClass.GetCurrencyCost() > playerUpgradeCurrency)
         {
             Debug.Log("Not enough currency!");
         }
         else
         {
-            int currencyCost = result.AddSkillLevel(1); // Have to get the currency cost of the operation
-            playerSkillCurrency -= currencyCost;
+            int currencyCost = currentClass.AddSkillLevel(1); // Have to get the currency cost of the operation
+            playerUpgradeCurrency -= currencyCost;
+
+            string skillType = currentClass.UpdateDropdownText();
+            if (skillType.Equals("Health"))
+            {
+                skillType = "maxHealth";
+            }
+            float modifyBy = currentClass.GetModifyValue(false);
+            gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
         }
-        UpdateValues();
+        
+        
+
+        UpdateUIElements();
     }
 
     public void SubtractPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
-        SkillType result = unlockedSkillLevels.Find(x => x.GetSkillID() == nameOfSkill);
-        if (result.GetSkillLevel() < 1)
+        SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID() == nameOfSkill);
+        float modifyBy = currentClass.GetModifyValue(true) * -1; // Have to do this here, before I subtract the skill level below
+        if (currentClass.GetSkillLevel() < 1)
         {
             Debug.Log("Skill at Lowest Level");
         }
         else
         {
-            int currencyCost = result.SubtractSkillLevel(1); // function returns the currency cost of the operation
-            playerSkillCurrency += currencyCost;
+            int currencyCost = currentClass.SubtractSkillLevel(1); // function returns the currency cost of the operation
+            playerUpgradeCurrency += currencyCost;
+            string skillType = currentClass.UpdateDropdownText();
+            if (skillType.Equals("Health"))
+            {
+                skillType = "maxHealth";
+            }
+            gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
         }
 
-        UpdateValues();
+        UpdateUIElements();
     }
 
     public void Awake()
@@ -146,7 +167,18 @@ public class PlayerSkills : MonoBehaviour
 
         PopulateList();
         UpdateValues();
+        UpdateUIElements();
     }
+
+
+    public Text playerUpgradeCurrencyTokensText;
+
+    public void UpdateUIElements()
+    {
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
+        gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
+    }
+
 
     private void ClearList()
     {

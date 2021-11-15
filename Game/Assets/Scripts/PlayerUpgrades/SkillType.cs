@@ -72,9 +72,20 @@ public class SkillType
     }
 
 
+    public int GetTotalCurrencyCost()
+    {
+        int finalVal = 0;
+        for (int i = 0; i < skillLevel; i++)
+        {
+            finalVal += (i) * currencyCostIncrease;
+        }
+        return finalVal;
+    }
+
+    // Only use this method for finding the currency cost for upgrading (eg, AddPoints())
     public int GetCurrencyCost()
     {
-        int currencyCost = GetSkillLevel() * currencyCostIncrease;
+        int currencyCost = (GetSkillLevel() + 1) * currencyCostIncrease;
         return currencyCost;
     }
 
@@ -82,19 +93,17 @@ public class SkillType
     public int AddSkillLevel(int x)
     {
         this.skillLevel += x;
-        return GetCurrencyCost();
+        return GetSkillLevel() * currencyCostIncrease;
     }
     public int SubtractSkillLevel(int x)
     {
-        Debug.Log(skillLevel);
         this.skillLevel -= x;
-        Debug.Log(skillLevel);
-        return GetCurrencyCost();
+        return (GetSkillLevel() + 1) * currencyCostIncrease; // needs to be +1 account for subtraction (currency cost only for that operation)
     }
 
 
     // Just a note, but the += used below increases the amount by that the first time, and then by that + that next time (pretty sure its exponential, but I'm tired)
-    public float GetModifyValue()
+    public float GetModifyValue(bool subtract)
     {
         float finalVal = 0f;
         if (skillType.Equals("Health")) // Health modifier = 10
@@ -105,8 +114,22 @@ public class SkillType
         {
             finalVal = 1 * skillLevel;
         }
-        // add to the amount skill has been increased by
-        skillAmountIncreased += finalVal;
+        else // Default is 1
+        {
+            finalVal = 1 * skillLevel;
+        }
+
+
+        // add/subtract to the amount skill has been increased by (depends on subtract field)
+        if (subtract)
+        {
+            skillAmountIncreased -= finalVal;
+        }
+        else
+        {
+            skillAmountIncreased += finalVal;
+        }
+        
         return finalVal;
     }
 

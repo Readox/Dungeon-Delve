@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Reflection;
-using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerStats : MonoBehaviour
 {
@@ -162,8 +161,23 @@ public class PlayerStats : MonoBehaviour
         if (currentHealth <= 0)
         {
             Destroy(player);
+            MainMenu();
         }
     }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 0f;
+        SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
+        StartCoroutine(SceneSwitch());
+    }
+    IEnumerator SceneSwitch()
+    {
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("MainMenu"));
+        yield return null;
+        SceneManager.UnloadSceneAsync("Level 0");
+    }
+
     public float getCurrentAbilityPool()
     {
         return currentAbilityPool;
