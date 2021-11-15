@@ -12,7 +12,7 @@ public class PlayerSkills : MonoBehaviour
     public int playerUpgradeCurrency;
     public int playerUpgradeTokens;
 
-    public GameObject tier1Dropdown;
+    public GameObject HealthDef1Dropdown;
 
 
     public GameObject gameManager;
@@ -47,6 +47,7 @@ public class PlayerSkills : MonoBehaviour
     // Try to make it so that I use code to find the dropdown that I want instead of linking in editor later? Maybe not though, because using Find() is slow af
 
     // Unfortunately, Unity doesnt seem to accept assignment of functions that have two arguments, so I'm going to have to hack a little (maybe I can call two functions from one button)
+    // Format for adding new skill types is: (Dropdown GameObject, skill level, Name of GameObject in editor)
     public void UnlockSkill(GameObject parentButton)
     {
         if (playerUpgradeTokens > 0)
@@ -54,7 +55,7 @@ public class PlayerSkills : MonoBehaviour
             playerUpgradeTokens -= 1; // Subtract from skill tokens
             GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
             string skillID = dropdown.name; // Get skill ID from above dropdown, which is the name of the GameObject
-            SkillType newSkill = new SkillType(dropdown, 0, 1, skillID); 
+            SkillType newSkill = new SkillType(dropdown, 0, skillID); // It does not matter whether the name is this or that, it is not used, more for reference in code
             unlockedSkillLevels.Add(newSkill);
             parentButton.SetActive(true);
         }
@@ -71,20 +72,6 @@ public class PlayerSkills : MonoBehaviour
         caller.SetActive(false);
     }
 
-
-    private void PopulateList()
-    {
-        // Format for adding new skill types is: (Dropdown GameObject, skill level, skill tree tier, Name of GameObject in editor)
-        
-        SkillType Tier1HealthDef = new SkillType(tier1Dropdown, 0, 1, "Tier1HealthDef"); // It does not matter whether the name is this or that, it is not used, more for reference in code
-        unlockedSkillLevels.Add(Tier1HealthDef);       // Tier 1 (HP/D)
-        
-
-
-
-
-    }
-
     // I need this to find out what the previous skill was, and then subtract that bonus from the PlayerStats
     public void SwitchedDropdown(GameObject dropdown)
     {
@@ -93,6 +80,7 @@ public class PlayerSkills : MonoBehaviour
 
         string skillType = currentClass.GetSkillType(); // Gets the skillType which has not been updated yet, but will be when UpdateValues() is called below
 
+
         if (skillType.Equals("Health"))
         {
             skillType = "maxHealth";
@@ -100,14 +88,20 @@ public class PlayerSkills : MonoBehaviour
 
         float modifyBy = currentClass.GetSkillAmountIncreased() * -1;
         playerUpgradeCurrency += currentClass.GetTotalCurrencyCost(); // Gives back currency, because skill level is reset as well
+        Debug.Log(currentClass.GetTotalCurrencyCost());
         gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
+
+
+        unlockedSkillLevels.Remove(currentClass);
+        SkillType replacementSkill = new SkillType(dropdown, 0, dropdown.name);
+        unlockedSkillLevels.Add(replacementSkill);
 
         UpdateUIElements();
     }
-       
+    
 
 
-    // get parent of gameobject, then find the name of the dropdown, then find the tier of the dropdown, then go into List and change class instance
+    // get parent of gameobject, then find the name of the dropdown, then find the tier of the dropdown, then go into List and change class instance: public void AddPoints(GameObject childbutton)
     public void AddPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
@@ -165,9 +159,16 @@ public class PlayerSkills : MonoBehaviour
         // I think I have to clear the list of everything when the game restarts, because it is saving values
         ClearList();
 
-        PopulateList();
         UpdateValues();
         UpdateUIElements();
+    }
+
+    private void PrintAllInList()
+    {
+        foreach(SkillType currentClass in unlockedSkillLevels)
+        {
+            Debug.Log(currentClass.GetSkillID() + "\n");
+        }
     }
 
 

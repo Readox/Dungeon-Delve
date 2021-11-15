@@ -8,7 +8,6 @@ public class SkillType
     public GameObject dropdown;
     public string skillType;
     public int skillLevel; // Skills will have base level of zero
-    public int skillTreeTier;
     public string skillID;
 
     public float skillAmountIncreased;
@@ -16,12 +15,11 @@ public class SkillType
 
     private GameObject gameManager;
 
-    public SkillType(GameObject dropdown, int skillLevel, int skillTreeTier, string skillID)
+    public SkillType(GameObject dropdown, int skillLevel, string skillID)
     {
         this.dropdown = dropdown;
         this.skillType = dropdown.GetComponent<Dropdown>().captionText.text;
         this.skillLevel = skillLevel;
-        this.skillTreeTier = skillTreeTier;
         this.skillID = skillID;
         this.skillAmountIncreased = 0; // Starts at 0
         //gameManager = GameObject.FindWithTag("GameController");
@@ -66,16 +64,12 @@ public class SkillType
     {
         return skillLevel;
     }
-    public int GetSkillTier()
-    {
-        return skillTreeTier;
-    }
 
 
     public int GetTotalCurrencyCost()
     {
         int finalVal = 0;
-        for (int i = 0; i < skillLevel; i++)
+        for (int i = 0; i < skillLevel + 1; i++)
         {
             finalVal += (i) * currencyCostIncrease;
         }
