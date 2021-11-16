@@ -224,18 +224,28 @@ public class PlayerStats : MonoBehaviour
         Text childText = scrollRect.GetComponentInChildren<Text>();
         // The curly bracket parts are working, as well as assignment but not the <> areas
         string outputString =
-            $" <color=#9D0000>Health: {maxHealth}</color> \n" +
-            $" <color=#00C803>Defense: {Defense}</color> \n" +
-            $" <color=#C80800>Strength: {Strength}</color> \n" +
-            $" <color=#0009FF>Critical Chance: {CritChance}</color> \n" +
-            $" <color=#0046FF>Critical Damage: {CritDamage}</color> \n" +
-            $" <color=#FF5F00>Ferocity: {Ferocity}</color> \n" +
-            $" <color=#9D0000>Health Regeneration: {HealthRegen}</color> \n" +
+            $" <color={healthColor}>Health: {maxHealth}</color> \n" +
+            $" <color={defenseColor}>Defense: {Defense}</color> \n" +
+            $" <color={strengthColor}>Strength: {Strength}</color> \n" +
+            $" <color={ccColor}>Critical Chance: {CritChance}</color> \n" +
+            $" <color={cdColor}>Critical Damage: {CritDamage}</color> \n" +
+            $" <color={ferocityColor}>Ferocity: {Ferocity}</color> \n" +
+            $" <color={healthColor}>Health Regeneration: {HealthRegen}</color> \n" +
             $" <color={abilityPoolColor}>Ability Regeneration: {AbilityRegen}</color> \n" +
             $" <color={abilityPoolColor}>Ability Pool: {abilityPoolMax}</color> \n" +
-            $" <color=#FF00D0>Magic Find: {MagicFind}</color> \n";
+            $" <color={mfColor}>Magic Find: {MagicFind}</color> \n";
         childText.text = outputString;
     }
+
+
+    private string healthColor = "#9D0000";
+    private string defenseColor = "#00C803";
+    private string strengthColor = "#C80800";
+    private string ccColor = "#0009FF";
+    private string cdColor = "#0046FF";
+    private string ferocityColor = "#FF5F00";
+    private string mfColor = "#FF00D0";
+
 
 
     /*

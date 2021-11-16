@@ -71,6 +71,10 @@ public class PlayerSkills : MonoBehaviour
     {
         caller.SetActive(false);
     }
+    public void SetInactiveButtonComponent(GameObject caller) // Unused, and doesn't accomplish what I want
+    {
+        caller.GetComponent<Button>().interactable = false;
+    }
 
     // I need this to find out what the previous skill was, and then subtract that bonus from the PlayerStats
     public void SwitchedDropdown(GameObject dropdown)
@@ -174,10 +178,20 @@ public class PlayerSkills : MonoBehaviour
 
     public Text playerUpgradeCurrencyTokensText;
 
+    public void UpdateUIElements(GameObject parent, SkillType currentClass)
+    {
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
+        gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
+
+        //parent.GetChild(0).GetComponent<Text>().text = currentClass.
+    }
+
     public void UpdateUIElements()
     {
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
         gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
+
+
     }
 
 
