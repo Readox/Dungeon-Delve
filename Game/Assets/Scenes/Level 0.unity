@@ -955,7 +955,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: Combat2
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -1565,7 +1565,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: HealthDef3
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2197,7 +2197,7 @@ MonoBehaviour:
   maxHealth: 100
   Defense: 0
   Strength: 0
-  CritChance: 0
+  CritChance: 25
   CritDamage: 0
   Ferocity: 0
   HealthRegen: 0.01
@@ -3345,7 +3345,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: Special2
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4090,7 +4090,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: HealthDef2
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -4573,7 +4573,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: Combat 3
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -5034,7 +5034,7 @@ MonoBehaviour:
   m_Vertical: 1
   m_MovementType: 2
   m_Elasticity: 0.1
-  m_Inertia: 1
+  m_Inertia: 0
   m_DecelerationRate: 0.135
   m_ScrollSensitivity: 10
   m_Viewport: {fileID: 100731829}
@@ -5783,7 +5783,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: Combat1
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -6656,7 +6656,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822c7af35cf149f4eb0f7da528b4b500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUpgradeCurrency: 1000
+  playerUpgradeCurrency: 10000
   playerUpgradeTokens: 10
   HealthDef1Dropdown: {fileID: 1680740072}
   gameManager: {fileID: 378433348}
@@ -6954,7 +6954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: Special1
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -7993,7 +7993,7 @@ MonoBehaviour:
   m_Content: {fileID: 363731198}
   m_Horizontal: 0
   m_Vertical: 1
-  m_MovementType: 1
+  m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
   m_DecelerationRate: 0.135
@@ -8826,7 +8826,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: Combat4
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x
@@ -9148,7 +9148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056334, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_Name
-      value: HealthDef
+      value: HealthDef1
       objectReference: {fileID: 0}
     - target: {fileID: 1485151544030056335, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_SizeDelta.x

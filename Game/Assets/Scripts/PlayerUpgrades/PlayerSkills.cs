@@ -27,10 +27,7 @@ public class PlayerSkills : MonoBehaviour
         {
             skillType = currentClass.UpdateDropdownText();
 
-            if (skillType.Equals("Health"))
-            {
-                skillType = "maxHealth";
-            }
+
             float modifyBy = currentClass.GetModifyValue(false);
 
             //Debug.Log(modifyBy);
@@ -54,9 +51,12 @@ public class PlayerSkills : MonoBehaviour
         {
             playerUpgradeTokens -= 1; // Subtract from skill tokens
             GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
-            string skillID = dropdown.name; // Get skill ID from above dropdown, which is the name of the GameObject
+            string skillID = dropdown.name; // Get skill ID from dropdown, which is the name of the GameObject
+            Debug.Log("SkillID: " + skillID);
+            Debug.Log("DropdownName: " + dropdown.GetComponent<Dropdown>().captionText.text);
             SkillType newSkill = new SkillType(dropdown, 0, skillID); // It does not matter whether the name is this or that, it is not used, more for reference in code
             unlockedSkillLevels.Add(newSkill);
+            Debug.Log("Skill Type: " + newSkill.GetSkillType());
             parentButton.SetActive(true);
         }
         else
@@ -77,6 +77,7 @@ public class PlayerSkills : MonoBehaviour
     }
 
     // I need this to find out what the previous skill was, and then subtract that bonus from the PlayerStats
+    // A notable problem is that when adding new Upgrades, they default to having the incorrect Dropdown name, causing them to become HealthDef dropdowns
     public void SwitchedDropdown(GameObject dropdown)
     {
         // Find the skill that the dropdown is associated with in unlockeSkillLevels
@@ -84,15 +85,9 @@ public class PlayerSkills : MonoBehaviour
 
         string skillType = currentClass.GetSkillType(); // Gets the skillType which has not been updated yet, but will be when UpdateValues() is called below
 
-
-        if (skillType.Equals("Health"))
-        {
-            skillType = "maxHealth";
-        }
-
         float modifyBy = currentClass.GetSkillAmountIncreased() * -1;
         playerUpgradeCurrency += currentClass.GetTotalCurrencyCost(); // Gives back currency, because skill level is reset as well
-        Debug.Log(currentClass.GetTotalCurrencyCost());
+        //Debug.Log(currentClass.GetTotalCurrencyCost());
         gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
 
 
@@ -117,14 +112,13 @@ public class PlayerSkills : MonoBehaviour
         else
         {
             int currencyCost = currentClass.AddSkillLevel(1); // Have to get the currency cost of the operation
+            
             playerUpgradeCurrency -= currencyCost;
 
             string skillType = currentClass.UpdateDropdownText();
-            if (skillType.Equals("Health"))
-            {
-                skillType = "maxHealth";
-            }
+            
             float modifyBy = currentClass.GetModifyValue(false);
+            Debug.Log("Modify Value: " + modifyBy);
             gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
         }
         
@@ -147,10 +141,7 @@ public class PlayerSkills : MonoBehaviour
             int currencyCost = currentClass.SubtractSkillLevel(1); // function returns the currency cost of the operation
             playerUpgradeCurrency += currencyCost;
             string skillType = currentClass.UpdateDropdownText();
-            if (skillType.Equals("Health"))
-            {
-                skillType = "maxHealth";
-            }
+
             gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
         }
 
@@ -183,6 +174,8 @@ public class PlayerSkills : MonoBehaviour
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
         gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
 
+        // Not finished yet
+        //gameManager.GetComponent<PlayerStats>().SetUpgradeText(ref currentClass.GetSkillType(), )
         //parent.GetChild(0).GetComponent<Text>().text = currentClass.
     }
 

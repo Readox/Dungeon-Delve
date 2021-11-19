@@ -211,7 +211,7 @@ public class PlayerStats : MonoBehaviour
     // Everytime that SetStat is called, I will also call a method that updates the scroll rect containing player stats
     public void SetStat(ref string skillType, float modifyBy)
     {
-        // Subtraction doesn't work and the problem might be here
+        //Debug.Log("SkillType: " + skillType + " ModifyBy: " + modifyBy);
 
         // ngl, didnt think that this would work first try, especially because it looks kinda wack, but alr
         float currentVal = (float)this.GetType().GetField(skillType).GetValue(this);
@@ -237,6 +237,12 @@ public class PlayerStats : MonoBehaviour
         childText.text = outputString;
     }
 
+    public void SetUpgradeText(ref string skillType, GameObject textObject)
+    {
+        // Iterate through array with colors in it
+    }
+
+    // Make an array go here with the colors inside eg: "string Ferocity = ferocityColor"
 
     private string healthColor = "#9D0000";
     private string defenseColor = "#00C803";
@@ -273,7 +279,7 @@ public class PlayerStats : MonoBehaviour
     public float currentHealth;
 
     // Maximum health that the player will have
-    // Base Value: 10
+    // Base Value: 100
     public float maxHealth;
 
     // Amount that damage is reduced by (eg. player has 2 def, takes a 3 damage hit, the damage is reduced by the defense so the player only takes 1 damage)

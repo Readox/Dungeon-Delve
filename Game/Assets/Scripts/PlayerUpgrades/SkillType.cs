@@ -18,7 +18,7 @@ public class SkillType
     public SkillType(GameObject dropdown, int skillLevel, string skillID)
     {
         this.dropdown = dropdown;
-        this.skillType = dropdown.GetComponent<Dropdown>().captionText.text;
+        this.skillType = GetFormattedSkillType(dropdown); // Need this function because some of the skills in the dropdowns have spaces in them
         this.skillLevel = skillLevel;
         this.skillID = skillID;
         this.skillAmountIncreased = 0; // Starts at 0
@@ -30,10 +30,47 @@ public class SkillType
 
     }
 
+    public string GetFormattedSkillType(GameObject dropdown)
+    {
+        string finalText = dropdown.GetComponent<Dropdown>().captionText.text;
+        Debug.Log("FinalText: " + finalText);
+        if (finalText.Equals("Health"))
+        {
+            finalText = "maxHealth";
+        }
+        else if (finalText.Equals("Critical Chance"))
+        {
+            finalText = "CritChance";
+        }
+        else if (finalText.Equals("Critical Damage"))
+        {
+            finalText = "CritDamage";
+        }
+        else if (finalText.Equals("Ability Max"))
+        {
+            finalText = "abilityPoolMax";
+        }
+        else if (finalText.Equals("Ability Regen"))
+        {
+            finalText = "AbilityRegen";
+        }
+        else if (finalText.Equals("Health Regen"))
+        {
+            finalText = "HealthRegen";
+        }
+        else if (finalText.Equals("Magic Find"))
+        {
+            finalText = "MagicFind";
+        }
+
+        //Debug.Log(finalText + " after");
+        return finalText;
+    }
+
     // Changes the skillType based on the dropdown text
     public string UpdateDropdownText()
     {
-        string newText = dropdown.GetComponent<Dropdown>().captionText.text;
+        string newText = GetFormattedSkillType(dropdown);
         // Make if statement here to check whether dropdown has changed
         if (!this.skillType.Equals(newText))
         {
@@ -100,15 +137,15 @@ public class SkillType
     public float GetModifyValue(bool subtract)
     {
         float finalVal = 0f;
-        if (skillType.Equals("Health")) // Health modifier = 10
+        if (skillType.Equals("maxHealth")) // Health modifier = 10
         {
             finalVal = 10 * skillLevel;
         }
-        else if (skillType.Equals("Defense")) // Defense modifier = 1
+        else if (skillType.Equals("AbilityRegen") || skillType.Equals("HealthRegen"))
         {
-            finalVal = 1 * skillLevel;
+            finalVal = 0.01f; // No multiplacation by skill Level, only increases by set amount every level
         }
-        else // Default is 1
+        else // Default is 1 (Defaults: Defense, Strength, Critical Chance, Critical Damage, Ferocity, Magic Find)
         {
             finalVal = 1 * skillLevel;
         }
