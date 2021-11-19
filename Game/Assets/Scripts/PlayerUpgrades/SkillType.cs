@@ -58,7 +58,6 @@ public class SkillType
             finalText = "MagicFind";
         }
 
-        //Debug.Log(finalText + " after");
         return finalText;
     }
 

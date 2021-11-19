@@ -237,12 +237,62 @@ public class PlayerStats : MonoBehaviour
         childText.text = outputString;
     }
 
-    public void SetUpgradeText(ref string skillType, GameObject textObject)
+    // I don't like having all of these if statements, but I gotta do it
+    public void SetUpgradeText(string skillType, GameObject textObject)
     {
-        // Iterate through array with colors in it
+        if(skillType.Equals("Health"))
+        {
+            textObject.GetComponent<Text>().text = $" <color={healthColor}>Health: {maxHealth}</color>";
+        }
+        else if (skillType.Equals("Strength"))
+        {
+
+        }
+        else if (skillType.Equals("CriticalChance"))
+        {
+
+        }
+        else if (skillType.Equals("CriticalDamage"))
+        {
+
+        }
+        else if (skillType.Equals("Ferocity"))
+        {
+
+        }
+        else if (skillType.Equals("HealthRegen"))
+        {
+
+        }
+        else if (skillType.Equals("AbilityRegen"))
+        {
+
+        }
+        else if (skillType.Equals("AbilityPool"))
+        {
+
+        }
+        else if (skillType.Equals("MagicFind"))
+        {
+
+        }
     }
 
+    
     // Make an array go here with the colors inside eg: "string Ferocity = ferocityColor"
+    /*
+    private string[] statColors = {
+        string maxHealth = healthColor,
+        string Defense = defenseColor,
+        string Strength = strengthColor,
+        string CritChance = ccColor,
+        string CritDamage = cdColor,
+        string Ferocity = ferocityColor, 
+        string HealthRegen = healthColor,
+        string AbilityRegen = abilityPoolColor,
+        string MagicFind = mfColor
+        };
+    */
 
     private string healthColor = "#9D0000";
     private string defenseColor = "#00C803";

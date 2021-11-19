@@ -114,13 +114,12 @@ public class PlayerSkills : MonoBehaviour
             string skillType = currentClass.UpdateDropdownText();
             
             float modifyBy = currentClass.GetModifyValue(false);
-            Debug.Log("Modify Value: " + modifyBy);
             gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
         }
         
         
 
-        UpdateUIElements();
+        UpdateUIElements(childButton.transform.parent.gameObject, currentClass);
     }
 
     public void SubtractPoints(GameObject childButton)
@@ -170,9 +169,8 @@ public class PlayerSkills : MonoBehaviour
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
         gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
 
-        // Not finished yet
-        //gameManager.GetComponent<PlayerStats>().SetUpgradeText(ref currentClass.GetSkillType(), )
-        //parent.GetChild(0).GetComponent<Text>().text = currentClass.
+        parent.transform.GetChild(0).GetComponent<Text>().text = currentClass.GetSkillType();
+        gameManager.GetComponent<PlayerStats>().SetUpgradeText(currentClass.GetSkillType(), parent.transform.GetChild(0).gameObject);
     }
 
     public void UpdateUIElements()
