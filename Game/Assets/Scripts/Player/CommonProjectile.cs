@@ -18,7 +18,7 @@ public class CommonProjectile : MonoBehaviour
     {
         if (collision.tag != "Player" && collision.tag != "PlayerProjectile")
         {
-            if (collision.GetComponent<EnemyDamageReception>() != null)
+            if (collision.GetComponent<EnemyDamageReception>() != null) // Do this multiple times for ferocity procs
             {
                 collision.GetComponent<EnemyDamageReception>().DealDamage(damage); 
             }

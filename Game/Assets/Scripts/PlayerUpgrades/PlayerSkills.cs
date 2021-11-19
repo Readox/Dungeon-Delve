@@ -54,13 +54,15 @@ public class PlayerSkills : MonoBehaviour
             SkillType newSkill = new SkillType(dropdown, 0, dropdown.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
             unlockedSkillLevels.Add(newSkill);
             parentButton.SetActive(true);
+
+            UpdateUIElements(dropdown, newSkill);
         }
         else
         {
             Debug.Log("Not enough tokens!");
         }
         
-        UpdateUIElements();
+        // UpdateUIElements() is not kept here
     }
     // Extension of UnlockSkill() bc/ I needed two functions to accomplish one thing
     public void SetInactiveUnlockButton(GameObject caller)
@@ -91,7 +93,7 @@ public class PlayerSkills : MonoBehaviour
         SkillType replacementSkill = new SkillType(dropdown, 0, dropdown.name);
         unlockedSkillLevels.Add(replacementSkill);
 
-        UpdateUIElements();
+        UpdateUIElements(dropdown, replacementSkill);
     }
     
 
@@ -140,7 +142,7 @@ public class PlayerSkills : MonoBehaviour
             gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
         }
 
-        UpdateUIElements();
+        UpdateUIElements(childButton.transform.parent.gameObject, currentClass);
     }
 
     public void Awake()
@@ -164,13 +166,14 @@ public class PlayerSkills : MonoBehaviour
 
     public Text playerUpgradeCurrencyTokensText;
 
-    public void UpdateUIElements(GameObject parent, SkillType currentClass)
+    public void UpdateUIElements(GameObject parent, SkillType currentClass) // This one is for the Add and Subtract Points
     {
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
         gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
 
-        parent.transform.GetChild(0).GetComponent<Text>().text = currentClass.GetSkillType();
-        gameManager.GetComponent<PlayerStats>().SetUpgradeText(currentClass.GetSkillType(), parent.transform.GetChild(0).gameObject);
+        string colorVal = gameManager.GetComponent<PlayerStats>().GetColorForStat(currentClass.GetSkillType());
+        parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{currentClass.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
+        //gameManager.GetComponent<PlayerStats>().SetUpgradeText(currentClass.GetSkillType(), parent.transform.GetChild(0).gameObject, currentClass.GetSkillAmountIncreased());
     }
 
     public void UpdateUIElements()

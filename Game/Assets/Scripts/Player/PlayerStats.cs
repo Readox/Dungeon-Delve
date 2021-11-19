@@ -238,69 +238,52 @@ public class PlayerStats : MonoBehaviour
     }
 
     // I don't like having all of these if statements, but I gotta do it
-    public void SetUpgradeText(string skillType, GameObject textObject)
+    public string GetColorForStat(string skillType)
     {
-        if(skillType.Equals("Health"))
+        if(skillType.Equals("maxHealth") || skillType.Equals("HealthRegen"))
         {
-            textObject.GetComponent<Text>().text = $" <color={healthColor}>Health: {maxHealth}</color>";
+            return healthColor;
+        }
+        else if (skillType.Equals("Defense"))
+        {
+            return defenseColor;
         }
         else if (skillType.Equals("Strength"))
         {
-
+            return strengthColor;
         }
-        else if (skillType.Equals("CriticalChance"))
+        else if (skillType.Equals("CritChance"))
         {
-
+            return ccColor;
         }
-        else if (skillType.Equals("CriticalDamage"))
+        else if (skillType.Equals("CritDamage"))
         {
-
+            return cdColor;
         }
         else if (skillType.Equals("Ferocity"))
         {
-
+            return ferocityColor;
         }
-        else if (skillType.Equals("HealthRegen"))
+        else if (skillType.Equals("abilityPoolMax") || skillType.Equals("AbilityRegen"))
         {
-
-        }
-        else if (skillType.Equals("AbilityRegen"))
-        {
-
-        }
-        else if (skillType.Equals("AbilityPool"))
-        {
-
+            return abilityPoolColor;
         }
         else if (skillType.Equals("MagicFind"))
         {
-
+            return mfColor;
         }
+
+        return "#000000";
     }
 
-    
-    // Make an array go here with the colors inside eg: "string Ferocity = ferocityColor"
-    /*
-    private string[] statColors = {
-        string maxHealth = healthColor,
-        string Defense = defenseColor,
-        string Strength = strengthColor,
-        string CritChance = ccColor,
-        string CritDamage = cdColor,
-        string Ferocity = ferocityColor, 
-        string HealthRegen = healthColor,
-        string AbilityRegen = abilityPoolColor,
-        string MagicFind = mfColor
-        };
-    */
 
-    private string healthColor = "#9D0000";
-    private string defenseColor = "#00C803";
-    private string strengthColor = "#C80800";
-    private string ccColor = "#0009FF";
-    private string cdColor = "#0046FF";
-    private string ferocityColor = "#FF5F00";
-    private string mfColor = "#FF00D0";
+    private string healthColor = "#9D0000";    // Stat(s) Implemented
+    private string defenseColor = "#00C803";   // Stat(s) Implemented
+    private string strengthColor = "#C80800";  // 
+    private string ccColor = "#0009FF";        // 
+    private string cdColor = "#0046FF";        // 
+    private string ferocityColor = "#FF5F00";  // 
+    private string mfColor = "#FF00D0";        // 
 
 
 
