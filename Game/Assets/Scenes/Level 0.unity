@@ -5561,6 +5561,10 @@ PrefabInstance:
       propertyPath: m_FontData.m_FontSize
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 1485151543162098980, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1485151543305704799, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_FontData.m_MaxSize
       value: 100
@@ -6658,7 +6662,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerUpgradeCurrency: 10000
   playerUpgradeTokens: 10
-  HealthDef1Dropdown: {fileID: 1680740072}
   gameManager: {fileID: 378433348}
   playerUpgradeCurrencyTokensText: {fileID: 350589281}
 --- !u!1001 &1506899827

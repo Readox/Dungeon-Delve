@@ -25,15 +25,10 @@ public class SkillType
         //gameManager = GameObject.FindWithTag("GameController");
     }
 
-    public SkillType()
-    {
-
-    }
-
+    
     public string GetFormattedSkillType(GameObject dropdown)
     {
         string finalText = dropdown.GetComponent<Dropdown>().captionText.text;
-        Debug.Log("FinalText: " + finalText);
         if (finalText.Equals("Health"))
         {
             finalText = "maxHealth";

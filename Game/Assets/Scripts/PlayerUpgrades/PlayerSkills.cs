@@ -12,9 +12,6 @@ public class PlayerSkills : MonoBehaviour
     public int playerUpgradeCurrency;
     public int playerUpgradeTokens;
 
-    public GameObject HealthDef1Dropdown;
-
-
     public GameObject gameManager;
 
 
@@ -51,12 +48,11 @@ public class PlayerSkills : MonoBehaviour
         {
             playerUpgradeTokens -= 1; // Subtract from skill tokens
             GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
-            string skillID = dropdown.name; // Get skill ID from dropdown, which is the name of the GameObject
-            Debug.Log("SkillID: " + skillID);
-            Debug.Log("DropdownName: " + dropdown.GetComponent<Dropdown>().captionText.text);
-            SkillType newSkill = new SkillType(dropdown, 0, skillID); // It does not matter whether the name is this or that, it is not used, more for reference in code
+
+            dropdown.GetComponent<Dropdown>().captionText.text = dropdown.GetComponent<Dropdown>().options[0].text; // I need this here, because often the default value isn't what it should be, so this changes it so that it will be the first option in the dropdown
+
+            SkillType newSkill = new SkillType(dropdown, 0, dropdown.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
             unlockedSkillLevels.Add(newSkill);
-            Debug.Log("Skill Type: " + newSkill.GetSkillType());
             parentButton.SetActive(true);
         }
         else
