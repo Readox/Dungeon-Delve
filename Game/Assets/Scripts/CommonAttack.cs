@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Random;
+using System;
 
 public class CommonAttack : MonoBehaviour
 {
