@@ -16,21 +16,38 @@ public class CommonAttack : MonoBehaviour
         if (GetRandFloat(0,100) > GetCritChance()) // No Critical Hit
         {
             damage = (10 + weaponDamage) * (1 + GetStrength()/100);
-            Debug.Log("No CH Damage: " + damage);
         }
         else // Critical Hit
         {
             damage = (10 + weaponDamage) * (1 + (GetStrength()/100)) * (1 + (GetCritDamage()/100));
-            Debug.Log("Critical Hit Damage: " + damage);
         }
 
         if (GetCritChance() > 100)
         {
             damage *= 1 + ((GetCritChance()-100)/100);
-            Debug.Log("Crit Chance Mult: " + 1 + ((GetCritChance()-100)/100));
         }
-        
+        Debug.Log("Final Damage: " + damage);
         return damage;
+    }
+
+    public int GetFerocityProcs()
+    {
+        float fero = GetFerocity();
+        int procs = (int)((fero - (fero % 100))/100);
+        if (GetRandFloat(0,100) < (fero % 100))
+        {
+            procs += 1;
+        }
+        /*
+        if ((fero / 100) < 1)
+        if (GetRandFloat(0,100) > (fero % 100))
+        {
+            procs += 1;
+        }
+        */
+
+        Debug.Log("Ferocity: " + fero + "\nProcs: " + procs);
+        return procs;
     }
 
     public float GetStrength()

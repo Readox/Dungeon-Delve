@@ -7,11 +7,8 @@ public class TestSpell : MonoBehaviour
 {
  
     public GameObject projectile;
-    public float minDamage;
-    public float maxDamage;
-    public bool criticalHit;
     public float projectileSpeed;
-
+    public float weaponDamage;
     public float removeDelay;
 
 
@@ -40,7 +37,7 @@ public class TestSpell : MonoBehaviour
             Vector2 playerPos = transform.position;
             Vector2 direction = (mousePos - playerPos).normalized;
             spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
-            spell.GetComponent<CommonProjectile>().damage = (int) Random.Range(minDamage, maxDamage);
+            spell.GetComponent<CommonProjectile>().weaponDamage = this.weaponDamage;
             
             //Destroy(spell, removeDelay);
 

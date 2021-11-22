@@ -229,7 +229,7 @@ public class PlayerStats : MonoBehaviour
             $" <color={strengthColor}>Strength: {Strength}</color> \n" +
             $" <color={ccColor}>Critical Chance: {CritChance}</color> \n" +
             $" <color={cdColor}>Critical Damage: {CritDamage}</color> \n" +
-            $" <color={ferocityColor}>Ferocity: {Ferocity}</color> \n" +
+            $" <color={ferocityColor}>Ferocity: {Ferocity}</color> \n" + 
             $" <color={healthColor}>Health Regeneration: {HealthRegen}</color> \n" +
             $" <color={abilityPoolColor}>Ability Regeneration: {AbilityRegen}</color> \n" +
             $" <color={abilityPoolColor}>Ability Pool: {abilityPoolMax}</color> \n" +
@@ -333,9 +333,8 @@ public class PlayerStats : MonoBehaviour
     // Base Value: 50%
     public float CritDamage;
 
-    // Chance for double hits
     // Percentages above 100% (and there will be) will overflow into triple hits, then quadruple hits, and oh boy this is going to be hard to balance
-    // Base Value: 0%
+    // Base Value: 0% 
     public float Ferocity;
 
     // Percentage of MaxHealth regenerated every second
