@@ -15,7 +15,7 @@ public class CommonProjectile : CommonAttack
     {
         StartCoroutine(RemoveObject());
         base.gameManager = GameObject.FindWithTag("GameController");
-        ferocityLineObject = GameObject.FindWithTag("FerocityLine");
+        //ferocityLineObject = GameObject.FindWithTag("FerocityLine");
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -30,6 +30,10 @@ public class CommonProjectile : CommonAttack
                 {
                     collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage));
                     GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+
+                    // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
+                    ferocityLine.transform.SetParent(collision.GetComponent<EnemyDamageReception>().gameObject.transform);
+
                 }
             }
             

@@ -134,5 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db597a8d2f254c445978e24d19c7684a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 0
+  gameManager: {fileID: 0}
+  weaponDamage: 0
   removeDelay: 1.5
+  ferocityLineObject: {fileID: 7096570754581355574, guid: b8b7dd745a01cfa489ba3bb1dbec775e, type: 3}

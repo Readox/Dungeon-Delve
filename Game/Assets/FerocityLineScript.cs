@@ -7,9 +7,11 @@ public class FerocityLineScript : MonoBehaviour
 
     public float removeDelay;
     
+    private Animator animator;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         StartCoroutine(RemoveObject());
     }
     
