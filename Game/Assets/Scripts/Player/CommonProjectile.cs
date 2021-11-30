@@ -29,7 +29,20 @@ public class CommonProjectile : CommonAttack
             {
                 collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage)); // initial attack
                 
-                StartCoroutine(DoFerocity(collision));
+                for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
+                {
+            
+                    collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage));
+                    GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+
+                    AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
+                    ferocityLine.transform.SetParent(collision.GetComponent<EnemyDamageReception>().gameObject.transform);
+                    
+                    
+                    // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
+            
+
+                }
             }
             
             Destroy(gameObject);
@@ -38,20 +51,8 @@ public class CommonProjectile : CommonAttack
 
     IEnumerator DoFerocity(Collider2D collision)
     {
-        for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
-        {
-            
-            collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage));
-            GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
-
-            AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
-            ferocityLine.transform.SetParent(collision.GetComponent<EnemyDamageReception>().gameObject.transform);
-            
-            yield return null;
-            // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
-            
-
-        }
+        
+        yield return null;
     }
 
     IEnumerator RemoveObject()

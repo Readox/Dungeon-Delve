@@ -261,7 +261,7 @@ GameObject:
   - component: {fileID: -5647063913651897892}
   - component: {fileID: -6135056989909895966}
   m_Layer: 0
-  m_Name: Test Enemy
+  m_Name: Test Ranged Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
