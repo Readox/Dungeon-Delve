@@ -11,10 +11,13 @@ public class CommonProjectile : CommonAttack
 
     public GameObject ferocityLineObject;
 
+    public AudioClip feroAudioClip;
+
     void Start()
     {
         StartCoroutine(RemoveObject());
         base.gameManager = GameObject.FindWithTag("GameController");
+        
         //ferocityLineObject = GameObject.FindWithTag("FerocityLine");
     }
 
@@ -26,18 +29,28 @@ public class CommonProjectile : CommonAttack
             {
                 collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage)); // initial attack
                 
-                for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
-                {
-                    collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage));
-                    GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
-
-                    // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
-                    ferocityLine.transform.SetParent(collision.GetComponent<EnemyDamageReception>().gameObject.transform);
-
-                }
+                StartCoroutine(DoFerocity(collision));
             }
             
             Destroy(gameObject);
+        }
+    }
+
+    IEnumerator DoFerocity(Collider2D collision)
+    {
+        for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
+        {
+            
+            collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage));
+            GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+
+            AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
+            ferocityLine.transform.SetParent(collision.GetComponent<EnemyDamageReception>().gameObject.transform);
+            
+            yield return null;
+            // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
+            
+
         }
     }
 

@@ -138,3 +138,4 @@ MonoBehaviour:
   weaponDamage: 0
   removeDelay: 1.5
   ferocityLineObject: {fileID: 7096570754581355574, guid: b8b7dd745a01cfa489ba3bb1dbec775e, type: 3}
+  feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}

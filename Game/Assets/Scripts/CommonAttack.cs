@@ -9,7 +9,6 @@ public class CommonAttack : MonoBehaviour
     public GameObject gameManager;
 
 
-
     public float CalculateDamage(float weaponDamage) // Eventually this will take weapons and such as args (maybe)
     {
         float damage = 10 + weaponDamage; // Base Weapon Damage = 10
@@ -26,7 +25,7 @@ public class CommonAttack : MonoBehaviour
         {
             damage *= 1 + ((GetCritChance()-100)/100);
         }
-        Debug.Log("Final Damage: " + damage);
+        //Debug.Log("Final Damage: " + damage);
         return damage;
     }
 
@@ -46,7 +45,7 @@ public class CommonAttack : MonoBehaviour
         }
         */
 
-        Debug.Log("Ferocity: " + fero + "\nProcs: " + procs);
+        //Debug.Log("Ferocity: " + fero + "\nProcs: " + procs);
         return procs;
     }
 

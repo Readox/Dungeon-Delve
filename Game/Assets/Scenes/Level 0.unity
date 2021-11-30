@@ -2200,7 +2200,7 @@ MonoBehaviour:
   Strength: 0
   CritChance: 25
   CritDamage: 0
-  Ferocity: 0
+  Ferocity: 100
   HealthRegen: 0.01
   AbilityRegen: 0.01
   MagicFind: 0
