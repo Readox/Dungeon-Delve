@@ -26,6 +26,7 @@ public class PlayerMovement : MonoBehaviour
     {
         
     }
+    
 
     // Update is called once per frame (depends on current framerate), less consistent than FixedUpdate(), better for processing inputs
     void Update()

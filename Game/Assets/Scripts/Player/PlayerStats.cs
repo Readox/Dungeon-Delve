@@ -50,7 +50,6 @@ public class PlayerStats : MonoBehaviour
         StartCoroutine(AbilityRegeneration());
     }
 
-
     // Update is called once per frame
     void Update()
     {

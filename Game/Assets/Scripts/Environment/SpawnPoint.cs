@@ -12,6 +12,7 @@ public class SpawnPoint : MonoBehaviour
     // Start is called before the first frame update
     public void Start()
     {
+        SpawnObject(); // spawn one object on game start
         if (repeatInterval > 0)
         {
             InvokeRepeating("SpawnObject", 0.0f, repeatInterval);

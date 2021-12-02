@@ -8,11 +8,53 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
     public GameObject player;
 
     public float moveSpeed;
+    public float damage;
+
+    Coroutine damageCoroutine;
 
     void Awake()
     {
         player = GameObject.FindWithTag("Player");
-        StartCoroutine(EnemyMove());
+        //StartCoroutine(EnemyMove());
+    }
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            if (damageCoroutine == null)
+            {
+                damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f));
+            }
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player"))
+        {
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+                damageCoroutine = null;
+            }
+        }
+    }
+
+    IEnumerator DamagePlayer(float damage, float interval)
+    {
+        while(true)
+        {
+            player.GetComponent<PlayerStats>().DealDamage(damage);
+            if (interval > float.Epsilon)
+            {
+                yield return new WaitForSeconds(interval);
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 
     IEnumerator EnemyMove()

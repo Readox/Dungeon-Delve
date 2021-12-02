@@ -44,4 +44,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 3163073305843476258, guid: 3118bbd701cdf70459e4c659fbb74d92, type: 3}
-  repeatInterval: 10
+  repeatInterval: 0
