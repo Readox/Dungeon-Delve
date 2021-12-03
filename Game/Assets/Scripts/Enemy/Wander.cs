@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-[RequireComponent(typeof(CircleCollider2D))]
+//[RequireComponent(typeof(CircleCollider2D))] // doesnt work with just having the collider in the child EnemyView
 [RequireComponent(typeof(Animator))]
 
 public class Wander : MonoBehaviour
@@ -26,6 +26,10 @@ public class Wander : MonoBehaviour
     Vector3 endPosition;
     float currentAngle = 0;
 
+    private GameObject gameManager;
+    public float damage;
+    Coroutine damageCoroutine;
+
     // These are for debugging:
     CircleCollider2D cc;
 
@@ -36,7 +40,8 @@ public class Wander : MonoBehaviour
         currentSpeed = wanderSpeed;
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(WanderRoutine());
-        cc = GetComponent<CircleCollider2D>();
+        cc = GetComponentInChildren<CircleCollider2D>();
+        gameManager = GameObject.FindWithTag("GameController");
     }
 
     public IEnumerator WanderRoutine()
@@ -112,6 +117,15 @@ public class Wander : MonoBehaviour
 
             moveCoroutine = StartCoroutine(Move(rb, currentSpeed));
         }
+        if((collision.gameObject.CompareTag("Player") && collision is BoxCollider2D) && !collision.gameObject.CompareTag("enemyView"))
+        {
+            Debug.Log("Here");
+            if (damageCoroutine == null)
+            {
+                damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f));
+            }
+
+        }
     }
 
     void OnTriggerExit2D(Collider2D collision)
@@ -128,7 +142,33 @@ public class Wander : MonoBehaviour
 
             targetTransform = null;
         }
+        if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D)
+        {
+            if (damageCoroutine != null)
+            {
+                StopCoroutine(damageCoroutine);
+                damageCoroutine = null;
+            }
+        }
     }
+
+    IEnumerator DamagePlayer(float damage, float interval)
+    {
+        while(true)
+        {
+            Debug.Log("Player Damage Coroutine Started");
+            gameManager.GetComponent<PlayerStats>().DealDamage(damage);
+            if (interval > float.Epsilon)
+            {
+                yield return new WaitForSeconds(interval);
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
 
     // For the debugging above:
     void OnDrawGizmos()

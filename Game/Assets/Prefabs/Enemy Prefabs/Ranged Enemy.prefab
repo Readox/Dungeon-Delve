@@ -31,7 +31,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -572190474775806033, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Radius
-      value: 1500
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_RootOrder
@@ -97,7 +97,9 @@ PrefabInstance:
       propertyPath: pursuitSpeed
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8269705221180437244, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+    - {fileID: -572190474775806033, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
 --- !u!1 &8974779828570008720 stripped
 GameObject:

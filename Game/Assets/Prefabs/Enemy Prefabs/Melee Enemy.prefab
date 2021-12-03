@@ -7,9 +7,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: -572190474775806033, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
-      propertyPath: m_Radius
-      value: 100
+    - target: {fileID: 500374336277594796, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: damage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_RootOrder

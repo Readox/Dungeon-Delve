@@ -5,33 +5,35 @@ using UnityEngine;
 public class TestMeleeEnemyMoveAttack : MonoBehaviour
 {
 
-    public GameObject player;
+    private GameObject gameManager;
 
-    public float moveSpeed;
     public float damage;
 
     Coroutine damageCoroutine;
 
+
     void Awake()
     {
-        player = GameObject.FindWithTag("Player");
+        gameManager = GameObject.FindWithTag("GameController");
         //StartCoroutine(EnemyMove());
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D)
         {
+            Debug.Log("Here");
             if (damageCoroutine == null)
             {
                 damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f));
             }
+
         }
     }
 
-    void OnCollisionExit2D(Collision2D collision)
+    void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player"))
+        if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D)
         {
             if (damageCoroutine != null)
             {
@@ -45,7 +47,8 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
     {
         while(true)
         {
-            player.GetComponent<PlayerStats>().DealDamage(damage);
+            Debug.Log("Player Damage Coroutine Started");
+            gameManager.GetComponent<PlayerStats>().DealDamage(damage);
             if (interval > float.Epsilon)
             {
                 yield return new WaitForSeconds(interval);
@@ -57,6 +60,7 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
         }
     }
 
+    /*
     IEnumerator EnemyMove()
     {
         //while(GetComponent<EnemyDamageReception>().)
@@ -67,12 +71,12 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
 
         yield return null;
     }
-
+    */
 
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        
     }
 
     // Update is called once per frame
