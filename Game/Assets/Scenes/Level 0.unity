@@ -2200,7 +2200,7 @@ MonoBehaviour:
   Strength: 0
   CritChance: 25
   CritDamage: 0
-  Ferocity: 100
+  Ferocity: 0
   HealthRegen: 0.01
   AbilityRegen: 0.01
   MagicFind: 0
@@ -8871,14 +8871,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2018586242, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: m_BodyType
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2018586242, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: m_Simulated
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502053, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_Name
       value: Player
@@ -8887,10 +8879,6 @@ PrefabInstance:
       propertyPath: gameManagerObject
       value: 
       objectReference: {fileID: 378433348}
-    - target: {fileID: 5082268277408502056, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_RootOrder
       value: 3

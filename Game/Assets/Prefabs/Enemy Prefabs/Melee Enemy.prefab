@@ -1,5 +1,22 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-188117573661093741
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707091818292605168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ed90a84849c03c489dfc17242286e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pursuitSpeed: 250
+  wanderSpeed: 100
+  directionChangeInterval: 1
+  followPlayer: 1
+  damage: 5
 --- !u!1001 &5585541515351182757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55,6 +72,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3849791783808606218, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6499567948720127317, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Name
       value: Melee Enemy
@@ -74,3 +95,8 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4645460539507598251, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+--- !u!1 &1707091818292605168 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6499567948720127317, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+  m_PrefabInstance: {fileID: 5585541515351182757}
+  m_PrefabAsset: {fileID: 0}

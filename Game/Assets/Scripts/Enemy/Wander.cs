@@ -26,12 +26,9 @@ public class Wander : MonoBehaviour
     Vector3 endPosition;
     float currentAngle = 0;
 
-    private GameObject gameManager;
     public float damage;
-    Coroutine damageCoroutine;
 
-    // These are for debugging:
-    CircleCollider2D cc;
+    //The problem with the enemy pathfinding might be the end position or target position not being set properly, so they just pathfind to the origin
 
     // Start is called before the first frame update
     void Start()
@@ -40,8 +37,6 @@ public class Wander : MonoBehaviour
         currentSpeed = wanderSpeed;
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(WanderRoutine());
-        cc = GetComponentInChildren<CircleCollider2D>();
-        gameManager = GameObject.FindWithTag("GameController");
     }
 
     public IEnumerator WanderRoutine()
@@ -52,6 +47,7 @@ public class Wander : MonoBehaviour
 
             if (moveCoroutine != null)
             {
+                Debug.Log("Stopped Wander Coroutine");
                 StopCoroutine(moveCoroutine);
             }
 
@@ -65,7 +61,7 @@ public class Wander : MonoBehaviour
     {
         currentAngle += Random.Range(0,360);
         currentAngle = Mathf.Repeat(currentAngle, 360);
-        endPosition += Vector3FromAngle(currentAngle);
+        this.endPosition += Vector3FromAngle(currentAngle);
     }
 
     Vector3 Vector3FromAngle(float inputDeg)
@@ -74,7 +70,12 @@ public class Wander : MonoBehaviour
         return new Vector3(Mathf.Cos(radianVal), Mathf.Sin(radianVal), 0);
     }
 
-    public IEnumerator Move(Rigidbody2D rb1, float speed)
+    public float GetDamage()
+    {
+        return damage;
+    }
+
+    public IEnumerator Move(Rigidbody2D rb, float speed)
     {
         float distRemain = (transform.position - endPosition).sqrMagnitude;
 
@@ -85,11 +86,11 @@ public class Wander : MonoBehaviour
                 endPosition = targetTransform.position;
             }
 
-            if (rb1 != null)
+            if (rb != null)
             {
                 animator.SetBool("isWalking", true);
 
-                Vector3 newPos = Vector3.MoveTowards(rb1.position, endPosition, speed * Time.deltaTime);
+                Vector3 newPos = Vector3.MoveTowards(rb.position, endPosition, speed * Time.deltaTime);
 
                 this.rb.MovePosition(newPos);
 
@@ -106,7 +107,6 @@ public class Wander : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") && followPlayer)
         {
-            Debug.Log("Player entered View Range");
             currentSpeed = pursuitSpeed;
             targetTransform = collision.gameObject.transform;
 
@@ -116,15 +116,6 @@ public class Wander : MonoBehaviour
             }
 
             moveCoroutine = StartCoroutine(Move(rb, currentSpeed));
-        }
-        if((collision.gameObject.CompareTag("Player") && collision is BoxCollider2D) && !collision.gameObject.CompareTag("enemyView"))
-        {
-            Debug.Log("Here");
-            if (damageCoroutine == null)
-            {
-                damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f));
-            }
-
         }
     }
 
@@ -138,44 +129,10 @@ public class Wander : MonoBehaviour
             if (moveCoroutine != null)
             {
                 StopCoroutine(moveCoroutine);
+                //StartCoroutine(WanderRoutine());
             }
 
             targetTransform = null;
-        }
-        if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D)
-        {
-            if (damageCoroutine != null)
-            {
-                StopCoroutine(damageCoroutine);
-                damageCoroutine = null;
-            }
-        }
-    }
-
-    IEnumerator DamagePlayer(float damage, float interval)
-    {
-        while(true)
-        {
-            Debug.Log("Player Damage Coroutine Started");
-            gameManager.GetComponent<PlayerStats>().DealDamage(damage);
-            if (interval > float.Epsilon)
-            {
-                yield return new WaitForSeconds(interval);
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
-
-
-    // For the debugging above:
-    void OnDrawGizmos()
-    {
-        if (cc != null)
-        {
-            Gizmos.DrawWireSphere(transform.position, cc.radius);
         }
     }
 
