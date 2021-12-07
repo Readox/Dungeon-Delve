@@ -2,20 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
 [RequireComponent(typeof(Rigidbody2D))]
 //[RequireComponent(typeof(CircleCollider2D))] // doesnt work with just having the collider in the child EnemyView
 [RequireComponent(typeof(Animator))]
-
-public class Wander : MonoBehaviour
+public class Patrol : MonoBehaviour
 {
-
     public float pursuitSpeed;
     public float wanderSpeed;
     float currentSpeed;
 
     public float directionChangeInterval;
-
-    public bool followPlayer;
 
     Coroutine moveCoroutine;
 
@@ -26,8 +23,6 @@ public class Wander : MonoBehaviour
     Vector3 endPosition;
     float currentAngle = 0;
 
-    public float damage;
-
     //The problem with the enemy pathfinding might be the end position or target position not being set properly, so they just pathfind to the origin
 
     // Start is called before the first frame update
@@ -36,10 +31,11 @@ public class Wander : MonoBehaviour
         animator = GetComponent<Animator>();
         currentSpeed = wanderSpeed;
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(WanderRoutine());
+        StartCoroutine(PatrolRoutine());
     }
 
-    public IEnumerator WanderRoutine()
+
+    public IEnumerator PatrolRoutine()
     {
         while(true)
         {
@@ -61,6 +57,7 @@ public class Wander : MonoBehaviour
         currentAngle += Random.Range(0,360);
         currentAngle = Mathf.Repeat(currentAngle, 360);
         this.endPosition += Vector3FromAngle(currentAngle);
+        Debug.Log(endPosition.ToString());
     }
 
     Vector3 Vector3FromAngle(float inputDeg)
@@ -69,11 +66,6 @@ public class Wander : MonoBehaviour
         return new Vector3(Mathf.Cos(radianVal) * 450, Mathf.Sin(radianVal) * 450, 0);
         // Because the scale of my assets is so large,I have to multiply the vectors by this much to get the pathfinding to work
         // Maybe I will look into scaling my assets back down
-    }
-
-    public float GetDamage()
-    {
-        return damage;
     }
 
     public IEnumerator Move(Rigidbody2D rb, float speed)
@@ -104,42 +96,6 @@ public class Wander : MonoBehaviour
         animator.SetBool("isWalking", false);
     }
 
-    void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player") && followPlayer)
-        {
-            currentSpeed = pursuitSpeed;
-            targetTransform = collision.gameObject.transform;
 
-            if (moveCoroutine != null)
-            {
-                StopCoroutine(moveCoroutine);
-            }
 
-            moveCoroutine = StartCoroutine(Move(rb, currentSpeed));
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            animator.SetBool("isWalking", false);
-            currentSpeed = wanderSpeed;
-
-            if (moveCoroutine != null)
-            {
-                StopCoroutine(moveCoroutine);
-                //StartCoroutine(WanderRoutine());
-            }
-
-            targetTransform = null;
-        }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        Debug.DrawLine(rb.position, endPosition, Color.red);
-    }
 }

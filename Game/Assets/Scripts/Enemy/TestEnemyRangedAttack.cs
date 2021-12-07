@@ -13,16 +13,38 @@ public class TestEnemyRangedAttack : MonoBehaviour
 
     public float removeDelay;
 
+    Coroutine attackCoroutine;
+
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ShootPlayer());  
+        //StartCoroutine(ShootPlayer());  
         player = FindObjectOfType<PlayerMovement>().gameObject;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player Entered CC");
+            attackCoroutine = StartCoroutine(ShootPlayer());
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player Exited CC");
+            if (attackCoroutine != null)
+            {
+                StopCoroutine(attackCoroutine);
+            }
+        }
     }
 
     IEnumerator ShootPlayer()
     {
-        yield return new WaitForSeconds(attackCooldown);
         if (player != null)
         {
             GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
@@ -37,11 +59,11 @@ public class TestEnemyRangedAttack : MonoBehaviour
             // The enemies will not critically hit, except maybe bosses, but they will have strength and base damage
             spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
 
-            StartCoroutine(ShootPlayer());
+            attackCoroutine = StartCoroutine(ShootPlayer());
             //StartCoroutine(SpellTimeout(spell));  // Moved to TestEnemyProjectile
 
 
-
+            yield return new WaitForSeconds(attackCooldown);
         }
 
     }

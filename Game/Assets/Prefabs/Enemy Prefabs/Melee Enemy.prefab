@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pursuitSpeed: 250
   wanderSpeed: 100
-  directionChangeInterval: 1
+  directionChangeInterval: 3
   followPlayer: 1
   damage: 5
 --- !u!1001 &5585541515351182757
