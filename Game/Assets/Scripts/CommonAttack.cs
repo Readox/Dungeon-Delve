@@ -7,6 +7,7 @@ public class CommonAttack : MonoBehaviour
 {
 
     public GameObject gameManager;
+    private PlayerStats playerStats_script;
 
 
     public float CalculateDamage(float weaponDamage) // Eventually this will take weapons and such as args (maybe)
@@ -51,22 +52,22 @@ public class CommonAttack : MonoBehaviour
 
     public float GetStrength()
     {
-        return gameManager.GetComponent<PlayerStats>().Strength;
+        return playerStats_script.Strength;
     }
 
     public float GetCritChance()
     {
-        return gameManager.GetComponent<PlayerStats>().CritChance;
+        return playerStats_script.CritChance;
     }
 
     public float GetCritDamage()
     {
-        return gameManager.GetComponent<PlayerStats>().CritDamage;
+        return playerStats_script.CritDamage;
     }
 
     public float GetFerocity()
     {
-        return gameManager.GetComponent<PlayerStats>().Ferocity;
+        return playerStats_script.Ferocity;
     }
 
     public float GetRandFloat(float min, float max)
@@ -82,6 +83,14 @@ public class CommonAttack : MonoBehaviour
     void Start()
     {
         gameManager = GameObject.FindWithTag("GameController");
+        playerStats_script = gameManager.GetComponent<PlayerStats>();
+    }
+
+    void Awake()
+    {
+        gameManager = GameObject.FindWithTag("GameController");
+        playerStats_script = gameManager.GetComponent<PlayerStats>();
+        //playerStats_script = gameManager.GetComponent<PlayerStats>();
     }
 
     // Update is called once per frame

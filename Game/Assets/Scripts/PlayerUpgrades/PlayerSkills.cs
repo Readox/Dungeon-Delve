@@ -13,7 +13,8 @@ public class PlayerSkills : MonoBehaviour
     public int playerUpgradeTokens;
 
     public GameObject gameManager;
-
+    
+    private PlayerStats playerStats_script;
 
     // Transitioning this so that it only occurs on + and - and switched dropdown, but will still exist for when Awake() happens
     public void UpdateValues()
@@ -30,10 +31,10 @@ public class PlayerSkills : MonoBehaviour
             //Debug.Log(modifyBy);
 
             //float playerStatValue = gameManager.GetComponent<PlayerStats>().FindFromClassType(skillType);
-            gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
+            playerStats_script.SetStat(ref skillType, modifyBy);
         }
 
-        gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars(); // Update the health and ability bars now before the player exits the menu so that they are ready
+        playerStats_script.UpdateHealthAbilityBars(); // Update the health and ability bars now before the player exits the menu so that they are ready
     }
 
 
@@ -86,7 +87,7 @@ public class PlayerSkills : MonoBehaviour
         float modifyBy = currentClass.GetSkillAmountIncreased() * -1;
         playerUpgradeCurrency += currentClass.GetTotalCurrencyCost(); // Gives back currency, because skill level is reset as well
         //Debug.Log(currentClass.GetTotalCurrencyCost());
-        gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
+        playerStats_script.SetStat(ref skillType, modifyBy);
 
 
         unlockedSkillLevels.Remove(currentClass);
@@ -116,7 +117,7 @@ public class PlayerSkills : MonoBehaviour
             string skillType = currentClass.UpdateDropdownText();
             
             float modifyBy = currentClass.GetModifyValue(false);
-            gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
+            playerStats_script.SetStat(ref skillType, modifyBy);
         }
         
         
@@ -139,7 +140,7 @@ public class PlayerSkills : MonoBehaviour
             playerUpgradeCurrency += currencyCost;
             string skillType = currentClass.UpdateDropdownText();
 
-            gameManager.GetComponent<PlayerStats>().SetStat(ref skillType, modifyBy);
+            playerStats_script.SetStat(ref skillType, modifyBy);
         }
 
         UpdateUIElements(childButton.transform.parent.gameObject, currentClass);
@@ -150,6 +151,8 @@ public class PlayerSkills : MonoBehaviour
         gameManager = GameObject.FindWithTag("GameController");
         // I think I have to clear the list of everything when the game restarts, because it is saving values
         ClearList();
+
+        playerStats_script = gameManager.GetComponent<PlayerStats>();
 
         UpdateValues();
         UpdateUIElements();
@@ -169,9 +172,9 @@ public class PlayerSkills : MonoBehaviour
     public void UpdateUIElements(GameObject parent, SkillType currentClass) // This one is for the Add and Subtract Points
     {
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
-        gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
+        playerStats_script.UpdateHealthAbilityBars();
 
-        string colorVal = gameManager.GetComponent<PlayerStats>().GetColorForStat(currentClass.GetSkillType());
+        string colorVal = playerStats_script.GetColorForStat(currentClass.GetSkillType());
         parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{currentClass.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
         //gameManager.GetComponent<PlayerStats>().SetUpgradeText(currentClass.GetSkillType(), parent.transform.GetChild(0).gameObject, currentClass.GetSkillAmountIncreased());
     }
@@ -179,7 +182,7 @@ public class PlayerSkills : MonoBehaviour
     public void UpdateUIElements()
     {
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
-        gameManager.GetComponent<PlayerStats>().UpdateHealthAbilityBars();
+        playerStats_script.UpdateHealthAbilityBars();
 
 
     }

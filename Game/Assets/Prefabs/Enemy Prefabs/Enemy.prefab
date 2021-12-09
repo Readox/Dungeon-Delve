@@ -351,7 +351,7 @@ GameObject:
   - component: {fileID: 1939311808952867285}
   - component: {fileID: 3994704635129528660}
   - component: {fileID: 445115104726993900}
-  - component: {fileID: 6561044102514519701}
+  - component: {fileID: 2858739568398597223}
   - component: {fileID: -7773204067870651914}
   - component: {fileID: -2287625742510872616}
   - component: {fileID: -8292150162282727758}
@@ -454,7 +454,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.10239119, y: 0.17478114}
   m_EdgeRadius: 0
---- !u!114 &6561044102514519701
+--- !u!114 &2858739568398597223
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -463,11 +463,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6499567948720127317}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 193eeab849329ee46946b357f7822cb8, type: 3}
+  m_Script: {fileID: 11500000, guid: 585359099e1b8f5468b0a8cf58e0c207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
   maxHealth: 100
+  currentHealth: 0
+  baseDamage: 0
   healthBar: {fileID: 4564789313968724521}
   healthBarSlider: {fileID: 1835493276073625745}
 --- !u!50 &-7773204067870651914

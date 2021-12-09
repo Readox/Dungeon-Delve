@@ -163,7 +163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 2035794386900728697, guid: 219f4c09ed4c7e84f86b1041fb276fdd, type: 3}
-  projectileSpeed: 200
+  projectileSpeed: 250
   weaponDamage: 5
   removeDelay: 1.5
 --- !u!50 &2018586242

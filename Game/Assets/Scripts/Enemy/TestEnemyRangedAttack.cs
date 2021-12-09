@@ -6,8 +6,9 @@ public class TestEnemyRangedAttack : MonoBehaviour
 {
     public GameObject projectile;
     private GameObject player;
-    public float minDamage;
-    public float maxDamage;
+    float minDamage;
+    float maxDamage;
+    float baseDamage;
     public float projectileSpeed;
     public float attackCooldown;
 
@@ -20,14 +21,17 @@ public class TestEnemyRangedAttack : MonoBehaviour
     {
         //StartCoroutine(ShootPlayer());  
         player = FindObjectOfType<PlayerMovement>().gameObject;
+        baseDamage = GetComponent<EnemyStats>().GetDamage();
+        minDamage = baseDamage - 2;
+        maxDamage = baseDamage + 2;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player Entered CC");
-            attackCoroutine = StartCoroutine(ShootPlayer());
+            //Debug.Log("Player Entered CC");
+            attackCoroutine = StartCoroutine(AttackPlayer());
         }
     }
 
@@ -35,7 +39,7 @@ public class TestEnemyRangedAttack : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("Player Exited CC");
+            //Debug.Log("Player Exited CC");
             if (attackCoroutine != null)
             {
                 StopCoroutine(attackCoroutine);
@@ -43,10 +47,12 @@ public class TestEnemyRangedAttack : MonoBehaviour
         }
     }
 
+    /*
     IEnumerator ShootPlayer()
     {
         if (player != null)
         {
+            yield return new WaitForSeconds(attackCooldown);
             GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
             Vector2 enemyPos = transform.position;
             Vector2 targetPos = player.transform.position;
@@ -62,10 +68,37 @@ public class TestEnemyRangedAttack : MonoBehaviour
             attackCoroutine = StartCoroutine(ShootPlayer());
             //StartCoroutine(SpellTimeout(spell));  // Moved to TestEnemyProjectile
 
-
-            yield return new WaitForSeconds(attackCooldown);
+            
         }
 
+    }
+    */
+
+    IEnumerator AttackPlayer()
+    {
+        if (player != null)
+        {
+            while(true)
+            {
+                //Debug.Log("Player Damage Coroutine Started");
+                
+                GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
+                Vector2 enemyPos = transform.position;
+                Vector2 targetPos = player.transform.position;
+                Vector2 direction = (targetPos - enemyPos).normalized;
+                spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
+                spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
+
+                if (attackCooldown > float.Epsilon)
+                {
+                    yield return new WaitForSeconds(attackCooldown);
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
     }
 
     /*

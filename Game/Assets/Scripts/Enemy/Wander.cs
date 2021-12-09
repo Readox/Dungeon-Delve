@@ -26,8 +26,6 @@ public class Wander : MonoBehaviour
     Vector3 endPosition;
     float currentAngle = 0;
 
-    public float damage;
-
     //The problem with the enemy pathfinding might be the end position or target position not being set properly, so they just pathfind to the origin
 
     // Start is called before the first frame update
@@ -69,11 +67,6 @@ public class Wander : MonoBehaviour
         return new Vector3(Mathf.Cos(radianVal) * 450, Mathf.Sin(radianVal) * 450, 0);
         // Because the scale of my assets is so large,I have to multiply the vectors by this much to get the pathfinding to work
         // Maybe I will look into scaling my assets back down
-    }
-
-    public float GetDamage()
-    {
-        return damage;
     }
 
     public IEnumerator Move(Rigidbody2D rb, float speed)
@@ -140,6 +133,6 @@ public class Wander : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Debug.DrawLine(rb.position, endPosition, Color.red);
+        //Debug.DrawLine(rb.position, endPosition, Color.red);
     }
 }

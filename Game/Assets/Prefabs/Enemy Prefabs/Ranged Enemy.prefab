@@ -18,6 +18,21 @@ MonoBehaviour:
   projectileSpeed: 200
   attackCooldown: 3
   removeDelay: 4
+--- !u!114 &7816971469064160499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8974779828570008720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 085b013767f2daa4d8c8fc213d4fabbf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wanderSpeed: 100
+  patrolRadius: 250
+  directionChangeInterval: 1
 --- !u!1001 &2792170371803746757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -80,6 +95,10 @@ PrefabInstance:
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858739568398597223, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: baseDamage
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6499567948720127317, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Name

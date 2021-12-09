@@ -8,32 +8,36 @@ using UnityEngine;
 [RequireComponent(typeof(Animator))]
 public class Patrol : MonoBehaviour
 {
-    public float pursuitSpeed;
     public float wanderSpeed;
+    public float patrolRadius;
     float currentSpeed;
 
-    public float directionChangeInterval;
+    public float directionChangeInterval; 
+    // For patrolling small area, this should be small; if big area, this should be big
 
     Coroutine moveCoroutine;
+    Coroutine patrolCoroutine;
 
     Rigidbody2D rb;
     Animator animator;
 
     Transform targetTransform = null;
     Vector3 endPosition;
+    Vector3 startPosition;
     float currentAngle = 0;
+    
 
     //The problem with the enemy pathfinding might be the end position or target position not being set properly, so they just pathfind to the origin
 
     // Start is called before the first frame update
     void Start()
     {
+        startPosition = transform.position;
         animator = GetComponent<Animator>();
         currentSpeed = wanderSpeed;
         rb = GetComponent<Rigidbody2D>();
-        StartCoroutine(PatrolRoutine());
+        patrolCoroutine = StartCoroutine(PatrolRoutine());
     }
-
 
     public IEnumerator PatrolRoutine()
     {
@@ -45,10 +49,12 @@ public class Patrol : MonoBehaviour
             {
                 StopCoroutine(moveCoroutine);
             }
+            
+            yield return new WaitForSeconds(1); //Thank goodness this doesnt cause a crash, waits between Move operations
 
             moveCoroutine = StartCoroutine(Move(rb, currentSpeed)); 
 
-            yield return new WaitForSeconds(directionChangeInterval);
+            yield return new WaitForSeconds(directionChangeInterval); //time before move coroutine ended
         }
     }
 
@@ -56,8 +62,9 @@ public class Patrol : MonoBehaviour
     {
         currentAngle += Random.Range(0,360);
         currentAngle = Mathf.Repeat(currentAngle, 360);
+        Debug.Log("Current Angle: " + currentAngle);
         this.endPosition += Vector3FromAngle(currentAngle);
-        Debug.Log(endPosition.ToString());
+        //Debug.Log(endPosition.ToString());
     }
 
     Vector3 Vector3FromAngle(float inputDeg)
@@ -90,12 +97,55 @@ public class Patrol : MonoBehaviour
                 distRemain = (transform.position - endPosition).sqrMagnitude;
             }
 
+
+            // Credit to CarterG81 on https://answers.unity.com/questions/1309521/how-to-keep-an-object-within-a-circlesphere-radius.html
+            // for this elegant solution to my problem of pathfinding within a circle
+            float distance = Vector3.Distance(endPosition, startPosition);
+            if (distance > patrolRadius)
+            {
+            Vector3 fromOriginToObject = endPosition - startPosition;
+            fromOriginToObject *= patrolRadius / distance;
+            endPosition = startPosition + fromOriginToObject;
+            }
+            //
+
             yield return new WaitForFixedUpdate();
         }
 
         animator.SetBool("isWalking", false);
     }
 
+
+
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+                StopCoroutine(patrolCoroutine);
+            }
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+                patrolCoroutine = StartCoroutine(PatrolRoutine());
+            }
+        }
+    }
+
+    void Update()
+    {
+        //Debug.DrawLine(rb.position, endPosition, Color.red);
+    }
 
 
 }

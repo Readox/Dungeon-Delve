@@ -13,6 +13,8 @@ public class CommonProjectile : CommonAttack
 
     public AudioClip feroAudioClip;
 
+    private EnemyStats enemyStats_script;
+
     void Start()
     {
         StartCoroutine(RemoveObject());
@@ -25,18 +27,19 @@ public class CommonProjectile : CommonAttack
     {
         if (collision.tag != "Player" && collision.tag != "PlayerProjectile" && collision is BoxCollider2D)
         {
-            if (collision.GetComponent<EnemyDamageReception>() != null) // Do this multiple times for ferocity procs
+            if (collision.GetComponent<EnemyStats>() != null) // Do this multiple times for ferocity procs
             {
-                collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage)); // initial attack
+                enemyStats_script = collision.GetComponent<EnemyStats>();
+                enemyStats_script.DealDamage(CalculateDamage(weaponDamage)); // initial attack
                 
                 for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
                 {
             
-                    collision.GetComponent<EnemyDamageReception>().DealDamage(CalculateDamage(weaponDamage));
+                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage));
                     GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
 
                     AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
-                    ferocityLine.transform.SetParent(collision.GetComponent<EnemyDamageReception>().gameObject.transform);
+                    ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
                     
                     
                     // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around

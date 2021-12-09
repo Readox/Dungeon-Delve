@@ -7,7 +7,7 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
 
     private GameObject gameManager;
 
-    public float damage;
+    float damage;
 
     Coroutine damageCoroutine;
 
@@ -15,6 +15,7 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
     void Awake()
     {
         gameManager = GameObject.FindWithTag("GameController");
+        damage = GetComponent<EnemyStats>().GetDamage();
         //StartCoroutine(EnemyMove());
     }
 

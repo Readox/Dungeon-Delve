@@ -15,7 +15,7 @@ public class SpawnPoint : MonoBehaviour
         //SpawnObject(); // spawn one object on game start
         if (repeatInterval > 0)
         {
-            InvokeRepeating("SpawnObject", 0.0f, repeatInterval);
+            InvokeRepeating("SpawnObject", 2f, repeatInterval);
         }
     }
 

@@ -16,7 +16,6 @@ MonoBehaviour:
   wanderSpeed: 100
   directionChangeInterval: 3
   followPlayer: 1
-  damage: 5
 --- !u!1001 &5585541515351182757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -71,6 +70,10 @@ PrefabInstance:
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2858739568398597223, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: baseDamage
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3849791783808606218, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_IsActive

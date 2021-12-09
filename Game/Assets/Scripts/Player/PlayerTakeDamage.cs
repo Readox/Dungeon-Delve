@@ -19,7 +19,7 @@ public class PlayerTakeDamage : MonoBehaviour
         {
             if (damageCoroutine == null)
             {
-                float damage = collision.gameObject.GetComponent<Wander>().GetDamage();
+                float damage = collision.gameObject.GetComponent<EnemyStats>().GetDamage();
                 damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f));
             }
 
