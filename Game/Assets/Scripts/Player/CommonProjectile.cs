@@ -13,7 +13,7 @@ public class CommonProjectile : CommonAttack
 
     public AudioClip feroAudioClip;
 
-    private EnemyStats enemyStats_script;
+    EnemyStats enemyStats_script;
 
     void Start()
     {

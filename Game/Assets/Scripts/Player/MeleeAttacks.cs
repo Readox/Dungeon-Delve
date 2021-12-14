@@ -16,20 +16,29 @@ public class MeleeAttacks : CommonAttack
     public LayerMask enemyLayers;
 
     public float weaponDamage;
+    public float attackRange;
 
     Vector3 mousePos;
     Vector3 attackDir;
     Vector3 attackPosition;
 
+    Rigidbody2D rb;
+    EnemyStats enemyStats_script;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        mousePos = Input.mousePosition; /*Camera.main.ScreenToWorldPoint(Input.mousePosition)*/;
+        //mousePos = mousePos.normalized;
+        //mousePos = mousePos * attackRange;
+        Debug.DrawLine(rb.position, mousePos, Color.red);
+
         if (attackTime <= 0)
         {
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
@@ -46,6 +55,23 @@ public class MeleeAttacks : CommonAttack
 
     void Attack()
     {
+        
+        RaycastHit2D collision = Physics2D.Raycast(rb.position, Input.mousePosition, attackRange);
+
+        if (collision.collider != null)
+        {
+            Debug.Log("Raycast hit something");
+            if (collision.collider.tag != "Player" && collision.collider.tag != "PlayerProjectile" && collision.collider is BoxCollider2D)
+            {
+                if (collision.collider.GetComponent<EnemyStats>() != null) // Do this multiple times for ferocity procs
+                {
+                    enemyStats_script = collision.collider.GetComponent<EnemyStats>();
+                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage)); // initial attack
+                }
+            }
+        }
+
+        /*
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         attackDir = (mousePos - transform.position).normalized;
         
@@ -61,6 +87,7 @@ public class MeleeAttacks : CommonAttack
         }
 
         attackTime = attackCooldownTime;
+        */
     }
 
     void OnDrawGizmosSelected()

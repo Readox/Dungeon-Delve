@@ -41,12 +41,13 @@ public class TestSpell : MonoBehaviour
             //Destroy(spell, removeDelay);
 
         }
+        /*
         if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
         {
             Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             Vector3 attackDir = (mousePos - transform.position).normalized;
             Debug.Log("Attack Direction: " + attackDir);
         }
-             
+        */    
     }
 }

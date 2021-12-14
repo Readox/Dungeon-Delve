@@ -57,7 +57,15 @@ public class EnemyStats : MonoBehaviour
     {
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
+            if (gameObject.name.Equals("Training Dummy"))
+            {
+            currentHealth = maxHealth;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+            
         }
     }
 
