@@ -36,10 +36,10 @@ public class CommonProjectile : CommonAttack
                 {
             
                     enemyStats_script.DealDamage(CalculateDamage(weaponDamage));
-                    GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+                    //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
 
                     AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
-                    ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
+                    //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
                     
                     
                     // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around

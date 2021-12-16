@@ -62,7 +62,7 @@ public class Patrol : MonoBehaviour
     {
         currentAngle += Random.Range(0,360);
         currentAngle = Mathf.Repeat(currentAngle, 360);
-        Debug.Log("Current Angle: " + currentAngle);
+        //Debug.Log("Current Angle: " + currentAngle);
         this.endPosition += Vector3FromAngle(currentAngle);
         //Debug.Log(endPosition.ToString());
     }

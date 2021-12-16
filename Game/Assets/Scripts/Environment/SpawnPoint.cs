@@ -9,6 +9,9 @@ public class SpawnPoint : MonoBehaviour
 
     public float repeatInterval;
 
+    public float maxEnemyCount;
+    float enemyCount;
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -21,8 +24,9 @@ public class SpawnPoint : MonoBehaviour
 
     public GameObject SpawnObject()
     {
-        if (prefab != null)
+        if (prefab != null && !(enemyCount >= maxEnemyCount))
         {
+            enemyCount += 1;
             return Instantiate(prefab, transform.position, Quaternion.identity);
         }
 

@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 5082268277408502054}
   - component: {fileID: 2018586242}
   - component: {fileID: 5876347685780788684}
+  - component: {fileID: 7680500884252180260}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 2035794386900728697, guid: 219f4c09ed4c7e84f86b1041fb276fdd, type: 3}
   projectileSpeed: 250
-  weaponDamage: 5
+  weaponDamage: 2
   removeDelay: 1.5
 --- !u!50 &2018586242
 Rigidbody2D:
@@ -199,3 +200,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff6608c1cb0818f4eb583879f1288a84, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &7680500884252180260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5082268277408502053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6c395e0d65cbf042b3a06e8df1425c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameManager: {fileID: 0}
+  attackSizeX: 250
+  attackSizeY: 250
+  enemyLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  weaponDamage: 8
+  attackRange: 50
+  attackWidth: 25
+  feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}

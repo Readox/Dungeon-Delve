@@ -5,10 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MeleeAttacks : CommonAttack
 {
-    public float attackCooldownTime;
-    float attackTime;
+    //public float attackCooldownTime;
+    //float attackTime;
     
-    float attackOffset = 25f;
+    //float attackOffset = 25f;
     // public string attackType; // Maybe later
 
     public float attackSizeX;
@@ -17,13 +17,15 @@ public class MeleeAttacks : CommonAttack
 
     public float weaponDamage;
     public float attackRange;
+    public float attackWidth; // Circlecast radius
 
-    Vector3 mousePos;
-    Vector3 attackDir;
-    Vector3 attackPosition;
+    Vector2 mousePos;
+    //Vector3 attackDir;
+    //Vector3 attackPosition;
 
     Rigidbody2D rb;
     EnemyStats enemyStats_script;
+    public AudioClip feroAudioClip;
 
     // Start is called before the first frame update
     void Start()
@@ -34,39 +36,46 @@ public class MeleeAttacks : CommonAttack
     // Update is called once per frame
     void Update()
     {
-        mousePos = Input.mousePosition; /*Camera.main.ScreenToWorldPoint(Input.mousePosition)*/;
+        //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         //mousePos = mousePos.normalized;
         //mousePos = mousePos * attackRange;
-        Debug.DrawLine(rb.position, mousePos, Color.red);
+        //Debug.DrawLine(rb.position, mousePos, Color.blue);
 
-        if (attackTime <= 0)
+        if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
         {
-            if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
-            {
-                Attack();
-            }
+            Attack();
         }
-        else
-        {
-            attackTime -= Time.deltaTime;
-        }
-        
     }
 
     void Attack()
     {
-        
-        RaycastHit2D collision = Physics2D.Raycast(rb.position, Input.mousePosition, attackRange);
-
+        // Physics2D.Raycast(Vector2 origin, Vector2 DIRECTION, float distance, int LayerMask {bit shifting involved}, ......)
+        RaycastHit2D collision = Physics2D.CircleCast(rb.position, attackWidth, (mousePos - rb.position).normalized, attackRange, enemyLayers.value);
+        //Debug.DrawRay(rb.position, (mousePos - rb.position).normalized, Color.red, 3f);
         if (collision.collider != null)
         {
-            Debug.Log("Raycast hit something");
             if (collision.collider.tag != "Player" && collision.collider.tag != "PlayerProjectile" && collision.collider is BoxCollider2D)
             {
-                if (collision.collider.GetComponent<EnemyStats>() != null) // Do this multiple times for ferocity procs
+                if (collision.collider.GetComponent<EnemyStats>() != null)
                 {
                     enemyStats_script = collision.collider.GetComponent<EnemyStats>();
                     enemyStats_script.DealDamage(CalculateDamage(weaponDamage)); // initial attack
+
+                    for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
+                    {   
+                
+                        enemyStats_script.DealDamage(CalculateDamage(weaponDamage));
+                        //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+
+                        AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
+                        //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
+                        
+                        
+                        // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
+                
+
+                    }
                 }
             }
         }
@@ -89,13 +98,6 @@ public class MeleeAttacks : CommonAttack
         attackTime = attackCooldownTime;
         */
     }
-
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(attackPosition, new Vector3(attackSizeX, attackSizeY, 1));
-    }
-
 
 
     /*

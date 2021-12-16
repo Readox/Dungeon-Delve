@@ -43,5 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef1ff9f1f00550841a18a6a32d6b2079, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 3163073305843476258, guid: 3118bbd701cdf70459e4c659fbb74d92, type: 3}
-  repeatInterval: 0
+  prefab: {fileID: 0}
+  repeatInterval: 5
+  maxEnemyCount: 3

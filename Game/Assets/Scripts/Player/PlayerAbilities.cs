@@ -29,7 +29,7 @@ public class PlayerAbilities : MonoBehaviour
 
     private void UseArcherAbility()
     {
-
+        
     }
 
     private void UseTankAbility()

@@ -27,6 +27,10 @@ PrefabInstance:
       propertyPath: damage
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 954552307176601853, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -82,6 +86,10 @@ PrefabInstance:
     - target: {fileID: 6499567948720127317, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Name
       value: Melee Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6762380693156336967, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7696428096649226747, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_AnchorMax.x
