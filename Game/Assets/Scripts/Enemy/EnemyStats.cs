@@ -14,6 +14,10 @@ public class EnemyStats : MonoBehaviour
     public GameObject healthBar;
     public Slider healthBarSlider;
 
+    public GameObject upgradeCurrencyDrop;
+    public float upgradeCurrencyDropChance;
+
+    float playerMagicFind;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,10 +67,25 @@ public class EnemyStats : MonoBehaviour
             }
             else
             {
+                playerMagicFind = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().MagicFind;
+                
+
+                if (upgradeCurrencyDropChance * (1 + (playerMagicFind / 100)) >= GetRandFloat(0,100))
+                {
+                    GameObject upgradeCurrency = Instantiate(upgradeCurrencyDrop, transform.position, Quaternion.identity);
+                }
+
                 Destroy(gameObject);
             }
             
         }
+    }
+
+    public float GetRandFloat(float min, float max)
+    {
+        System.Random random = new System.Random();
+        double val = (random.NextDouble() * (max - min) + min);
+        return (float) val;
     }
 
 

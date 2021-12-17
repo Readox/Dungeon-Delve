@@ -518,6 +518,8 @@ MonoBehaviour:
   baseDamage: 0
   healthBar: {fileID: 4564789313968724521}
   healthBarSlider: {fileID: 1835493276073625745}
+  upgradeCurrencyDrop: {fileID: 6532993714681381135, guid: 6ff97e3eba51f274983722f5bdcf4944, type: 3}
+  upgradeCurrencyDropChance: 100
 --- !u!50 &-7773204067870651914
 Rigidbody2D:
   serializedVersion: 4

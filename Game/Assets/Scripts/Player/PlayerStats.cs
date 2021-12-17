@@ -10,6 +10,8 @@ public class PlayerStats : MonoBehaviour
     // Because Domain and Scene reloading is off, I need to be wary about this being static, but it appears to be fine for now
     public static PlayerStats playerStats;
 
+    PlayerSkills playerSkills_script;
+    
     public GameObject player;
 
     public GameObject statsScrollRect;
@@ -21,7 +23,6 @@ public class PlayerStats : MonoBehaviour
     public Text abilityText;
 
     public string playerClass;
-
 
     // Start is called before the first frame update
     void Start()
@@ -59,7 +60,8 @@ public class PlayerStats : MonoBehaviour
     void Awake()
     {
         playerStats = this;
-
+        
+        playerSkills_script = GameObject.FindWithTag("PauseMenu").GetComponent<PlayerSkills>();
         // For safeties:
         // Actually, dont have this on anything except for _game in the preload scene
         // DontDestroyOnLoad(this);
@@ -162,6 +164,15 @@ public class PlayerStats : MonoBehaviour
             Destroy(player);
             MainMenu();
         }
+    }
+    public void AddUpgradeCurrency(int amount)
+    {
+        playerSkills_script.playerUpgradeCurrency += amount;
+    }
+
+    public void AddUpgradeTokens(int amount)
+    {
+        playerSkills_script.playerUpgradeTokens += amount;
     }
 
     public void MainMenu()
@@ -345,6 +356,7 @@ public class PlayerStats : MonoBehaviour
     public float AbilityRegen;
 
     // Chance for rare drops from boss chests and monsters
+    // Formula = baseDropChance * (1 + (MagicFind / 100))
     // Base Value: 0%
     public float MagicFind;
 

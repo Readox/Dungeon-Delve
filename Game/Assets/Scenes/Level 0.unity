@@ -6436,7 +6436,7 @@ GameObject:
   - component: {fileID: 1454650969}
   m_Layer: 0
   m_Name: Pause Menu
-  m_TagString: Untagged
+  m_TagString: PauseMenu
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6554,7 +6554,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822c7af35cf149f4eb0f7da528b4b500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerUpgradeCurrency: 10000
+  playerUpgradeCurrency: 100
   playerUpgradeTokens: 10
   gameManager: {fileID: 378433348}
   playerUpgradeCurrencyTokensText: {fileID: 350589281}

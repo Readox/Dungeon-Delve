@@ -16,6 +16,8 @@ public class PlayerSkills : MonoBehaviour
     
     private PlayerStats playerStats_script;
 
+    
+
     // Transitioning this so that it only occurs on + and - and switched dropdown, but will still exist for when Awake() happens
     public void UpdateValues()
     {
@@ -158,6 +160,12 @@ public class PlayerSkills : MonoBehaviour
         UpdateUIElements();
     }
 
+    public void OpenUpgradesMenuStart()
+    {
+        UpdateValues();
+        UpdateUIElements();
+    }
+
     private void PrintAllInList()
     {
         foreach(SkillType currentClass in unlockedSkillLevels)
@@ -192,8 +200,6 @@ public class PlayerSkills : MonoBehaviour
     {
         unlockedSkillLevels.Clear();
     }
-
-
 
 
 

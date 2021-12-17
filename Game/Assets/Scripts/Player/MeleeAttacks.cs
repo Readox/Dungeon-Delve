@@ -55,7 +55,7 @@ public class MeleeAttacks : CommonAttack
         //Debug.DrawRay(rb.position, (mousePos - rb.position).normalized, Color.red, 3f);
         if (collision.collider != null)
         {
-            if (collision.collider.tag != "Player" && collision.collider.tag != "PlayerProjectile" && collision.collider is BoxCollider2D)
+            if (collision.collider.tag == "Enemy" && collision.collider is BoxCollider2D)
             {
                 if (collision.collider.GetComponent<EnemyStats>() != null)
                 {
