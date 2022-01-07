@@ -16,6 +16,7 @@ public class Wander : MonoBehaviour
     public float directionChangeInterval;
 
     public bool followPlayer;
+    public bool continuousMove;
 
     Coroutine moveCoroutine;
 
@@ -31,6 +32,7 @@ public class Wander : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        endPosition = transform.position;
         animator = GetComponent<Animator>();
         currentSpeed = wanderSpeed;
         rb = GetComponent<Rigidbody2D>();
@@ -64,9 +66,10 @@ public class Wander : MonoBehaviour
     Vector3 Vector3FromAngle(float inputDeg)
     {
         float radianVal = inputDeg * Mathf.Deg2Rad;
-        return new Vector3(Mathf.Cos(radianVal) * 450, Mathf.Sin(radianVal) * 450, 0);
-        // Because the scale of my assets is so large,I have to multiply the vectors by this much to get the pathfinding to work
-        // Maybe I will look into scaling my assets back down
+        return new Vector3(Mathf.Cos(radianVal)*5, Mathf.Sin(radianVal)*5, 0);
+        // I still don't know why I have to multiply by a certain amount to get the enemy to actually pathfind in a direction
+        // I will probably figure something else out later
+        // This can just be a placeholder script I guess?
     }
 
     public IEnumerator Move(Rigidbody2D rb, float speed)
@@ -89,6 +92,11 @@ public class Wander : MonoBehaviour
                 this.rb.MovePosition(newPos);
 
                 distRemain = (transform.position - endPosition).sqrMagnitude;
+            }
+
+            if (continuousMove && transform.position == endPosition)
+            {
+                StartCoroutine(WanderRoutine());
             }
 
             yield return new WaitForFixedUpdate();
@@ -133,6 +141,6 @@ public class Wander : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //Debug.DrawLine(rb.position, endPosition, Color.red);
+        Debug.DrawLine(rb.position, endPosition, Color.red);
     }
 }

@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   projectile: {fileID: 8215537497472630613, guid: dbe8fcb21e12e4c4a9df4e8e56316c89, type: 3}
-  minDamage: 10
-  maxDamage: 15
-  projectileSpeed: 200
+  projectileSpeed: 5
   attackCooldown: 3
   removeDelay: 4
 --- !u!114 &7816971469064160499
@@ -30,8 +28,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 085b013767f2daa4d8c8fc213d4fabbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wanderSpeed: 100
-  patrolRadius: 250
+  wanderSpeed: 1
+  patrolRadius: 50
   directionChangeInterval: 1
 --- !u!1001 &2792170371803746757
 PrefabInstance:
@@ -111,6 +109,10 @@ PrefabInstance:
     - target: {fileID: 7696428096649226747, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8129598511973424593, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_Radius
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8269705221180437244, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Enabled

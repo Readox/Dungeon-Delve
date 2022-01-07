@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 2035794386900728693}
   - component: {fileID: 2035794386900728694}
-  - component: {fileID: 2035794386900728695}
   - component: {fileID: 2035794386900728696}
   - component: {fileID: 2782802388422644157}
+  - component: {fileID: 5072695142131514754}
   m_Layer: 0
   m_Name: Test Spell
   m_TagString: PlayerProjectile
@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 2035794386900728697}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.1556, y: -1.8344, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 15}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2413806693520163455, guid: 23d2911c39238a14c8537f4097f851e0, type: 3}
+  m_Sprite: {fileID: 21300002, guid: 70357443c4c444c47a8208878cbb58f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -85,22 +85,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!58 &2035794386900728695
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2035794386900728697}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.5
 --- !u!50 &2035794386900728696
 Rigidbody2D:
   serializedVersion: 4
@@ -139,3 +123,29 @@ MonoBehaviour:
   removeDelay: 1.5
   ferocityLineObject: {fileID: 7096570754581355574, guid: b8b7dd745a01cfa489ba3bb1dbec775e, type: 3}
   feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}
+--- !u!61 &5072695142131514754
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2035794386900728697}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.032806396, y: -0.03055811}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.18749094, y: 0.44667673}
+  m_EdgeRadius: 0

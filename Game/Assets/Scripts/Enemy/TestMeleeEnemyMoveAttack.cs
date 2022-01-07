@@ -21,7 +21,7 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D)
+        if(collision.gameObject.CompareTag("Player") && !collision is CircleCollider2D) 
         {
             Debug.Log("Here");
             if (damageCoroutine == null)
@@ -34,7 +34,7 @@ public class TestMeleeEnemyMoveAttack : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D)
+        if(collision.gameObject.CompareTag("Player") && !collision is CircleCollider2D)
         {
             if (damageCoroutine != null)
             {

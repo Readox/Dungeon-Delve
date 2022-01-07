@@ -26,12 +26,14 @@ public class Patrol : MonoBehaviour
     Vector3 startPosition;
     float currentAngle = 0;
     
-
+    TestEnemyRangedAttack attack_script;
     //The problem with the enemy pathfinding might be the end position or target position not being set properly, so they just pathfind to the origin
 
     // Start is called before the first frame update
     void Start()
     {
+        endPosition = transform.position;
+        attack_script = GetComponent<TestEnemyRangedAttack>();
         startPosition = transform.position;
         animator = GetComponent<Animator>();
         currentSpeed = wanderSpeed;
@@ -70,9 +72,10 @@ public class Patrol : MonoBehaviour
     Vector3 Vector3FromAngle(float inputDeg)
     {
         float radianVal = inputDeg * Mathf.Deg2Rad;
-        return new Vector3(Mathf.Cos(radianVal) * 450, Mathf.Sin(radianVal) * 450, 0);
-        // Because the scale of my assets is so large,I have to multiply the vectors by this much to get the pathfinding to work
-        // Maybe I will look into scaling my assets back down
+        return new Vector3(Mathf.Cos(radianVal)*5, Mathf.Sin(radianVal)*5, 0);
+        // I still don't know why I have to multiply by a certain amount to get the enemy to actually pathfind in a direction
+        // I will probably figure something else out later
+        // This can just be a placeholder script I guess?
     }
 
     public IEnumerator Move(Rigidbody2D rb, float speed)
@@ -126,6 +129,8 @@ public class Patrol : MonoBehaviour
             {
                 StopCoroutine(moveCoroutine);
                 StopCoroutine(patrolCoroutine);
+                attack_script.StartRangedAttack();
+
             }
         }
     }
@@ -138,6 +143,7 @@ public class Patrol : MonoBehaviour
             {
                 StopCoroutine(moveCoroutine);
                 patrolCoroutine = StartCoroutine(PatrolRoutine());
+                attack_script.StopRangedAttack();
             }
         }
     }

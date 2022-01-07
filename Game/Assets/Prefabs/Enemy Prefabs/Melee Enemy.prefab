@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-188117573661093741
+--- !u!114 &3185630832429313500
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -12,10 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ed90a84849c03c489dfc17242286e67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pursuitSpeed: 250
-  wanderSpeed: 100
-  directionChangeInterval: 3
+  pursuitSpeed: 5
+  wanderSpeed: 2
+  directionChangeInterval: 5
   followPlayer: 1
+--- !u!114 &9086976311613186336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1707091818292605168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0cfe07f08f57074eb573caafa012b29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5585541515351182757
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23,14 +35,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 500374336277594796, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
-      propertyPath: damage
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 954552307176601853, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -79,17 +83,9 @@ PrefabInstance:
       propertyPath: baseDamage
       value: 5
       objectReference: {fileID: 0}
-    - target: {fileID: 3849791783808606218, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 6499567948720127317, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Name
       value: Melee Enemy
-      objectReference: {fileID: 0}
-    - target: {fileID: 6762380693156336967, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
-      propertyPath: m_RootOrder
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7696428096649226747, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_AnchorMax.x
@@ -99,12 +95,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8269705221180437244, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
-      propertyPath: followPlayer
-      value: 1
+    - target: {fileID: 8129598511973424593, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_Radius
+      value: 7
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4645460539507598251, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
 --- !u!1 &1707091818292605168 stripped
 GameObject:

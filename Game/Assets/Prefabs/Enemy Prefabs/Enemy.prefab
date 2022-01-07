@@ -148,7 +148,7 @@ RectTransform:
   m_GameObject: {fileID: 4564789313968724521}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.0035317603, y: 0.0035317603, z: 0.0035317603}
+  m_LocalScale: {x: 0.02, y: 0.02, z: 0.02}
   m_Children:
   - {fileID: 5376901160167120818}
   - {fileID: 5887306058071120301}
@@ -158,7 +158,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -958.1971, y: -541.34827}
+  m_AnchoredPosition: {x: -958.14, y: -538.51}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1835493276073625745
@@ -360,7 +360,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
+  m_ReferencePixelsPerUnit: 16
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
@@ -417,7 +417,7 @@ Transform:
   m_GameObject: {fileID: 6499567948720127317}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 1.77, y: -1.85, z: 0}
-  m_LocalScale: {x: 450, y: 450, z: 450}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6762380693156336967}
   - {fileID: 954552307176601853}
@@ -492,7 +492,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.14, y: 0.21}
+    oldSize: {x: 0.875, y: 1.3125}
     newSize: {x: 0.14, y: 0.21}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

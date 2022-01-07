@@ -26,6 +26,17 @@ public class TestEnemyRangedAttack : MonoBehaviour
         maxDamage = baseDamage + 2;
     }
 
+    public void StartRangedAttack()
+    {
+        attackCoroutine = StartCoroutine(AttackPlayer());
+    }
+
+    public void StopRangedAttack()
+    {
+        StopCoroutine(attackCoroutine);
+    }
+
+/*
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -46,7 +57,7 @@ public class TestEnemyRangedAttack : MonoBehaviour
             }
         }
     }
-
+*/
     /*
     IEnumerator ShootPlayer()
     {
