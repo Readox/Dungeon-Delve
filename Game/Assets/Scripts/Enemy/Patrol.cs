@@ -125,13 +125,9 @@ public class Patrol : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (moveCoroutine != null)
-            {
-                StopCoroutine(moveCoroutine);
-                StopCoroutine(patrolCoroutine);
-                attack_script.StartRangedAttack();
-
-            }
+            attack_script.StartRangedAttack();
+            StopCoroutine(moveCoroutine);
+            //anim.SetBool("Attack", true);
         }
     }
 
@@ -139,12 +135,8 @@ public class Patrol : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            if (moveCoroutine != null)
-            {
-                StopCoroutine(moveCoroutine);
-                patrolCoroutine = StartCoroutine(PatrolRoutine());
-                attack_script.StopRangedAttack();
-            }
+            attack_script.StopRangedAttack();
+            //anim.SetBool("Attack", false);
         }
     }
 

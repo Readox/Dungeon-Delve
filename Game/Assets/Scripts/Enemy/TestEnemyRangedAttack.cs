@@ -33,7 +33,11 @@ public class TestEnemyRangedAttack : MonoBehaviour
 
     public void StopRangedAttack()
     {
-        StopCoroutine(attackCoroutine);
+        if (attackCoroutine != null)
+        {
+            StopCoroutine(attackCoroutine);
+        }
+        
     }
 
 /*

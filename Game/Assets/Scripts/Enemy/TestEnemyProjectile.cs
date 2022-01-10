@@ -13,13 +13,17 @@ public class TestEnemyProjectile : MonoBehaviour
     {
         StartCoroutine(RemoveObject());
     }
-
+    
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Player")
         {
             //gameManager.GetComponent<PlayerStats>().DealDamage(damage);
             PlayerStats.playerStats.DealDamage(damage);
+            Destroy(gameObject);
+        }
+        if (collision.tag == "PlayerProjectile")
+        {
             Destroy(gameObject);
         }
     }

@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 8215537497472630613, guid: dbe8fcb21e12e4c4a9df4e8e56316c89, type: 3}
   projectileSpeed: 5
-  attackCooldown: 3
+  attackCooldown: 1.5
+  anim: {fileID: 5856829713840763503}
   removeDelay: 4
-  cc2D: {fileID: 4743761416023935078}
 --- !u!1001 &3532822230741800375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -33,12 +33,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: 70cc5d759b4f23a4994153a6b4d527bf, type: 2}
     - target: {fileID: 445115104726993900, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_Size.x
+      value: 0.6557007
+      objectReference: {fileID: 0}
+    - target: {fileID: 445115104726993900, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_Size.y
+      value: 0.9901123
+      objectReference: {fileID: 0}
+    - target: {fileID: 445115104726993900, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.04208374
+      objectReference: {fileID: 0}
+    - target: {fileID: 445115104726993900, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0032348633
+      objectReference: {fileID: 0}
+    - target: {fileID: 445115104726993900, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 0.16
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 445115104726993900, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.16
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_RootOrder
@@ -46,11 +62,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.77
+      value: 968.3629
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.85
+      value: 545.9354
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -115,8 +131,8 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6499567948720127317, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
   m_PrefabInstance: {fileID: 3532822230741800375}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &4743761416023935078 stripped
-CircleCollider2D:
-  m_CorrespondingSourceObject: {fileID: 8129598511973424593, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+--- !u!95 &5856829713840763503 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: -2287625742510872616, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
   m_PrefabInstance: {fileID: 3532822230741800375}
   m_PrefabAsset: {fileID: 0}

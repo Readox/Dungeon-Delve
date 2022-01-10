@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 8215537497472630613, guid: dbe8fcb21e12e4c4a9df4e8e56316c89, type: 3}
   projectileSpeed: 5
-  attackCooldown: 3
+  attackCooldown: 2.5
   removeDelay: 4
 --- !u!114 &7816971469064160499
 MonoBehaviour:
@@ -56,11 +56,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.77
+      value: 963.83203
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.85
+      value: 549.2413
       objectReference: {fileID: 0}
     - target: {fileID: 1939311808952867285, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_LocalPosition.z

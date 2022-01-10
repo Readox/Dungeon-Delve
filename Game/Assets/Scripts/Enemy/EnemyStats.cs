@@ -63,7 +63,7 @@ public class EnemyStats : MonoBehaviour
         {
             if (gameObject.name.Equals("Training Dummy"))
             {
-            currentHealth = maxHealth;
+                currentHealth = maxHealth;
             }
             else
             {
@@ -72,7 +72,7 @@ public class EnemyStats : MonoBehaviour
 
                 if (upgradeCurrencyDropChance * (1 + (playerMagicFind / 100)) >= GetRandFloat(0,100))
                 {
-                    GameObject upgradeCurrency = Instantiate(upgradeCurrencyDrop, transform.position, Quaternion.identity);
+                    GameObject upgradeCurrency = Instantiate(upgradeCurrencyDrop, this.transform.position, Quaternion.identity);
                 }
 
                 Destroy(gameObject);

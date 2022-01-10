@@ -17,12 +17,14 @@ public class PlayerTakeDamage : MonoBehaviour
     {
         if(/*collision.gameObject.CompareTag("Enemy") &&*/ collision is BoxCollider2D)
         {
-            if (damageCoroutine == null)
+            if (collision.tag == "Enemy")
             {
-                float damage = collision.gameObject.GetComponent<EnemyStats>().GetDamage();
-                damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f));
+                if (damageCoroutine == null)
+                {
+                    float damage = collision.gameObject.GetComponent<EnemyStats>().GetDamage();
+                    damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f));
+                }
             }
-
         }
     }
 

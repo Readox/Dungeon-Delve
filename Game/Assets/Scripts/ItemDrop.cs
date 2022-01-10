@@ -25,11 +25,18 @@ public class ItemDrop : MonoBehaviour
     {
         if(collision.tag == "Player")
         {
-            gameManager.GetComponent<PlayerStats>().AddUpgradeCurrency(coinTier);
-            Debug.Log("Player picke up coin");
-            Destroy(gameObject);
+            if (coinTier > 0)
+            {
+                gameManager.GetComponent<PlayerStats>().AddUpgradeCurrency(coinTier);
+                Debug.Log("Player picked up coin");
+                Destroy(gameObject);
+            }
+            else
+            {
+                // Add item to inventory here;
+            }
+            
         }
-
     }
 
     // Update is called once per frame
