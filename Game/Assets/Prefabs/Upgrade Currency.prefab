@@ -136,3 +136,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   baseSpeed: 2
   attractDist: 5
+  coinTier: 10

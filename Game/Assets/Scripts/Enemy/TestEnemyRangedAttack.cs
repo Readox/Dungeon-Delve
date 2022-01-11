@@ -15,11 +15,13 @@ public class TestEnemyRangedAttack : MonoBehaviour
     public float removeDelay;
 
     Coroutine attackCoroutine;
+    Animator animator;
 
     // Start is called before the first frame update
     void Start()
     {
         //StartCoroutine(ShootPlayer());  
+        animator = GetComponent<Animator>();
         player = FindObjectOfType<PlayerMovement>().gameObject;
         baseDamage = GetComponent<EnemyStats>().GetDamage();
         minDamage = baseDamage - 2;
@@ -47,6 +49,7 @@ public class TestEnemyRangedAttack : MonoBehaviour
         {
             //Debug.Log("Player Entered CC");
             attackCoroutine = StartCoroutine(AttackPlayer());
+            
         }
     }
 
@@ -59,9 +62,11 @@ public class TestEnemyRangedAttack : MonoBehaviour
             {
                 StopCoroutine(attackCoroutine);
             }
+            
         }
     }
 */
+
     /*
     IEnumerator ShootPlayer()
     {
@@ -91,27 +96,23 @@ public class TestEnemyRangedAttack : MonoBehaviour
 
     IEnumerator AttackPlayer()
     {
-        if (player != null)
+        
+        if (player != null && attackCooldown > float.Epsilon)
         {
             while(true)
             {
                 //Debug.Log("Player Damage Coroutine Started");
-                
+                animator.SetBool("Attack", true);
+
                 GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
                 Vector2 enemyPos = transform.position;
                 Vector2 targetPos = player.transform.position;
                 Vector2 direction = (targetPos - enemyPos).normalized;
                 spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
                 spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
+                animator.SetBool("Attack", true);
 
-                if (attackCooldown > float.Epsilon)
-                {
-                    yield return new WaitForSeconds(attackCooldown);
-                }
-                else
-                {
-                    break;
-                }
+                yield return new WaitForSeconds(attackCooldown);
             }
         }
     }

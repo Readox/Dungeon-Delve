@@ -8,6 +8,7 @@ public class CommonProjectile : CommonAttack
     
     public float weaponDamage;
     public float removeDelay;
+    public bool piercing;
 
     public GameObject ferocityLineObject;
 
@@ -48,6 +49,10 @@ public class CommonProjectile : CommonAttack
                 }
             }
             
+            Destroy(gameObject);
+        }
+        else if (collision.tag == "Enemy" && !piercing)
+        {
             Destroy(gameObject);
         }
     }

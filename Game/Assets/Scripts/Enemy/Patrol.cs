@@ -91,7 +91,7 @@ public class Patrol : MonoBehaviour
 
             if (rb != null)
             {
-                animator.SetBool("isWalking", true);
+                animator.SetBool("Walk", true);
 
                 Vector3 newPos = Vector3.MoveTowards(rb.position, endPosition, speed * Time.deltaTime);
 
@@ -115,7 +115,7 @@ public class Patrol : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        animator.SetBool("isWalking", false);
+        animator.SetBool("Walk", false);
     }
 
 
@@ -126,8 +126,11 @@ public class Patrol : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             attack_script.StartRangedAttack();
-            StopCoroutine(moveCoroutine);
-            //anim.SetBool("Attack", true);
+            if (moveCoroutine != null)
+            {
+                StopCoroutine(moveCoroutine);
+            }
+            //animator.SetBool("Attack", true);
         }
     }
 
@@ -136,7 +139,7 @@ public class Patrol : MonoBehaviour
         if (collision.gameObject.CompareTag("Player"))
         {
             attack_script.StopRangedAttack();
-            //anim.SetBool("Attack", false);
+            //animator.SetBool("Attack", false);
         }
     }
 

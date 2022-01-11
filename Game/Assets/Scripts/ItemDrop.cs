@@ -8,7 +8,7 @@ public class ItemDrop : MonoBehaviour
 
     public float attractDist;
 
-    int coinTier = 1;
+    public int coinTier;
     
     GameObject gameManager;
 
@@ -28,7 +28,7 @@ public class ItemDrop : MonoBehaviour
             if (coinTier > 0)
             {
                 gameManager.GetComponent<PlayerStats>().AddUpgradeCurrency(coinTier);
-                Debug.Log("Player picked up coin");
+                //Debug.Log("Player picked up coin");
                 Destroy(gameObject);
             }
             else
