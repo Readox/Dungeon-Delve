@@ -85,7 +85,7 @@ public class Wander : MonoBehaviour
 
             if (rb != null)
             {
-                animator.SetBool("isWalking", true);
+                animator.SetBool("Walk", true);
 
                 Vector3 newPos = Vector3.MoveTowards(rb.position, endPosition, speed * Time.deltaTime);
 
@@ -102,7 +102,7 @@ public class Wander : MonoBehaviour
             yield return new WaitForFixedUpdate();
         }
 
-        animator.SetBool("isWalking", false);
+        animator.SetBool("Walk", false);
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -125,7 +125,7 @@ public class Wander : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            animator.SetBool("isWalking", false);
+            animator.SetBool("Walk", false);
             currentSpeed = wanderSpeed;
 
             if (moveCoroutine != null)
