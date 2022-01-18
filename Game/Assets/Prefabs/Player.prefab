@@ -213,12 +213,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  attackSizeX: 250
-  attackSizeY: 250
+  attackSizeX: 1
+  attackSizeY: 1
   enemyLayers:
     serializedVersion: 2
     m_Bits: 64
   weaponDamage: 8
-  attackRange: 50
-  attackWidth: 25
+  attackRange: 0.5
+  attackWidth: 0.5
   feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}

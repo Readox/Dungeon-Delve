@@ -12,6 +12,9 @@ public class CameraFollowPlayer : MonoBehaviour
     void Start()
     {
         GetPlayerLoc();
+        Vector3 playerPos = playerLoc.transform.position;
+        Vector3 startPos = new Vector3(playerPos.x, playerPos.y, playerPos.z);
+        transform.position = startPos;
     }
     public void Awake()
     {
