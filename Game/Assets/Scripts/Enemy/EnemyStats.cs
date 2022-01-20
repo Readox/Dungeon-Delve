@@ -74,8 +74,17 @@ public class EnemyStats : MonoBehaviour
                 {
                     GameObject upgradeCurrency = Instantiate(upgradeCurrencyDrop, this.transform.position, Quaternion.identity);
                 }
-
-                Destroy(gameObject);
+                
+                // Destruction
+                if (transform.parent != null) // Is there a parent?
+                {
+                    Destroy(gameObject.transform.parent.gameObject);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+                
             }
             
         }
