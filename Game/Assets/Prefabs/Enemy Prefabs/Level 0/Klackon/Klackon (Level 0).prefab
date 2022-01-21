@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 620601312}
   - component: {fileID: 620601319}
   m_Layer: 6
-  m_Name: Klackon AI Test
+  m_Name: Klackon (Level 0)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

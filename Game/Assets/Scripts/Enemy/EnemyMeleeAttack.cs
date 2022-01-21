@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EnemyMeleeAttack : MonoBehaviour
 {
-    GameObject gameManager;
     Coroutine damageCoroutine;
     Animator anim;
+    PlayerStats playerStats_script;
 
     float damage;
 
@@ -15,9 +15,9 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     void Awake()
     {
-        gameManager = GameObject.FindWithTag("GameController");
         damage = GetComponent<EnemyStats>().GetDamage();
         anim = GetComponent<Animator>();
+        playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
         //StartCoroutine(EnemyMove());
     }
 
@@ -50,7 +50,14 @@ public class EnemyMeleeAttack : MonoBehaviour
         while(true)
         {
             anim.SetBool("Attack", true);
-            gameManager.GetComponent<PlayerStats>().DealDamage(damage);
+            playerStats_script.DealDamage(damage);
+            if (gameObject.name.Substring(0,8).Equals("Scorpion"))
+            {
+                Debug.Log("Added Poison");
+                // new Conditions("Effect Name", # Effect Stacks, Duration)
+                playerStats_script.conditionsList.Add(new Conditions("Poison", 3, 5));
+                playerStats_script.conditionsList[playerStats_script.conditionsList.Count-1].OnStart();
+            }
             if (interval > float.Epsilon)
             {
                 yield return new WaitForSeconds(interval);

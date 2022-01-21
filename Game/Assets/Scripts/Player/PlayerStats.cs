@@ -9,21 +9,22 @@ public class PlayerStats : MonoBehaviour
 
     // Because Domain and Scene reloading is off, I need to be wary about this being static, but it appears to be fine for now
     public static PlayerStats playerStats;
-
     PlayerSkills playerSkills_script;
-    
     public GameObject player;
-
     public GameObject statsScrollRect;
 
     public Slider healthBarSlider;
     public Text healthText;
-
     public Slider abilityBarSlider;
     public Text abilityText;
 
     public string playerClass;
 
+    public List<Conditions> conditionsList = new List<Conditions>();
+    public List<Boons> boonsList = new List<Boons>();
+
+    public Coroutine healthRegenCoroutine;
+    public Coroutine abilityRegenCoroutine;
     // Start is called before the first frame update
     void Start()
     {
@@ -31,30 +32,30 @@ public class PlayerStats : MonoBehaviour
         currentAbilityPool = abilityPoolMax;
 
 
-        StartCoroutine(HealthRegeneration());
-        StartCoroutine(AbilityRegeneration());
+        healthRegenCoroutine = StartCoroutine(HealthRegeneration());
+        abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
     }
-    IEnumerator HealthRegeneration()
+    public IEnumerator HealthRegeneration()
     {
         yield return new WaitForSeconds(1);
         currentHealth += maxHealth * HealthRegen;
         CheckHealthMax();
         SetHealthInfo();
-        StartCoroutine(HealthRegeneration());
+        healthRegenCoroutine = StartCoroutine(HealthRegeneration());
     }
-    IEnumerator AbilityRegeneration()
+    public IEnumerator AbilityRegeneration()
     {
         yield return new WaitForSeconds(1);
         currentAbilityPool += abilityPoolMax * AbilityRegen;
         CheckAbilityMax();
         SetAbilityInfo();
-        StartCoroutine(AbilityRegeneration());
+        abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
     }
 
     // Update is called once per frame
     void Update()
     {
-            
+        
     }
 
     void Awake()
@@ -65,6 +66,10 @@ public class PlayerStats : MonoBehaviour
         // For safeties:
         // Actually, dont have this on anything except for _game in the preload scene
         // DontDestroyOnLoad(this);
+
+        conditionsList.Clear();
+        boonsList.Clear();
+        InvokeRepeating("EffectTick", 1f, 1f); // For Conditions and Boons
 
 
         PlayerClassSetup();
@@ -86,12 +91,40 @@ public class PlayerStats : MonoBehaviour
         abilityText.text = Mathf.Ceil(currentAbilityPool).ToString() + " / " + Mathf.Ceil(abilityPoolMax).ToString();
     }
 
+    void EffectTick()
+    {
+        foreach (Conditions c in conditionsList)
+        {
+            c.DoEffect();
+            if (c.duration == 0f)
+            {
+                c.OnDurationExpire();
+            }
+            conditionsList.Remove(c);
+        }
+        foreach (Boons b in boonsList)
+        {
+            b.DoEffect();
+            if (b.duration == 0f)
+            {
+                b.OnDurationExpire();
+            }
+            boonsList.Remove(b);
+        }
+    }
+
     public void DealDamage(float damage)
     {
         float dmgredper = Defense / (Defense + 100);
         if (dmgredper == 0) { dmgredper = 1; }
         float finalDamage = damage * dmgredper;
         currentHealth -= finalDamage;
+        CheckDeath();
+        SetHealthInfo();
+    }
+    public void DealConditionDamage(float damage)
+    {
+        currentHealth -= damage;
         CheckDeath();
         SetHealthInfo();
     }

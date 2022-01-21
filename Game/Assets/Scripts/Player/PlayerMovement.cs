@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-    public float fighterDashSpeed;
+    //public float fighterDashSpeed;
     public float fighterDashCost; 
 
     private void UseFighterAbility()
@@ -117,7 +117,7 @@ public class PlayerMovement : MonoBehaviour
         gameManagerObject.GetComponent<PlayerStats>().AbilityExpend(fighterDashCost);
         if (gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool() > 0)
         {
-            transform.Translate(moveVec * fighterDashSpeed * Time.deltaTime);
+            transform.Translate(moveVec * (playerSpeed * 2) * Time.deltaTime);
             //Debug.Log("Current Ability Pool: " + gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool());
         }
         //moveVec = PlayerMovement.GetPlayerMoveVec();
