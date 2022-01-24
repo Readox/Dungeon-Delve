@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-8241000214688928030
+--- !u!114 &4168376182480616204
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8976859556916245322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 940786e14034b0f48b5658df539fac02, type: 3}
+  m_Script: {fileID: 11500000, guid: 4861df55c68698143840cd59a232c532, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  aiPath: {fileID: 0}
   updateSprite: 1
   spriteSheet:
   - {fileID: 21300000, guid: d9ea2bed0f2e5274d81c03c64ad37e05, type: 3}
@@ -23,7 +24,7 @@ MonoBehaviour:
   - {fileID: 21300012, guid: d9ea2bed0f2e5274d81c03c64ad37e05, type: 3}
   - {fileID: 21300014, guid: d9ea2bed0f2e5274d81c03c64ad37e05, type: 3}
   - {fileID: 21300016, guid: d9ea2bed0f2e5274d81c03c64ad37e05, type: 3}
-  - {fileID: 21300018, guid: d9ea2bed0f2e5274d81c03c64ad37e05, type: 3}
+  - {fileID: 21300018, guid: c9b87f933c939b241bdb89d05d3d27e3, type: 3}
   - {fileID: 21300020, guid: d9ea2bed0f2e5274d81c03c64ad37e05, type: 3}
   - {fileID: 21300022, guid: d9ea2bed0f2e5274d81c03c64ad37e05, type: 3}
 --- !u!1001 &7006640059555802

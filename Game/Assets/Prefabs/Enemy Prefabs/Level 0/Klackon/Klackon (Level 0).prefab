@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 6644100987987970555}
   - component: {fileID: 6644100987987970556}
   - component: {fileID: 6644100987987970558}
-  - component: {fileID: 6644100987987970559}
   - component: {fileID: 620601312}
   - component: {fileID: 620601319}
   m_Layer: 6
@@ -153,29 +152,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &6644100987987970559
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6644100987987970496}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 940786e14034b0f48b5658df539fac02, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  updateSprite: 1
-  spriteSheet:
-  - {fileID: 21300000, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300002, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300004, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300006, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300008, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300010, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300012, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300014, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
-  - {fileID: 21300016, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
 --- !u!114 &620601312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,6 +165,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   aiPath: {fileID: 0}
+  updateSprite: 1
+  spriteSheet:
+  - {fileID: 21300000, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300002, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300004, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300006, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300008, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300010, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300012, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300014, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
+  - {fileID: 21300016, guid: 5f1a34840985d4843b92f4525ca52388, type: 3}
 --- !u!114 &620601319
 MonoBehaviour:
   m_ObjectHideFlags: 0

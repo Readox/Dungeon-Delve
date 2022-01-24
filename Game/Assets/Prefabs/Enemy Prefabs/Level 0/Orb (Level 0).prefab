@@ -1,5 +1,20 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &1808593817935427382
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6141574325696329293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4861df55c68698143840cd59a232c532, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aiPath: {fileID: 0}
+  updateSprite: 0
+  spriteSheet: []
 --- !u!1001 &3006033984410376925
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -117,3 +132,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 34554d93b329e7a4784c28a3a097c0fe, type: 3}
+--- !u!1 &6141574325696329293 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8974779828570008720, guid: 34554d93b329e7a4784c28a3a097c0fe, type: 3}
+  m_PrefabInstance: {fileID: 3006033984410376925}
+  m_PrefabAsset: {fileID: 0}

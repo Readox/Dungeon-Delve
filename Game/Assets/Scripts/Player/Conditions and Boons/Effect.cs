@@ -4,40 +4,6 @@ using UnityEngine;
 
 public class Effect : MonoBehaviour
 {
-
-
-    public PlayerStats playerStats_script;
-
-    public void StartHealthRegen()
-    {
-        
-    }
-
-    public void StopHealthRegen()
-    {
-        StopCoroutine(playerStats_script.healthRegenCoroutine);
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // This class is unused
 
 

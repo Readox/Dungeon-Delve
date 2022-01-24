@@ -55,7 +55,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             {
                 Debug.Log("Added Poison");
                 // new Conditions("Effect Name", # Effect Stacks, Duration)
-                playerStats_script.conditionsList.Add(new Conditions("Poison", 3, 5));
+                playerStats_script.conditionsList.Add(new Conditions("Poison", 3, 3));
                 playerStats_script.conditionsList[playerStats_script.conditionsList.Count-1].OnStart();
             }
             if (interval > float.Epsilon)

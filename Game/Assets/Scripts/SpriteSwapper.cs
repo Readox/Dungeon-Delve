@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SpriteSwapper : MonoBehaviour
 {
-     private SpriteRenderer spriteRenderer;
+    private SpriteRenderer spriteRenderer;
     public bool updateSprite;
     public Sprite[] spriteSheet;
     //[SerializeField] private SpriteAtlas spriteSheet;

@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Conditions : Effect
+public class Conditions
 {
     public string effectName;
     public string affectedStat;
     public int effectStacks;
     public float duration;
-    public Coroutine damageTickCoroutine;
     public float originalStat;
 
     private PlayerMovement playerMovementScript;
-    public PlayerStats playerStats_script;
+    private PlayerStats playerStats_script;
 
     public Conditions(string effectName, string affectedStat, int effectStacks, float duration)
     {
@@ -36,33 +35,21 @@ public class Conditions : Effect
         duration -= 1f;
     }
 
-    IEnumerator DamageTick()
-    {
-        yield return new WaitForSeconds(1);
-        float finalDamage = effectStacks;
-        playerStats_script.DealConditionDamage(finalDamage);
-    }
-
     public void OnStart()
     {
         if (effectName.Equals("Bleeding"))
         {
-            damageTickCoroutine = StartCoroutine(DamageTick());
+            // Do damage here
         }
         else if (effectName.Equals("Poison"))
         {
-            base.playerStats_script = this.playerStats_script;
-
-            base.StopHealthRegen();
-
-            /*
-            playerStats_script.StopCoroutine(playerStats_script.healthRegenCoroutine);
-            damageTickCoroutine = StartCoroutine(DamageTick());
-            */
+            playerStats_script.StopHealthRegen();
+            
+            // Do damage here
         }
         else if (effectName.Equals("Burning"))
         {
-            damageTickCoroutine = StartCoroutine(DamageTick());
+            // Do damage here
         }
         else if (effectName.Equals("Slowness"))
         {
@@ -90,16 +77,17 @@ public class Conditions : Effect
     {
         if (effectName.Equals("Bleeding"))
         {
-            StopCoroutine(damageTickCoroutine);
+            // Stop damage here
         }
         else if (effectName.Equals("Poison"))
         {
-            playerStats_script.healthRegenCoroutine = playerStats_script.StartCoroutine(playerStats_script.HealthRegeneration());
-            StopCoroutine(damageTickCoroutine);
+            playerStats_script.StartHealthRegen();
+            
+            // Stop damage here
         }
         else if (effectName.Equals("Burning"))
         {
-            StopCoroutine(damageTickCoroutine);
+            // Stop damage here
         }
         else if (effectName.Equals("Slowness"))
         {
@@ -132,6 +120,8 @@ public class Conditions : Effect
             Debug.Log("No Effect Name defined");
         }
     }
+
+    
 
 
     public void PersistentEffect()

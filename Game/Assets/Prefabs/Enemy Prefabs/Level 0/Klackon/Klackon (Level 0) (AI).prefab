@@ -150,7 +150,7 @@ PrefabInstance:
       objectReference: {fileID: 8390773015415750400}
     - target: {fileID: 6644100987987970496, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_Name
-      value: Klackon AI Test
+      value: Klackon (Level 0)
       objectReference: {fileID: 0}
     - target: {fileID: 6644100987987970555, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_Size.x

@@ -25,6 +25,7 @@ public class PlayerStats : MonoBehaviour
 
     public Coroutine healthRegenCoroutine;
     public Coroutine abilityRegenCoroutine;
+    public Coroutine damageTickCoroutine; // For condition damage
     // Start is called before the first frame update
     void Start()
     {
@@ -93,23 +94,25 @@ public class PlayerStats : MonoBehaviour
 
     void EffectTick()
     {
-        foreach (Conditions c in conditionsList)
+        for (int i = 0; i < conditionsList.Count; i++) // need to do a for loop instead of foreach because of exceptions being thrown, same below
         {
+            Conditions c = conditionsList[i];
             c.DoEffect();
             if (c.duration == 0f)
             {
                 c.OnDurationExpire();
+                conditionsList.Remove(c);
             }
-            conditionsList.Remove(c);
         }
-        foreach (Boons b in boonsList)
+        for (int o = 0; o < boonsList.Count; o++)
         {
+            Boons b = boonsList[o];
             b.DoEffect();
             if (b.duration == 0f)
             {
                 b.OnDurationExpire();
+                boonsList.Remove(b);
             }
-            boonsList.Remove(b);
         }
     }
 
@@ -128,6 +131,32 @@ public class PlayerStats : MonoBehaviour
         CheckDeath();
         SetHealthInfo();
     }
+
+    IEnumerator ConditionDamageTick()
+    {
+        yield return new WaitForSeconds(1);
+        //float finalDamage =  Condition Effect Stacks;
+        //playerStats_script.DealConditionDamage(finalDamage);
+    }
+
+    public void StartHealthRegen()
+    {
+        healthRegenCoroutine = StartCoroutine(HealthRegeneration());
+    }
+    public void StopHealthRegen()
+    {
+        StopCoroutine(healthRegenCoroutine);
+    }
+    public void StartConditionDamageCoroutine()
+    {
+        damageTickCoroutine = StartCoroutine(ConditionDamageTick());
+    }
+    public void StopConditionDamageCoroutine()
+    {
+        StopCoroutine(damageTickCoroutine);
+    }
+
+    
     public void AbilityExpend(float abilityCost)
     {
         currentAbilityPool -= abilityCost;
