@@ -2233,6 +2233,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 378433348}
+  damageIndicator: {fileID: 1756199386625121662, guid: 20e470699e0ef8445b2088d6307dd070, type: 3}
+  damageIndicatorParent: {fileID: 539887452}
 --- !u!114 &378433352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2950,7 +2952,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -8941,5 +8943,9 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 378433348}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: damageIndicator
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}

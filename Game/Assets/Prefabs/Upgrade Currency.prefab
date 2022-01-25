@@ -134,6 +134,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cd46ff1d4454f4085cee5ccdb6c399, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseSpeed: 2
+  baseSpeed: 4
   attractDist: 5
   coinTier: 10

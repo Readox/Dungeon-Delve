@@ -8,6 +8,8 @@ public class CommonAttack : MonoBehaviour
 
     public GameObject gameManager;
     private PlayerStats playerStats_script;
+    public GameObject damageIndicator; // damageIndicator prefab
+    public GameObject damageIndicatorParent; //parent canvas for damage indicators and maybe more (will be UI overlay)
 
 
     public float CalculateDamage(float weaponDamage) // Eventually this will take weapons and such as args (maybe)
@@ -82,8 +84,8 @@ public class CommonAttack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        gameManager = GameObject.FindWithTag("GameController");
-        playerStats_script = gameManager.GetComponent<PlayerStats>();
+        //gameManager = GameObject.FindWithTag("GameController");
+        //playerStats_script = gameManager.GetComponent<PlayerStats>();
     }
 
     void Awake()
