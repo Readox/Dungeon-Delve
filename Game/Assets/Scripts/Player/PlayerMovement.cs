@@ -35,6 +35,13 @@ public class PlayerMovement : MonoBehaviour
         Move();
     }
 
+    /*
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        moveVec = Vector2.zero;
+    }
+    */
+
     void ProcessInputs()
     {
         moveVec = Vector2.zero;

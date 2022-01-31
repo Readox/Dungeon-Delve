@@ -32,6 +32,17 @@ public class EnemyMeleeAttack : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D/*&& !collision is CircleCollider2D*/) 
+        {
+            if (damageCoroutine == null)
+            {
+                damageCoroutine = StartCoroutine(DamagePlayer(damage, 1.0f)); 
+            }
+        }
+    }
+
     void OnTriggerExit2D(Collider2D collision)
     {
         if(collision.gameObject.CompareTag("Player") && collision is BoxCollider2D/*&& !collision is CircleCollider2D*/)
