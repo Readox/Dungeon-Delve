@@ -5,7 +5,7 @@ using Pathfinding;
 
 public class EnemyGFX : MonoBehaviour
 {
-    AIPath aiPath;
+    public AIPath aiPath;
     Animator anim;
     WanderingDestinationSetter wanderScript;
 
@@ -17,7 +17,6 @@ public class EnemyGFX : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
-        aiPath = gameObject.transform.parent.GetComponent<AIPath>();
         if (gameObject.transform.parent != null)
         {
             wanderScript = gameObject.transform.parent.gameObject.GetComponent<WanderingDestinationSetter>();
