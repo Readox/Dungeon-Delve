@@ -58,6 +58,7 @@ public class MainMenu : MonoBehaviour
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level 0"));
 
             GameObject mainCam = GameObject.FindWithTag("MainCamera");
+            GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().SetUIActiveState("true");
             CameraFollowPlayer camFollow_Script = mainCam.GetComponent<CameraFollowPlayer>();
             camFollow_Script.GetPlayerLoc();
 

@@ -139,6 +139,18 @@ public class PlayerStats : MonoBehaviour
         //playerStats_script.DealConditionDamage(finalDamage);
     }
 
+    public void SetUIActiveState(string state)
+    {
+        if (state.Equals("true"))
+        {
+            healthBarSlider.gameObject.transform.parent.parent.gameObject.SetActive(true);
+        }
+        else
+        {
+            healthBarSlider.gameObject.transform.parent.parent.gameObject.SetActive(false);
+        }
+        
+    }
     public void StartHealthRegen()
     {
         healthRegenCoroutine = StartCoroutine(HealthRegeneration());
