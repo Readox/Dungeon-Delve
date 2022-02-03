@@ -8,6 +8,7 @@ TagManager:
   - PlayerProjectile
   - enemyView
   - PauseMenu
+  - Doorway
   layers:
   - Default
   - TransparentFX

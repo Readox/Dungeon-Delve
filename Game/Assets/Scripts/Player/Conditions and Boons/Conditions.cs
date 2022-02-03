@@ -5,29 +5,24 @@ using UnityEngine;
 public class Conditions
 {
     public string effectName;
-    public string affectedStat;
     public int effectStacks;
     public float duration;
-    public float originalStat;
 
-    private PlayerMovement playerMovementScript;
-    private PlayerStats playerStats_script;
-
-    public Conditions(string effectName, string affectedStat, int effectStacks, float duration)
-    {
-        this.effectName = effectName;
-        this.affectedStat = affectedStat;
-        this.effectStacks = effectStacks;
-        this.duration = duration;
-        playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
-    }
+    private ConditionManager cm;
 
     public Conditions(string effectName, int effectStacks, float duration)
     {
         this.effectName = effectName;
         this.effectStacks = effectStacks;
         this.duration = duration;
-        playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
+        cm = GameObject.FindWithTag("GameController").GetComponent<ConditionManager>();
+    }
+
+    public Conditions(string effectName, float duration)
+    {
+        this.effectName = effectName;
+        this.duration = duration;
+        cm = GameObject.FindWithTag("GameController").GetComponent<ConditionManager>();
     }
 
     public void DoEffect() // Make sure to subtract duration;
@@ -43,7 +38,6 @@ public class Conditions
         }
         else if (effectName.Equals("Poison"))
         {
-            playerStats_script.StopHealthRegen();
             
             // Do damage here
         }
@@ -53,15 +47,11 @@ public class Conditions
         }
         else if (effectName.Equals("Slowness"))
         {
-            playerMovementScript = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
-            originalStat = playerMovementScript.playerSpeed;
-            playerMovementScript.playerSpeed = originalStat / 2;
+            cm.DoSlowness();
         }
         else if (effectName.Equals("Immobility"))
         {
-            playerMovementScript = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
-            originalStat = playerMovementScript.playerSpeed;
-            playerMovementScript.playerSpeed = 0;
+            cm.DoImmobility();
         }
         else if (effectName.Equals("Weakness"))
         {
@@ -81,7 +71,6 @@ public class Conditions
         }
         else if (effectName.Equals("Poison"))
         {
-            playerStats_script.StartHealthRegen();
             
             // Stop damage here
         }
@@ -91,25 +80,11 @@ public class Conditions
         }
         else if (effectName.Equals("Slowness"))
         {
-            if(playerMovementScript.playerSpeed > originalStat / 2) // Accounts for a change during condition
-            {
-                playerMovementScript.playerSpeed = originalStat + (playerMovementScript.playerSpeed - (originalStat / 2));
-            }
-            else
-            {
-                playerMovementScript.playerSpeed = originalStat;
-            }
+            cm.ResetSpeed();
         }
         else if (effectName.Equals("Immobility"))
         {
-            if(playerMovementScript.playerSpeed > 0) // Accounts for a change during condition
-            {
-                playerMovementScript.playerSpeed = originalStat + playerMovementScript.playerSpeed;
-            }
-            else
-            {
-                playerMovementScript.playerSpeed = originalStat;
-            }
+            cm.ResetSpeed();
         }
         else if (effectName.Equals("Weakness"))
         {

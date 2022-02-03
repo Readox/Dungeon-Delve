@@ -12,14 +12,16 @@ public class PlayerMovement : MonoBehaviour
     //private PlayerStats script_PlayerStats;
 
     public GameObject gameManagerObject;
-
     // Entity Values
     public float playerSpeed;
+    public float originalSpeed; // for storing the original speed value for slowness condition
 
     // Move Vector
-    private Vector2 moveVec;
-
+    private Vector2 animationVec;
     public Animator animator;
+
+    public Rigidbody2D rb;
+    private Vector2 moveDirection;
 
     // Fixed Update called at regular times (set amount), more consistent than Update(), do physics here
     void FixedUpdate()
@@ -38,29 +40,33 @@ public class PlayerMovement : MonoBehaviour
     /*
     void OnCollisionEnter2D(Collision2D collision)
     {
-        moveVec = Vector2.zero;
+        animationVec = Vector2.zero;
     }
     */
 
     void ProcessInputs()
     {
-        moveVec = Vector2.zero;
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+        
+        moveDirection = new Vector2(moveX, moveY).normalized; // To fix diagonal movement
 
+        animationVec = Vector2.zero;
         if (Input.GetKey(KeyCode.W))
         {
-            moveVec += Vector2.up;
+            animationVec += Vector2.up;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            moveVec += Vector2.down;
+            animationVec += Vector2.down;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            moveVec += Vector2.left;
+            animationVec += Vector2.left;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            moveVec += Vector2.right;
+            animationVec += Vector2.right;
         }
         if (Input.GetKey(KeyCode.Space))
         {
@@ -76,17 +82,18 @@ public class PlayerMovement : MonoBehaviour
 
     void Move()
     {
-        moveVec = moveVec.normalized;
-        transform.Translate(moveVec * playerSpeed * Time.deltaTime);
+        rb.velocity = new Vector2(moveDirection.x * playerSpeed, moveDirection.y * playerSpeed);
 
-        if (moveVec.x != 0 )
+        animationVec = animationVec.normalized;
+        //transform.Translate(animationVec * playerSpeed * Time.deltaTime);
+        if (animationVec.x != 0 )
         {
-            moveVec.y = 0;
-            AnimatorMovement(moveVec);
+            animationVec.y = 0;
+            AnimatorMovement(animationVec);
         }
-        else if (moveVec.y != 0)
+        else if (animationVec.y != 0)
         {
-            AnimatorMovement(moveVec);
+            AnimatorMovement(animationVec);
         }
         else
         {
@@ -97,11 +104,11 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
-    private void AnimatorMovement(Vector2 moveVec)
+    private void AnimatorMovement(Vector2 animationVec)
     {
         animator.SetLayerWeight(1, 1);
-        animator.SetFloat("XDir", moveVec.x);
-        animator.SetFloat("YDir", moveVec.y);
+        animator.SetFloat("XDir", animationVec.x);
+        animator.SetFloat("YDir", animationVec.y);
     }
 
 
@@ -110,10 +117,37 @@ public class PlayerMovement : MonoBehaviour
     {
         // Get animator component from player
         animator = GetComponent<Animator>();
-
+        originalSpeed = playerSpeed;
     }
 
+    public void DoSlowness()
+    {
+        if (playerSpeed == originalSpeed)
+        {
+            playerSpeed /= 2;
+        }
+        else
+        {
+            Debug.Log("Slowness already applied, player speed not changed");
+        }
+    }
+    public void DoImmobility()
+    {
+        if (playerSpeed == originalSpeed)
+        {
+            playerSpeed = 0;
+        }
+        else
+        {
+            Debug.Log("Immobility already applied, player speed not changed");
+        }
+    }
+    public void ResetSpeed()
+    {
+        playerSpeed = originalSpeed;
+    }
 
+    
 
     //public float fighterDashSpeed;
     public float fighterDashCost; 
@@ -124,10 +158,10 @@ public class PlayerMovement : MonoBehaviour
         gameManagerObject.GetComponent<PlayerStats>().AbilityExpend(fighterDashCost);
         if (gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool() > 0)
         {
-            transform.Translate(moveVec * (playerSpeed * 2) * Time.deltaTime);
+            transform.Translate(animationVec * (playerSpeed * 2) * Time.deltaTime);
             //Debug.Log("Current Ability Pool: " + gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool());
         }
-        //moveVec = PlayerMovement.GetPlayerMoveVec();
+        //animationVec = PlayerMovement.GetPlayeranimationVec();
         
     }
 
@@ -144,12 +178,12 @@ public class PlayerMovement : MonoBehaviour
 
 
 /*
- * rigidbody.velocity = new Vector2(moveVec.x * playerSpeed, moveVec.y * playerSpeed);
+ * rigidbody.velocity = new Vector2(animationVec.x * playerSpeed, animationVec.y * playerSpeed);
  * 
  * 
  * float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
-        moveVec = new Vector2(moveX, moveY).normalized;
+        animationVec = new Vector2(moveX, moveY).normalized;
  * 
  */

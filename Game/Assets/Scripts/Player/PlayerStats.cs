@@ -20,12 +20,8 @@ public class PlayerStats : MonoBehaviour
 
     public string playerClass;
 
-    public List<Conditions> conditionsList = new List<Conditions>();
-    public List<Boons> boonsList = new List<Boons>();
-
     public Coroutine healthRegenCoroutine;
     public Coroutine abilityRegenCoroutine;
-    public Coroutine damageTickCoroutine; // For condition damage
     // Start is called before the first frame update
     void Start()
     {
@@ -68,11 +64,6 @@ public class PlayerStats : MonoBehaviour
         // Actually, dont have this on anything except for _game in the preload scene
         // DontDestroyOnLoad(this);
 
-        conditionsList.Clear();
-        boonsList.Clear();
-        InvokeRepeating("EffectTick", 1f, 1f); // For Conditions and Boons
-
-
         PlayerClassSetup();
         UpdateScrollRectStats(statsScrollRect);
 
@@ -92,30 +83,6 @@ public class PlayerStats : MonoBehaviour
         abilityText.text = Mathf.Ceil(currentAbilityPool).ToString() + " / " + Mathf.Ceil(abilityPoolMax).ToString();
     }
 
-    void EffectTick()
-    {
-        for (int i = 0; i < conditionsList.Count; i++) // need to do a for loop instead of foreach because of exceptions being thrown, same below
-        {
-            Conditions c = conditionsList[i];
-            c.DoEffect();
-            if (c.duration == 0f)
-            {
-                c.OnDurationExpire();
-                conditionsList.Remove(c);
-            }
-        }
-        for (int o = 0; o < boonsList.Count; o++)
-        {
-            Boons b = boonsList[o];
-            b.DoEffect();
-            if (b.duration == 0f)
-            {
-                b.OnDurationExpire();
-                boonsList.Remove(b);
-            }
-        }
-    }
-
     public void DealDamage(float damage)
     {
         float dmgredper = Defense / (Defense + 100);
@@ -132,11 +99,13 @@ public class PlayerStats : MonoBehaviour
         SetHealthInfo();
     }
 
-    IEnumerator ConditionDamageTick()
+    public void StartHealthRegen()
     {
-        yield return new WaitForSeconds(1);
-        //float finalDamage =  Condition Effect Stacks;
-        //playerStats_script.DealConditionDamage(finalDamage);
+        healthRegenCoroutine = StartCoroutine(HealthRegeneration());
+    }
+    public void StopHealthRegen()
+    {
+        StopCoroutine(healthRegenCoroutine);
     }
 
     public void SetUIActiveState(string state)
@@ -151,23 +120,6 @@ public class PlayerStats : MonoBehaviour
         }
         
     }
-    public void StartHealthRegen()
-    {
-        healthRegenCoroutine = StartCoroutine(HealthRegeneration());
-    }
-    public void StopHealthRegen()
-    {
-        StopCoroutine(healthRegenCoroutine);
-    }
-    public void StartConditionDamageCoroutine()
-    {
-        damageTickCoroutine = StartCoroutine(ConditionDamageTick());
-    }
-    public void StopConditionDamageCoroutine()
-    {
-        StopCoroutine(damageTickCoroutine);
-    }
-
     
     public void AbilityExpend(float abilityCost)
     {
