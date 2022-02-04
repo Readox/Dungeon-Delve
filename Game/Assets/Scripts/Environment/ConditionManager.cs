@@ -8,13 +8,10 @@ public class ConditionManager : MonoBehaviour
     private List<Conditions> conditionsList = new List<Conditions>();
     private List<Boons> boonsList = new List<Boons>();
 
-    public Coroutine bleedingTickCoroutine; 
-    public Coroutine poisonTickCoroutine;
-    public Coroutine burningTickCoroutine;
+    Coroutine conditionDamageTickCoroutine;
 
     public PlayerMovement playerMovement_script;
     public PlayerStats playerStats_script;
-
 
 
     void Awake()
@@ -26,6 +23,7 @@ public class ConditionManager : MonoBehaviour
 
     void EffectTick()
     {
+        int totalEffectStacks = 0; // For damage
         for (int i = 0; i < conditionsList.Count; i++) // need to do a for loop instead of foreach because of exceptions being thrown, same below
         {
             Conditions c = conditionsList[i];
@@ -34,6 +32,10 @@ public class ConditionManager : MonoBehaviour
             {
                 c.OnDurationExpire();
                 conditionsList.Remove(c);
+            }
+            if (c.effectName.Equals("Bleeding") || c.effectName.Equals("Poison") || c.effectName.Equals("Burning"))
+            {
+                totalEffectStacks += c.effectStacks;
             }
         }
         for (int o = 0; o < boonsList.Count; o++)
@@ -46,6 +48,8 @@ public class ConditionManager : MonoBehaviour
                 boonsList.Remove(b);
             }
         }
+
+        playerStats_script.DealConditionDamage(totalEffectStacks); // TODO do animations, do proper damage, take in effect name for anim, take in effectstacks for damage
     }
 
     public void AddCondition(Conditions c)
@@ -60,6 +64,11 @@ public class ConditionManager : MonoBehaviour
                 conditionsList[i].ReStart(); //TODO need restart method
                 break();
             }
+        }
+        
+        if (conditionDamageTickCoroutine == null)
+        {
+            StartConditionDamageCoroutine();
         }
         */
         if (c.effectName.Equals("Slowness") || c.effectName.Equals("Immobility"))
@@ -77,60 +86,16 @@ public class ConditionManager : MonoBehaviour
             if (inList == false)
             {
                 conditionsList.Add(c);
-                conditionsList[conditionsList.Count-1].OnStart();
+                conditionsList[conditionsList.Count - 1].OnStart();
             }
+        }
+        else
+        {
+            conditionsList.Add(c);
+            conditionsList[conditionsList.Count - 1].OnStart();
         }
 
         
-    }
-
-
-
-
-    IEnumerator ConditionDamageTick()
-    {
-        yield return new WaitForSeconds(1);
-        playerStats_script.DealConditionDamage(1); // TODO do animations, do proper damage, take in effect name for anim, take in effectstacks for damage
-    }
-
-
-    public void StartConditionDamageCoroutine(string cName)
-    {
-        if (cName.Equals("Bleeding"))
-        {
-            bleedingTickCoroutine = StartCoroutine(ConditionDamageTick());
-        }
-        else if (cName.Equals("Poison"))
-        {
-            poisonTickCoroutine = StartCoroutine(ConditionDamageTick());
-        }
-        else if (cName.Equals("Burning"))
-        {
-            burningTickCoroutine = StartCoroutine(ConditionDamageTick());
-        }
-        else
-        {
-            Debug.Log("Invalid Condition!");
-        }
-    }
-    public void StopConditionDamageCoroutine(string cName)
-    {
-        if (cName.Equals("Bleeding"))
-        {
-            StopCoroutine(bleedingTickCoroutine);
-        }
-        else if (cName.Equals("Poison"))
-        {
-            StopCoroutine(poisonTickCoroutine);
-        }
-        else if (cName.Equals("Burning"))
-        {
-            StopCoroutine(burningTickCoroutine);
-        }
-        else
-        {
-            Debug.Log("Invalid Condition!");
-        }
     }
 
     public void DoSlowness()

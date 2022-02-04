@@ -66,12 +66,12 @@ public class EnemyMeleeAttack : MonoBehaviour
             playerStats_script.DealDamage(damage);
             if (gameObject.name.Substring(0,8).Equals("Scorpion"))
             {
-                Debug.Log("Added Poison");
                 // new Conditions("Effect Name", # Effect Stacks, Duration)
                 // new Conditions("Effect Name", Duration)
 
-                //conditionManager_Script.AddCondition(new Conditions("Poison", 3, 3));
-                conditionManager_Script.AddCondition(new Conditions("Slowness", 3));
+                conditionManager_Script.AddCondition(new Conditions("Poison", 3, 3));
+                //conditionManager_Script.AddCondition(new Conditions("Slowness", 3));
+                //conditionManager_Script.AddCondition(new Conditions("Bleeding", 5, 10));
             }
             if (interval > float.Epsilon)
             {

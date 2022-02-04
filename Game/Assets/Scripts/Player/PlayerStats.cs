@@ -29,8 +29,8 @@ public class PlayerStats : MonoBehaviour
         currentAbilityPool = abilityPoolMax;
 
 
-        healthRegenCoroutine = StartCoroutine(HealthRegeneration());
-        abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
+        //healthRegenCoroutine = StartCoroutine(HealthRegeneration());
+        //abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
     }
     public IEnumerator HealthRegeneration()
     {
@@ -38,7 +38,7 @@ public class PlayerStats : MonoBehaviour
         currentHealth += maxHealth * HealthRegen;
         CheckHealthMax();
         SetHealthInfo();
-        healthRegenCoroutine = StartCoroutine(HealthRegeneration());
+        //healthRegenCoroutine = StartCoroutine(HealthRegeneration());
     }
     public IEnumerator AbilityRegeneration()
     {
@@ -46,7 +46,7 @@ public class PlayerStats : MonoBehaviour
         currentAbilityPool += abilityPoolMax * AbilityRegen;
         CheckAbilityMax();
         SetAbilityInfo();
-        abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
+        //abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
     }
 
     // Update is called once per frame
@@ -85,6 +85,11 @@ public class PlayerStats : MonoBehaviour
 
     public void DealDamage(float damage)
     {
+        if (healthRegenCoroutine == null && currentHealth == maxHealth)
+        {
+            healthRegenCoroutine = StartCoroutine(HealthRegeneration());
+        }
+
         float dmgredper = Defense / (Defense + 100);
         if (dmgredper == 0) { dmgredper = 1; }
         float finalDamage = damage * dmgredper;
@@ -123,6 +128,10 @@ public class PlayerStats : MonoBehaviour
     
     public void AbilityExpend(float abilityCost)
     {
+        if (abilityRegenCoroutine == null && currentAbilityPool == abilityPoolMax)
+        {
+            abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
+        }
         currentAbilityPool -= abilityCost;
         CheckAbilityMax();
         SetAbilityInfo();
@@ -130,6 +139,10 @@ public class PlayerStats : MonoBehaviour
     }
     public void CheckAbilityMax()
     {
+        if (abilityRegenCoroutine != null && currentAbilityPool == abilityPoolMax)
+        {
+            StopCoroutine(abilityRegenCoroutine);
+        }
         if (currentAbilityPool > abilityPoolMax)
         {
             currentAbilityPool = abilityPoolMax;
@@ -174,6 +187,10 @@ public class PlayerStats : MonoBehaviour
     }
     public void CheckHealthMax()
     {
+        if (healthRegenCoroutine != null && currentHealth == maxHealth)
+        {
+            StopCoroutine(healthRegenCoroutine);
+        }
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
