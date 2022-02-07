@@ -11,21 +11,50 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     float damage;
 
-    
+    private Transform target;
+    public float attackDelay;
+    public float attackRange;
+    private float lastTime;
+
+    void Update()
+    {
+        float dist = Vector3.Distance(transform.position, target.position);
+        if (dist < attackRange)
+        {
+            Debug.Log("In Range");
+            if (Time.time > lastTime + attackDelay)
+            {
+                anim.SetBool("Attack", true);
+                playerStats_script.DealDamage(damage); Debug.Log("Dealt Damage");
+                if (gameObject.name.Substring(0,8).Equals("Scorpion"))
+                {
+                    // new Conditions("Effect Name", # Effect Stacks, Duration)
+                    // new Conditions("Effect Name", Duration)
+                    //Debug.Log("Added Bleeding");
+                    //conditionManager_Script.AddCondition(new Conditions("Poison", 3, 3));
+                    //conditionManager_Script.AddCondition(new Conditions("Slowness", 3));
+                    //conditionManager_Script.AddCondition(new Conditions("Bleeding", 5, 10));
+                }
+                lastTime += Time.time;
+            }
+        }
+    }
 
 
     void Awake()
     {
         damage = GetComponent<EnemyStats>().GetDamage();
         anim = GetComponent<Animator>();
+        target = GameObject.FindWithTag("Player").GetComponent<Transform>();
         conditionManager_Script = GameObject.FindWithTag("GameController").GetComponent<ConditionManager>();
         playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
-        //StartCoroutine(EnemyMove());
     }
+
+    /*
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player") /*&& collision is BoxCollider2D*//*&& !collision is CircleCollider2D*/) 
+        if(collision.gameObject.CompareTag("Player")) 
         {
             if (damageCoroutine == null)
             {
@@ -36,7 +65,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Player") /*&& collision is BoxCollider2D*//*&& !collision is CircleCollider2D*/) 
+        if(collision.gameObject.CompareTag("Player")) 
         {
             if (damageCoroutine == null)
             {
@@ -47,7 +76,7 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D collision)
     {
-        if(collision.gameObject.CompareTag("Player") /*&& collision is BoxCollider2D*//*&& !collision is CircleCollider2D*/)
+        if(collision.gameObject.CompareTag("Player"))
         {
             //anim.SetBool("Attack", false);
             if (damageCoroutine != null)
@@ -60,27 +89,20 @@ public class EnemyMeleeAttack : MonoBehaviour
 
     IEnumerator DamagePlayer(float damage, float interval)
     {
-        while(true)
+        
+        anim.SetBool("Attack", true);
+        playerStats_script.DealDamage(damage);
+        if (gameObject.name.Substring(0,8).Equals("Scorpion"))
         {
-            anim.SetBool("Attack", true);
-            playerStats_script.DealDamage(damage);
-            if (gameObject.name.Substring(0,8).Equals("Scorpion"))
-            {
-                // new Conditions("Effect Name", # Effect Stacks, Duration)
-                // new Conditions("Effect Name", Duration)
-
-                conditionManager_Script.AddCondition(new Conditions("Poison", 3, 3));
-                //conditionManager_Script.AddCondition(new Conditions("Slowness", 3));
-                //conditionManager_Script.AddCondition(new Conditions("Bleeding", 5, 10));
-            }
-            if (interval > float.Epsilon)
-            {
-                yield return new WaitForSeconds(interval);
-            }
-            else
-            {
-                break;
-            }
+            // new Conditions("Effect Name", # Effect Stacks, Duration)
+            // new Conditions("Effect Name", Duration)
+            Debug.Log("Added Poison");
+            conditionManager_Script.AddCondition(new Conditions("Poison", 3, 3));
+            //conditionManager_Script.AddCondition(new Conditions("Slowness", 3));
+            //conditionManager_Script.AddCondition(new Conditions("Bleeding", 5, 10));
         }
+        yield return new WaitForSeconds(interval);
     }
+
+    */
 }

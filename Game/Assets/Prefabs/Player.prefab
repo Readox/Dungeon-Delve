@@ -15,7 +15,6 @@ GameObject:
   - component: {fileID: 5082268277408502055}
   - component: {fileID: 5082268277408502054}
   - component: {fileID: 2018586242}
-  - component: {fileID: 5876347685780788684}
   - component: {fileID: 7680500884252180260}
   m_Layer: 0
   m_Name: Player
@@ -148,8 +147,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManagerObject: {fileID: 0}
   playerSpeed: 3
+  originalSpeed: 0
   animator: {fileID: 5082268277408502058}
-  fighterDashSpeed: 6
+  rb: {fileID: 2018586242}
   fighterDashCost: 3
 --- !u!114 &5082268277408502054
 MonoBehaviour:
@@ -175,7 +175,7 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5082268277408502053}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
@@ -188,18 +188,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!114 &5876347685780788684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5082268277408502053}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ff6608c1cb0818f4eb583879f1288a84, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &7680500884252180260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,6 +201,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  damageIndicator: {fileID: 0}
+  damageIndicatorParent: {fileID: 0}
   attackSizeX: 1
   attackSizeY: 1
   enemyLayers:
