@@ -144,10 +144,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7871596058365844241}
     m_Modifications:
-    - target: {fileID: 28205038571472678, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 626130771095538397, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -196,21 +192,13 @@ PrefabInstance:
       propertyPath: aiPath
       value: 
       objectReference: {fileID: 7871596058365844243}
-    - target: {fileID: 4517530747191642688, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
-      propertyPath: m_Constraints
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562961165430499580, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4562961165430499580, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5144910342435109551, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
       propertyPath: m_Name
       value: Scorpion (Level 0)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7472881860944499612, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
+      propertyPath: attackAnimationLength
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}

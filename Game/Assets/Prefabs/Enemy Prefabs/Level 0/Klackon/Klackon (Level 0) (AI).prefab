@@ -148,29 +148,13 @@ PrefabInstance:
       propertyPath: aiPath
       value: 
       objectReference: {fileID: 8390773015415750400}
+    - target: {fileID: 620601319, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: attackAnimationLength
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 6644100987987970496, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_Name
       value: Klackon (Level 0)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644100987987970555, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
-      propertyPath: m_Size.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644100987987970555, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
-      propertyPath: m_Size.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644100987987970555, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644100987987970555, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
-      propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6644100987987970555, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
-      propertyPath: m_IsTrigger
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6644100988723325267, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_AnchorMax.x
@@ -223,6 +207,14 @@ PrefabInstance:
     - target: {fileID: 6644100989216711874, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644100989410036162, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -789.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644100989410036162, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -743.58
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}

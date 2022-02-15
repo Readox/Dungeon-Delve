@@ -23,6 +23,7 @@ public class WanderingDestinationSetter : MonoBehaviour
     {
         ai = GetComponent<IAstarAI>();
         aiPath = GetComponent<AIPath>();
+        attackTarget = GameObject.FindWithTag("Player").gameObject.transform;
     }
 
     Vector3 RandomPoint()
