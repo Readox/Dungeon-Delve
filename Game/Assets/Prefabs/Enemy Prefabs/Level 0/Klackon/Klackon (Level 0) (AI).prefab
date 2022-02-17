@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 8390773015415750400}
   - component: {fileID: 8390773015415750402}
   - component: {fileID: 8390773015415750412}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Klackon (Level 0) (AI)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8390773015415750403
 Transform:
   m_ObjectHideFlags: 0
@@ -158,11 +158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6644100988723325267, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6644100988723325267, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6644100989216711874, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_RootOrder
@@ -215,6 +215,18 @@ PrefabInstance:
     - target: {fileID: 6644100989410036162, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -743.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644100989487835604, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644100989487835604, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644100989487835604, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}

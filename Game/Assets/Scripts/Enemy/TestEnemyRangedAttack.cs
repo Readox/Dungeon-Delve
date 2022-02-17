@@ -42,6 +42,35 @@ public class TestEnemyRangedAttack : MonoBehaviour
         
     }
 
+    IEnumerator AttackPlayer()
+    {
+        
+        if (player != null && attackCooldown > float.Epsilon)
+        {
+            while(true)
+            {
+                //Debug.Log("Player Damage Coroutine Started");
+                animator.SetBool("Attack", true);
+
+                GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
+                Vector2 enemyPos = transform.position;
+                Vector2 targetPos = player.transform.position;
+                Vector2 direction = (targetPos - enemyPos).normalized;
+                spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
+                spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
+                animator.SetBool("Attack", true);
+
+                yield return new WaitForSeconds(attackCooldown);
+            }
+        }
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
+
 /*
     void OnTriggerEnter2D(Collider2D collision)
     {
@@ -94,28 +123,7 @@ public class TestEnemyRangedAttack : MonoBehaviour
     }
     */
 
-    IEnumerator AttackPlayer()
-    {
-        
-        if (player != null && attackCooldown > float.Epsilon)
-        {
-            while(true)
-            {
-                //Debug.Log("Player Damage Coroutine Started");
-                animator.SetBool("Attack", true);
-
-                GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
-                Vector2 enemyPos = transform.position;
-                Vector2 targetPos = player.transform.position;
-                Vector2 direction = (targetPos - enemyPos).normalized;
-                spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
-                spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
-                animator.SetBool("Attack", true);
-
-                yield return new WaitForSeconds(attackCooldown);
-            }
-        }
-    }
+    
 
     /*
     IEnumerator SpellTimeout(GameObject spell)
@@ -125,9 +133,5 @@ public class TestEnemyRangedAttack : MonoBehaviour
     }
     */
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

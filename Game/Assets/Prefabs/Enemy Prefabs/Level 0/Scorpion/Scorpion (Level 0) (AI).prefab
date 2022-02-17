@@ -13,13 +13,13 @@ GameObject:
   - component: {fileID: 7871596058365844243}
   - component: {fileID: 7871596058365844252}
   - component: {fileID: 7871596058365844253}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Scorpion (Level 0) (AI)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7871596058365844241
 Transform:
   m_ObjectHideFlags: 0
@@ -188,10 +188,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2226322821248672889, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 2549370105088066615, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
       propertyPath: aiPath
       value: 
       objectReference: {fileID: 7871596058365844243}
+    - target: {fileID: 4562961165430499580, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4562961165430499580, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5144910342435109551, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
       propertyPath: m_Name
       value: Scorpion (Level 0)
@@ -199,6 +211,18 @@ PrefabInstance:
     - target: {fileID: 7472881860944499612, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
       propertyPath: attackAnimationLength
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646638422010061842, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646638422010061842, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7646638422010061842, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aaf2ecf31ff4e8a47a7b9ba8cd5c5c7b, type: 3}

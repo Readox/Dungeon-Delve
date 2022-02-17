@@ -5,29 +5,65 @@ using UnityEngine;
 public class Turret : MonoBehaviour
 {
     public GameObject projectile;
-    private GameObject player;
+    private Transform target;
+    public Animator anim;
+
+    Coroutine attackCoroutine;
+
     float minDamage;
     float maxDamage;
     float baseDamage;
     public float projectileSpeed;
-    public float attackCooldown;
-
-    public Animator anim;
-
+    public float attackDelay;
     public float removeDelay;
+    public float attackRange;
+    public float attackAnimationLength;
+    
 
-    Coroutine attackCoroutine;
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        //StartCoroutine(ShootPlayer());  
-        player = FindObjectOfType<PlayerMovement>().gameObject;
+        target = GameObject.FindWithTag("Player").GetComponent<Transform>();
         baseDamage = GetComponent<EnemyStats>().GetDamage();
         minDamage = baseDamage - 2;
         maxDamage = baseDamage + 2;
+
+        StartCoroutine(CheckForAttacks());
     }
 
+
+    IEnumerator CheckForAttacks()
+    {
+        float dist = Vector3.Distance(transform.position, target.position);
+        //Debug.Log("Distance: " + dist);
+        if (dist < attackRange)
+        {
+            anim.SetBool("Attack", true);
+            //Debug.Log("In Range");
+            yield return new WaitForSeconds(attackAnimationLength);
+        }
+        yield return new WaitForSeconds(attackDelay); // Pretty sure that the attackDelay goes here
+
+        StartCoroutine(CheckForAttacks());
+    }
+
+    public void FireProjectile()
+    {
+        GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
+        Vector2 enemyPos = transform.position;
+        Vector2 targetPos = target.position;
+        Vector2 direction = (targetPos - enemyPos).normalized;
+        spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
+        spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
+    }
+
+    public void EndAttackAnimation() // I need have an animation event that calls this or the enemy will be stuck in an attack loop
+    {
+        //anim.SetBool("Idle", true); // Animator for enemies don't have an "Idle" bool
+        anim.SetBool("Attack", false);
+    }
+
+
+    /*
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
@@ -62,9 +98,9 @@ public class Turret : MonoBehaviour
                 spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
                 spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
 
-                if (attackCooldown > float.Epsilon)
+                if (attackDelay > float.Epsilon)
                 {
-                    yield return new WaitForSeconds(attackCooldown);
+                    yield return new WaitForSeconds(attackDelay);
                 }
                 else
                 {
@@ -74,7 +110,7 @@ public class Turret : MonoBehaviour
         }
     }
 
-    /*
+    
     IEnumerator SpellTimeout(GameObject spell)
     {
         yield return new WaitForSeconds(removeDelay);
@@ -82,9 +118,5 @@ public class Turret : MonoBehaviour
     }
     */
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }

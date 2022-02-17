@@ -12,7 +12,8 @@ public class ConditionManager : MonoBehaviour
 
     public PlayerMovement playerMovement_script;
     public PlayerStats playerStats_script;
-
+    
+    private GameObject poisonEffectObject;
 
     void Awake()
     {
@@ -92,10 +93,30 @@ public class ConditionManager : MonoBehaviour
         else
         {
             conditionsList.Add(c);
+            CreateEffectAnimationPrefab(c);
             conditionsList[conditionsList.Count - 1].OnStart();
         }
 
         
+    }
+
+
+    void CreateEffectAnimationPrefab(Conditions c)
+    {
+        /*
+        if (c.name.Equals("Poison") && poisonEffectObject == null)
+        {
+            //  poisonEffectObject = Instantiate(projectile, transform.position, Quaternion.identity);
+        }
+        else if (c.name.Equals("Bleeding"))
+        {
+            
+        }
+        else if (c.name.Equals("Poison"))
+        {
+            
+        }
+        */
     }
 
     public void DoSlowness()

@@ -42,7 +42,7 @@ public class EnemyMeleeAttack : MonoBehaviour
             //Debug.Log("In Range");
             yield return new WaitForSeconds(attackAnimationLength);
         }
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(attackDelay); // Pretty sure that the Attack Delay goes here
 
         StartCoroutine(CheckForAttacks());
     }
@@ -84,7 +84,7 @@ public class EnemyMeleeAttack : MonoBehaviour
         AIPath_script.maxSpeed = savedSpeed;
     }
 
-    public void EndAltWalk()
+    public void EndAltWalk() // This isnt used I think
     {
         anim.SetBool("Walk", true);
         anim.SetBool("AltWalk", false);
