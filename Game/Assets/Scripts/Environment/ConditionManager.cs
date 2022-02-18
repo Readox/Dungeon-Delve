@@ -12,8 +12,14 @@ public class ConditionManager : MonoBehaviour
 
     public PlayerMovement playerMovement_script;
     public PlayerStats playerStats_script;
+    public Transform storageGameObject;
     
+    public GameObject poisonEffectObjectInst;
     private GameObject poisonEffectObject;
+    public GameObject bleedingEffectObjectInst;
+    private GameObject bleedingEffectObject;
+    
+    
 
     void Awake()
     {
@@ -31,8 +37,8 @@ public class ConditionManager : MonoBehaviour
             c.DoEffect();
             if (c.duration == 0f)
             {
-                c.OnDurationExpire();
                 conditionsList.Remove(c);
+                c.OnDurationExpire();
             }
             if (c.effectName.Equals("Bleeding") || c.effectName.Equals("Poison") || c.effectName.Equals("Burning"))
             {
@@ -45,8 +51,8 @@ public class ConditionManager : MonoBehaviour
             b.DoEffect();
             if (b.duration == 0f)
             {
-                b.OnDurationExpire();
                 boonsList.Remove(b);
+                b.OnDurationExpire();
             }
         }
 
@@ -103,20 +109,43 @@ public class ConditionManager : MonoBehaviour
 
     void CreateEffectAnimationPrefab(Conditions c)
     {
-        /*
-        if (c.name.Equals("Poison") && poisonEffectObject == null)
+        
+        if (c.effectName.Equals("Poison") && poisonEffectObject == null)
         {
-            //  poisonEffectObject = Instantiate(projectile, transform.position, Quaternion.identity);
+            poisonEffectObject = Instantiate(poisonEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
+            poisonEffectObject.transform.SetParent(storageGameObject);
         }
-        else if (c.name.Equals("Bleeding"))
+        else if (c.effectName.Equals("Bleeding") && bleedingEffectObject == null)
         {
-            
+            bleedingEffectObject = Instantiate(bleedingEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
+            bleedingEffectObject.transform.SetParent(storageGameObject);
         }
-        else if (c.name.Equals("Poison"))
+        
+    }
+
+    public bool CheckForInstanceOf(string type)
+    {
+        for (int i = 0; i < conditionsList.Count; i++)
         {
-            
+            Conditions c = conditionsList[i];
+            if (c.effectName.Equals(type))
+            {
+                return true;
+            }
         }
-        */
+        return false;
+    }
+
+    public void RemoveEffectAnimation(string type)
+    {
+        if (type.Equals("Poison"))
+        {
+            Destroy(poisonEffectObject);
+        }
+        else if (type.Equals("Bleeding"))
+        {
+            Destroy(bleedingEffectObject);
+        }
     }
 
     public void DoSlowness()
@@ -131,8 +160,6 @@ public class ConditionManager : MonoBehaviour
     {
         playerMovement_script.ResetSpeed();
     }
-
-
     public void StartHealthRegen()
     {
         playerStats_script.StartHealthRegen();

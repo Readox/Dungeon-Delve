@@ -2628,6 +2628,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerMovement_script: {fileID: 2018586246}
   playerStats_script: {fileID: 378433349}
+  storageGameObject: {fileID: 837827545}
+  poisonEffectObjectInst: {fileID: 125664502301223601, guid: 52d497d9925fd374da076c81899b3730, type: 3}
+  bleedingEffectObjectInst: {fileID: 5331262014403437011, guid: c494ff49e3bfda84a975a13037b42fa6, type: 3}
 --- !u!1 &381666071
 GameObject:
   m_ObjectHideFlags: 0
@@ -4846,7 +4849,7 @@ GameObject:
   m_Component:
   - component: {fileID: 837827545}
   m_Layer: 12
-  m_Name: Obstacle Parent
+  m_Name: Added GameObjects
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4860,7 +4863,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 837827544}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 963.7, y: 543.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10692,32 +10695,12 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
-      propertyPath: damage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
-      propertyPath: targetTag
-      value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
-      propertyPath: applyDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: conditionName
       value: Poison
       objectReference: {fileID: 0}
     - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
-      propertyPath: applyCondition
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
-      propertyPath: conditionStacks
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: conditionDuration
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8433834297086595105, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: m_RootOrder

@@ -66,16 +66,22 @@ public class Conditions
     {
         if (effectName.Equals("Bleeding"))
         {
-            // Stop damage here
+            if (!cm.CheckForInstanceOf(effectName))
+            {
+                cm.RemoveEffectAnimation(effectName);
+            }
         }
         else if (effectName.Equals("Poison"))
         {
             cm.StartHealthRegen();
-            // Stop damage here
+            if (!cm.CheckForInstanceOf(effectName))
+            {
+                cm.RemoveEffectAnimation(effectName);
+            }
         }
         else if (effectName.Equals("Burning"))
         {
-            // Stop damage here
+            
         }
         else if (effectName.Equals("Slowness"))
         {
