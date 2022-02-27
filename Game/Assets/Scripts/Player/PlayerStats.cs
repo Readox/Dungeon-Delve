@@ -23,6 +23,8 @@ public class PlayerStats : MonoBehaviour
     public Coroutine healthRegenCoroutine;
     public Coroutine abilityRegenCoroutine;
     private bool healthRegenIsRunning = false;
+
+    private bool isEvading = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -87,12 +89,20 @@ public class PlayerStats : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        float dmgredper = Defense / (Defense + 100);
-        if (dmgredper == 0) { dmgredper = 1; }
-        float finalDamage = damage * dmgredper;
-        currentHealth -= finalDamage;
-        CheckDeath();
-        SetHealthInfo();
+        if (!isEvading)
+        {
+            float dmgredper = Defense / (Defense + 100);
+            if (dmgredper == 0) { dmgredper = 1; }
+            float finalDamage = damage * dmgredper;
+            currentHealth -= finalDamage;
+            CheckDeath();
+            SetHealthInfo();
+        }
+        else
+        {
+            Debug.Log("Pop up Evade text on game screen!!!");
+        }
+        
     }
     public void DealConditionDamage(float damage)
     {
@@ -210,6 +220,10 @@ public class PlayerStats : MonoBehaviour
     public void AddUpgradeTokens(int amount)
     {
         playerSkills_script.playerUpgradeTokens += amount;
+    }
+    public void FlipEvading()
+    {
+        isEvading = !isEvading;
     }
 
     public void MainMenu()

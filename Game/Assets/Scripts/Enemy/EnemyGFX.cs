@@ -6,6 +6,7 @@ using Pathfinding;
 public class EnemyGFX : MonoBehaviour
 {
     public AIPath aiPath;
+    private Transform target; // the player
     Animator anim;
     WanderingDestinationSetter wanderScript;
 
@@ -17,6 +18,7 @@ public class EnemyGFX : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        target = GameObject.FindWithTag("Player").GetComponent<Transform>();
         if (gameObject.transform.parent != null)
         {
             wanderScript = gameObject.transform.parent.gameObject.GetComponent<WanderingDestinationSetter>();
@@ -48,7 +50,17 @@ public class EnemyGFX : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // These are for setting orientation
+        
+        if (transform.position.x >= target.position.x)
+        {
+            spriteRenderer.flipX = false;
+        }
+        else if (transform.position.x <= target.position.x)
+        {
+            spriteRenderer.flipX = true;
+        }
+        // These are for setting orientation using AI Path, which does not work with non-moving enemies
+        /*
         if (aiPath.desiredVelocity.x >= 0.01f)
         {
             transform.localScale = new Vector3(-1f,1f,1f);
@@ -57,6 +69,7 @@ public class EnemyGFX : MonoBehaviour
         {
             transform.localScale = new Vector3(1f,1f,1f);
         }
+        */
     }
 
     void FixedUpdate()

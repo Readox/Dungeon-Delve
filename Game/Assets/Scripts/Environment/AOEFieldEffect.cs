@@ -42,17 +42,21 @@ public class AOEFieldEffect : MonoBehaviour
         {
             foreach (Collider2D cd in targets)
             {
-                if (applyDamage)
+                if (cd.gameObject.tag.Equals("Player"))
                 {
-                    //cd.parent.gameObject.GetComponent<PlayerStats>().DealDamage(damage);
-                    playerStats_script.DealDamage(damage);
+                    if (applyDamage)
+                    {
+                        //cd.parent.gameObject.GetComponent<PlayerStats>().DealDamage(damage);
+                        playerStats_script.DealDamage(damage);
+                    }
+                    if (applyCondition)
+                    {
+                        // new Conditions("Effect Name", # Effect Stacks, Duration)
+                        // new Conditions("Effect Name", Duration)
+                        conditionManager_script.AddCondition(new Conditions(conditionName, conditionStacks, conditionDuration));
+                    }
                 }
-                if (applyCondition)
-                {
-                    // new Conditions("Effect Name", # Effect Stacks, Duration)
-                    // new Conditions("Effect Name", Duration)
-                    conditionManager_script.AddCondition(new Conditions(conditionName, conditionStacks, conditionDuration));
-                }
+                
             }
         }
         else // Does the following for enemies, does not apply conditions, but maybe later can implement a slow or immobilize field or something

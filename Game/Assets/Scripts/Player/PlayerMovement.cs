@@ -12,9 +12,12 @@ public class PlayerMovement : MonoBehaviour
     //private PlayerStats script_PlayerStats;
 
     public GameObject gameManagerObject;
+    private PlayerStats playerStats_script;
     // Entity Values
     public float playerSpeed;
     public float originalSpeed; // for storing the original speed value for slowness condition
+    public float dodgeImmunityLength;
+    public float dodgeCooldown;
 
     // Move Vector
     private Vector2 animationVec;
@@ -77,8 +80,18 @@ public class PlayerMovement : MonoBehaviour
             */
             UseFighterAbility();
         }
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            StartCoroutine(Dodge());
+        }
     }
 
+    IEnumerator Dodge()
+    {
+        playerStats_script.FlipEvading(); // sets isEvading to true for [dodgeCooldown] length
+        yield return new WaitForSeconds(dodgeImmunityLength);
+        playerStats_script.FlipEvading(); // sets isEvading back to false
+    }
 
     void Move()
     {
@@ -113,9 +126,10 @@ public class PlayerMovement : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         // Get animator component from player
+        playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
         animator = GetComponent<Animator>();
         originalSpeed = playerSpeed;
     }
