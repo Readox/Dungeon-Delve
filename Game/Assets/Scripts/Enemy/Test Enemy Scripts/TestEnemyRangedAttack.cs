@@ -58,6 +58,7 @@ public class TestEnemyRangedAttack : MonoBehaviour
                 Vector2 direction = (targetPos - enemyPos).normalized;
                 spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
                 spell.GetComponent<TestEnemyProjectile>().damage = (int)Random.Range(minDamage, maxDamage);
+                spell.GetComponent<TestEnemyProjectile>().removeDelay = removeDelay;
                 animator.SetBool("Attack", true);
 
                 yield return new WaitForSeconds(attackCooldown);

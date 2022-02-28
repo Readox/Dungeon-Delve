@@ -1,5 +1,23 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &5508516110695914129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4637744833142067454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab40679da58c2124d908d20c8d2836d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cairnProjectile: {fileID: 6647960612705429361, guid: ec2faa7b72e6d1748b5a7a9a2eac49c3, type: 3}
+  cairnProjectileSpeed: 3
+  projectileRemoveDelay: 5
+  attackDelay: 0.5
+  attackRange: 2.5
+  attackAnimationLength: 0.4
 --- !u!1 &4637744834213301506
 GameObject:
   m_ObjectHideFlags: 0
@@ -193,9 +211,17 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6644100987987970556, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: maxHealth
+      value: 800
+      objectReference: {fileID: 0}
+    - target: {fileID: 6644100987987970556, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: baseDamage
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 6644100987987970556, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+      propertyPath: upgradeCurrencyDrop
+      value: 
+      objectReference: {fileID: 4176021586273655086, guid: c317af0c1c264e74293a2772224de8b1, type: 3}
     - target: {fileID: 6644100987987970558, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
       propertyPath: m_Controller
       value: 
@@ -284,8 +310,14 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 620601319, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+--- !u!1 &4637744833142067454 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6644100987987970496, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}
+  m_PrefabInstance: {fileID: 2046889325191125310}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4637744833784135164 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6644100989216711874, guid: 1b1c8cf12356ace43a04ed9e1865ddb1, type: 3}

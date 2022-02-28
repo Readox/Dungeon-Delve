@@ -8,6 +8,7 @@ public class EnemyStats : MonoBehaviour
 
     public float maxHealth;
     public float currentHealth;
+    public bool invulnerable;
 
     public float baseDamage;
 
@@ -18,7 +19,7 @@ public class EnemyStats : MonoBehaviour
     public float upgradeCurrencyDropChance;
 
     float playerMagicFind;
-    // Start is called before the first frame update
+
     void Start()
     {
         currentHealth = maxHealth;
@@ -26,10 +27,13 @@ public class EnemyStats : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        healthBar.SetActive(true);
-        currentHealth -= damage;
-        CheckDeath();
-        healthBarSlider.value = CalculateHealthPercentage();    
+        if (!invulnerable)
+        {
+            healthBar.SetActive(true);
+            currentHealth -= damage;
+            CheckDeath();
+            healthBarSlider.value = CalculateHealthPercentage();  
+        }
     }
 
     public void HealCharacter(float heal)

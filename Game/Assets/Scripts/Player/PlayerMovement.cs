@@ -13,11 +13,13 @@ public class PlayerMovement : MonoBehaviour
 
     public GameObject gameManagerObject;
     private PlayerStats playerStats_script;
+    public GameObject puffAnimation;
     // Entity Values
     public float playerSpeed;
     public float originalSpeed; // for storing the original speed value for slowness condition
     public float dodgeImmunityLength;
     public float dodgeCooldown;
+    private float dodgeCharges;
 
     // Move Vector
     private Vector2 animationVec;
@@ -73,21 +75,32 @@ public class PlayerMovement : MonoBehaviour
         }
         if (Input.GetKey(KeyCode.Space))
         {
-
-            /*
-            script_PlayerAbilities instPlayerAbilities = new script_PlayerAbilities(); 
-            instPlayerAbilities.PreUseAbility();
-            */
             UseFighterAbility();
+            // Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
+            // Uncommenting the code makes a trail of animations, which could probably be used to deal damage
         }
-        if (Input.GetKey(KeyCode.LeftShift))
+        if (Input.GetKey(KeyCode.LeftShift) && dodgeCharges > 0)
         {
+            dodgeCharges -= 1;
             StartCoroutine(Dodge());
         }
     }
 
+    IEnumerator Timer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        dodgeCharges += 1;
+        if (dodgeCharges > Mathf.Round(playerStats_script.abilityPoolMax / 100))
+        {
+            dodgeCharges -= 1;
+        }
+        StartCoroutine(Timer(dodgeCooldown));
+    }
+
     IEnumerator Dodge()
     {
+        Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
+        transform.Translate(animationVec * (playerSpeed * 3) * Time.deltaTime);
         playerStats_script.FlipEvading(); // sets isEvading to true for [dodgeCooldown] length
         yield return new WaitForSeconds(dodgeImmunityLength);
         playerStats_script.FlipEvading(); // sets isEvading back to false
@@ -132,6 +145,8 @@ public class PlayerMovement : MonoBehaviour
         playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
         animator = GetComponent<Animator>();
         originalSpeed = playerSpeed;
+        dodgeCharges = Mathf.Round(playerStats_script.abilityPoolMax / 100);
+        StartCoroutine(Timer(dodgeCooldown));
     }
 
     public void DoSlowness()

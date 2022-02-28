@@ -2440,7 +2440,7 @@ MonoBehaviour:
   abilityPoolMax: 200
   currentAbilityPool: 0
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 1000
   Defense: 0
   Strength: 1
   CritChance: 25
@@ -10499,14 +10499,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4637744833142067394, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
-      propertyPath: maxHealth
-      value: 800
-      objectReference: {fileID: 0}
-    - target: {fileID: 4637744833142067394, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
-      propertyPath: upgradeCurrencyDrop
-      value: 
-      objectReference: {fileID: 4176021586273655086, guid: c317af0c1c264e74293a2772224de8b1, type: 3}
     - target: {fileID: 4637744833340026989, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -10637,6 +10629,10 @@ PrefabInstance:
       propertyPath: dodgeCooldown
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: puffAnimation
+      value: 
+      objectReference: {fileID: 8005730577629841105, guid: 93c45a9fb2e1a5c45b647890e3d5bc9c, type: 3}
     - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: gameManagerObject
       value: 

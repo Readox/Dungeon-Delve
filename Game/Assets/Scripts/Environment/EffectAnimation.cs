@@ -7,6 +7,8 @@ public class EffectAnimation : MonoBehaviour
     private Transform target;
     private Animator anim;
     public bool showConstantly;
+    public bool followPlayer;
+    public float destroyTime;
     public float repeatInterval;
     private Coroutine c;
 
@@ -14,6 +16,10 @@ public class EffectAnimation : MonoBehaviour
     {
         target = GameObject.FindWithTag("Player").GetComponent<Transform>();
         anim = GetComponent<Animator>();
+        if (destroyTime > 0)
+        {
+            StartCoroutine(DestroyAfterTime());
+        }
         if (showConstantly)
         {
             c = StartCoroutine(ShowEffectConstantly(repeatInterval));
@@ -22,6 +28,12 @@ public class EffectAnimation : MonoBehaviour
         {
             anim.SetBool("Trigger", true);
         }
+    }
+
+    IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(destroyTime);
+        Destroy(gameObject);
     }
 
     IEnumerator ShowEffectConstantly(float repeatInterval)
@@ -39,7 +51,10 @@ public class EffectAnimation : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = target.position;
+        if (followPlayer)
+        {
+            transform.position = target.position;
+        }
         /*
         if (!anim.GetBool("Trigger") && showConstantly)
         {

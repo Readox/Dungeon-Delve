@@ -313,4 +313,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   showConstantly: 0
+  followPlayer: 1
+  destroyTime: 0
   repeatInterval: 0

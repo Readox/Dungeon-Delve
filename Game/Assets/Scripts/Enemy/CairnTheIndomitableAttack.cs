@@ -11,6 +11,9 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     PlayerStats playerStats_script;
     AIPath AIPath_script;
     EnemyStats enemyStats_script;
+    public GameObject cairnProjectile;
+    public float cairnProjectileSpeed;
+    public float projectileRemoveDelay;
 
     float damage;
     int attackCounter;
@@ -53,14 +56,30 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     public void AnimationEventDamage()
     {
         float dist = Vector3.Distance(transform.position, target.position);
-        if (dist < (attackRange * 1.5)) // Multiply the attack range to give the enemy a slight boost in range to combat diagonal movement
+        if (attackCounter % 3 == 0) // Probably put this in Update() as it doesnt rely on animation cues
+        {
+            for (int i = 0; i < 360; i += 45)
+            {
+                GameObject projectile = Instantiate(cairnProjectile, transform.position, Quaternion.identity);
+                float pdxp = transform.position.x + Mathf.Sin((i * Mathf.PI) / 180) * 1;
+                float pdyp = transform.position.y + Mathf.Cos((i * Mathf.PI) / 180) * 1;
+                Vector2 self = transform.position;
+                Vector2 pVec = new Vector2 (pdxp, pdyp);
+                Vector2 direction = (pVec - self).normalized * cairnProjectileSpeed;
+                projectile.GetComponent<Rigidbody2D>().velocity = direction;
+                projectile.GetComponent<TestEnemyProjectile>().damage = enemyStats_script.baseDamage;
+                projectile.GetComponent<TestEnemyProjectile>().removeDelay = projectileRemoveDelay;
+            }
+        }
+        if (attackCounter / 6 == 1)
+        {
+            //enemyStats_script.invulnerable = true; 
+            // Do Chaotic Release or something
+        }
+        if (dist < (attackRange * 1.5)) // Multiply the attack range to give the enemy a slight boost in range to combat diagonal movement 
         {
             playerStats_script.DealDamage(damage);
             attackCounter += 1; 
-        }
-        if (attackCounter % 3 == 0)
-        {
-            // do something
         }
         /*
         else // Don't complete attack animation if player is not in range
@@ -71,6 +90,18 @@ public class CairnTheIndomitableAttack : MonoBehaviour
             //anim.Play("KlackonAltWalk", 0, 0); // This crashed Unity
             anim.SetBool("Attack", false);
             AnimationStartMovement();
+        }
+        */
+    }
+
+    void Update()
+    {
+        /*
+        if (enemyStats_script.currentHealth <= (enemyStats_script.maxHealth / 4) * 3) // At 75% health
+        {
+            // Play Animation
+            // Chaotic Release ability : spawn green AOE safe field that applies Aegis buff (blocks attacks)
+            // Deal damage equal to player 99% of player health
         }
         */
     }
