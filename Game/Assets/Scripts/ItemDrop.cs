@@ -33,7 +33,8 @@ public class ItemDrop : MonoBehaviour
             }
             else
             {
-                // Add item to inventory here;
+                // Add gameobject to inventory here
+                Destroy(gameObject);
             }
             
         }

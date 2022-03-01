@@ -1,24 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &3751202684221714107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7724800932076972258}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55e75fccbf2c6534ea1cb53e6b12bbf3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  projectile: {fileID: 8215537497472630613, guid: dbe8fcb21e12e4c4a9df4e8e56316c89, type: 3}
-  anim: {fileID: 5856829713840763503}
-  projectileSpeed: 5
-  attackDelay: 1
-  removeDelay: 4
-  attackRange: 10
-  attackAnimationLength: 1.1
 --- !u!114 &-310501965424781074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -44,6 +25,25 @@ MonoBehaviour:
   - {fileID: 21300016, guid: 371b4b4200ba75c488e6889b7069fd33, type: 3}
   - {fileID: 21300018, guid: 371b4b4200ba75c488e6889b7069fd33, type: 3}
   - {fileID: 21300020, guid: 371b4b4200ba75c488e6889b7069fd33, type: 3}
+--- !u!114 &3751202684221714107
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7724800932076972258}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55e75fccbf2c6534ea1cb53e6b12bbf3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 8215537497472630613, guid: dbe8fcb21e12e4c4a9df4e8e56316c89, type: 3}
+  anim: {fileID: 5856829713840763503}
+  projectileSpeed: 5
+  attackDelay: 1
+  removeDelay: 4
+  attackRange: 10
+  attackAnimationLength: 1.1
 --- !u!1001 &3532822230741800375
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -143,6 +143,10 @@ PrefabInstance:
       propertyPath: baseDamage
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2858739568398597223, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: deathAnimation
+      value: 
+      objectReference: {fileID: 6003699789930840402, guid: 58b7708873b2c684e865f9b044ce33ed, type: 3}
     - target: {fileID: 3994704635129528660, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Size.x
       value: 1

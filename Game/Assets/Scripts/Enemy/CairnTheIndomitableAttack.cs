@@ -56,7 +56,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     public void AnimationEventDamage()
     {
         float dist = Vector3.Distance(transform.position, target.position);
-        if (attackCounter % 3 == 0) // Probably put this in Update() as it doesnt rely on animation cues
+        if (attackCounter % 3 == 0)
         {
             for (int i = 0; i < 360; i += 45)
             {
@@ -65,13 +65,14 @@ public class CairnTheIndomitableAttack : MonoBehaviour
                 float pdyp = transform.position.y + Mathf.Cos((i * Mathf.PI) / 180) * 1;
                 Vector2 self = transform.position;
                 Vector2 pVec = new Vector2 (pdxp, pdyp);
-                Vector2 direction = (pVec - self).normalized * cairnProjectileSpeed;
-                projectile.GetComponent<Rigidbody2D>().velocity = direction;
+                Vector2 direction = (pVec - self).normalized;
+                projectile.GetComponent<Rigidbody2D>().velocity = direction  * cairnProjectileSpeed;
                 projectile.GetComponent<TestEnemyProjectile>().damage = enemyStats_script.baseDamage;
                 projectile.GetComponent<TestEnemyProjectile>().removeDelay = projectileRemoveDelay;
+                projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
             }
         }
-        if (attackCounter / 6 == 1)
+        if (attackCounter % 6 == 0)
         {
             //enemyStats_script.invulnerable = true; 
             // Do Chaotic Release or something

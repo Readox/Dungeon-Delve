@@ -96,6 +96,10 @@ PrefabInstance:
       propertyPath: baseDamage
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 2858739568398597223, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
+      propertyPath: deathAnimation
+      value: 
+      objectReference: {fileID: 6003699789930840402, guid: 58b7708873b2c684e865f9b044ce33ed, type: 3}
     - target: {fileID: 3994704635129528660, guid: f8c456dae838aa14eb382a6a7dbf62a0, type: 3}
       propertyPath: m_Size.x
       value: 0.875

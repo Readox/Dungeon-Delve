@@ -128,10 +128,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 100
   currentHealth: 0
+  invulnerable: 0
   baseDamage: 5
   healthBar: {fileID: 6644100989410036163}
   healthBarSlider: {fileID: 6644100989410036161}
   upgradeCurrencyDrop: {fileID: 6532993714681381135, guid: 6ff97e3eba51f274983722f5bdcf4944, type: 3}
+  deathAnimation: {fileID: 6003699789930840402, guid: 58b7708873b2c684e865f9b044ce33ed, type: 3}
   upgradeCurrencyDropChance: 100
 --- !u!95 &6644100987987970558
 Animator:

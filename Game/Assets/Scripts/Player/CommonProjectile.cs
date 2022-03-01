@@ -30,8 +30,8 @@ public class CommonProjectile : CommonAttack
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.tag == "Enemy" && collision is BoxCollider2D)
-        {
-            if (collision.GetComponent<EnemyStats>() != null) // Do this multiple times for ferocity procs
+        { // Cairn is immune to projectiles
+            if (collision.GetComponent<EnemyStats>() != null && !collision.gameObject.name.Equals("Cairn the Indomitable")) // Do this multiple times for ferocity procs
             {
                 enemyStats_script = collision.GetComponent<EnemyStats>();
                 float finalDamage = CalculateDamage(weaponDamage);

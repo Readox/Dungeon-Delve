@@ -16,6 +16,7 @@ public class EnemyStats : MonoBehaviour
     public Slider healthBarSlider;
 
     public GameObject upgradeCurrencyDrop;
+    public GameObject deathAnimation;
     public float upgradeCurrencyDropChance;
 
     float playerMagicFind;
@@ -78,6 +79,9 @@ public class EnemyStats : MonoBehaviour
                 {
                     GameObject upgradeCurrency = Instantiate(upgradeCurrencyDrop, this.transform.position, Quaternion.identity);
                 }
+
+                GameObject deathAnim = Instantiate(deathAnimation, transform.position, Quaternion.identity);
+                deathAnim.gameObject.transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y, transform.localScale.z);
                 
                 // Destruction
                 if (transform.parent != null) // Is there a parent?
