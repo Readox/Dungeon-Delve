@@ -22,7 +22,6 @@ public class CommonProjectile : CommonAttack
         StartCoroutine(RemoveObject());
         base.gameManager = GameObject.FindWithTag("GameController");
         this.damageIndicator = gameManager.GetComponent<CommonAttack>().damageIndicator;
-        this.damageIndicatorParent = gameManager.GetComponent<CommonAttack>().damageIndicatorParent;
         
         //ferocityLineObject = GameObject.FindWithTag("FerocityLine");
     }
@@ -34,7 +33,7 @@ public class CommonProjectile : CommonAttack
             if (collision.GetComponent<EnemyStats>() != null && !collision.gameObject.name.Equals("Cairn the Indomitable")) // Do this multiple times for ferocity procs
             {
                 enemyStats_script = collision.GetComponent<EnemyStats>();
-                float finalDamage = CalculateDamage(weaponDamage);
+                float finalDamage = CalculateDamage(weaponDamage, collision.GetComponent<EnemyStats>().gameObject.transform); // Send in collision too for damageIndicator position
                 enemyStats_script.DealDamage(finalDamage); // initial attack
                 
                 //GameObject dI = Instantiate(damageIndicator, collision.GetComponent<EnemyStats>().gameObject.transform.position, Quaternion.identity);

@@ -1,7 +1,19 @@
 fileFormatVersion: 2
-guid: de73123fb6f05d94297893091b855f64
+guid: a0d5ba8c0e612364ba6a042f684c657e
 TextureImporter:
   internalIDToNameTable:
+  - first:
+      213: -168421969075237668
+    second: pixil-frame-0 (2)_0
+  - first:
+      213: -249628310123516169
+    second: pixil-frame-0 (2)_1
+  - first:
+      213: 6950916264672091854
+    second: pixil-frame-0 (2)_2
+  - first:
+      213: 87419031593189281
+    second: pixil-frame-0 (2)_3
   - first:
       213: 1144091964323245248
     second: CairnProjectile_0
@@ -14,6 +26,18 @@ TextureImporter:
   - first:
       213: -9219951895817767648
     second: CairnProjectile_3
+  - first:
+      213: -4166580829966953713
+    second: Mask_0
+  - first:
+      213: -710117256364220538
+    second: Mask_1
+  - first:
+      213: -7265138039870055927
+    second: Mask_2
+  - first:
+      213: 9077638449488412042
+    second: Mask_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -44,7 +68,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -115,7 +139,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: CairnProjectile_0
+      name: Mask_0
       rect:
         serializedVersion: 2
         x: 0
@@ -129,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0ccadd37491a0ef00800000000000000
-      internalID: 1144091964323245248
+      spriteID: f031ed58fc45d26c0800000000000000
+      internalID: -4166580829966953713
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CairnProjectile_1
+      name: Mask_1
       rect:
         serializedVersion: 2
         x: 16
@@ -150,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32da1af3b3ade9750800000000000000
-      internalID: 6313723675625499939
+      spriteID: 68f19812e182526f0800000000000000
+      internalID: -710117256364220538
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CairnProjectile_2
+      name: Mask_2
       rect:
         serializedVersion: 2
         x: 32
@@ -171,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e0e3d572e473aee0800000000000000
-      internalID: -1251027755490615067
+      spriteID: 90a1e51f17b0d2b90800000000000000
+      internalID: -7265138039870055927
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: CairnProjectile_3
+      name: Mask_3
       rect:
         serializedVersion: 2
         x: 48
@@ -192,8 +216,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 025b793a9962c0080800000000000000
-      internalID: -9219951895817767648
+      spriteID: a8d3f2d03104afd70800000000000000
+      internalID: 9077638449488412042
       vertices: []
       indices: 
       edges: []

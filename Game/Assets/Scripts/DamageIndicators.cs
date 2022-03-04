@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class DamageIndicators : MonoBehaviour
 {
-    public float removeDelay;
 
-    void Awake()
+    public void AnimationEventDestroy()
     {
-        StartCoroutine(DestroyAfterTime());
+        Destroy(gameObject);
     }
 
-    IEnumerator DestroyAfterTime()
+    public void StartDestroyTimer(float t) // takes in time and sends it to destroy function
     {
-        yield return new WaitForSeconds(removeDelay);
+        StartCoroutine(DestroyAfterTime(t));
+    }
+
+    IEnumerator DestroyAfterTime(float t)
+    {
+        yield return new WaitForSeconds(t);
         Destroy(gameObject);
     }
 

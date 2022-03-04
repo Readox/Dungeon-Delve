@@ -9,12 +9,12 @@ public class CommonAttack : MonoBehaviour
     public GameObject gameManager;
     private PlayerStats playerStats_script;
     public GameObject damageIndicator; // damageIndicator prefab
-    public GameObject damageIndicatorParent; //parent canvas for damage indicators and maybe more (will be UI overlay)
 
 
-    public float CalculateDamage(float weaponDamage) // Eventually this will take weapons and such as args (maybe)
+    public float CalculateDamage(float weaponDamage, Transform targetPos) // Takes in Transform for damage indicator location
     {
         float damage = 10 + weaponDamage; // Base Weapon Damage = 10
+        bool criticalHit = false;
         if (GetRandFloat(0,100) > GetCritChance()) // No Critical Hit
         {
             damage = (10 + weaponDamage) * (1 + GetStrength()/100);
@@ -22,6 +22,7 @@ public class CommonAttack : MonoBehaviour
         else // Critical Hit
         {
             damage = (10 + weaponDamage) * (1 + (GetStrength()/100)) * (1 + (GetCritDamage()/100));
+            criticalHit = true;
         }
 
         if (GetCritChance() > 100)
@@ -29,8 +30,27 @@ public class CommonAttack : MonoBehaviour
             damage *= 1 + ((GetCritChance()-100)/100);
         }
         //Debug.Log("Final Damage: " + damage);
+
+
+        GameObject di = Instantiate(damageIndicator, targetPos.position, Quaternion.identity);
+        ConfigureDamageIndicator(di, targetPos, damage, criticalHit);
+
         return damage;
     }
+
+
+    private void ConfigureDamageIndicator(GameObject di, Transform newParent, float damage, bool criticalHit)
+    {
+        di.transform.SetParent(newParent);
+        di.transform.position = newParent.position;
+        //di.GetComponent<TextMeshPro>().text = damage;
+        if (criticalHit)
+        {
+            //di.GetComponent<TextMeshPro>().color = 000000;
+        }
+    }
+
+
 
     public int GetFerocityProcs()
     {
@@ -99,5 +119,28 @@ public class CommonAttack : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // Older version of above
+    public float CalculateDamage(float weaponDamage) // Eventually this will take weapons and such as args (maybe)
+    {
+        float damage = 10 + weaponDamage; // Base Weapon Damage = 10
+        //bool criticalHit = false;
+        if (GetRandFloat(0,100) > GetCritChance()) // No Critical Hit
+        {
+            damage = (10 + weaponDamage) * (1 + GetStrength()/100);
+        }
+        else // Critical Hit
+        {
+            damage = (10 + weaponDamage) * (1 + (GetStrength()/100)) * (1 + (GetCritDamage()/100));
+            //criticalHit = true;
+        }
+
+        if (GetCritChance() > 100)
+        {
+            damage *= 1 + ((GetCritChance()-100)/100);
+        }
+        //Debug.Log("Final Damage: " + damage);
+        return damage;
     }
 }

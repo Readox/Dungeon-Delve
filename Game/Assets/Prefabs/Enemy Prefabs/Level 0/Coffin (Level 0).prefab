@@ -51,6 +51,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3751202684221714107, guid: d03599b6049ed06469c17188802d19fc, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 6647960612705429361, guid: ec2faa7b72e6d1748b5a7a9a2eac49c3, type: 3}
     - target: {fileID: 7724800932076972258, guid: d03599b6049ed06469c17188802d19fc, type: 3}
       propertyPath: m_Name
       value: Coffin (Level 0)
