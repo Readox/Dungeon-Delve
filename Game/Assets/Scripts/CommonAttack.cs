@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using TMPro;
 
 public class CommonAttack : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class CommonAttack : MonoBehaviour
     public GameObject gameManager;
     private PlayerStats playerStats_script;
     public GameObject damageIndicator; // damageIndicator prefab
-
+    public GameObject ferocityAnimation;
 
     public float CalculateDamage(float weaponDamage, Transform targetPos) // Takes in Transform for damage indicator location
     {
@@ -31,23 +32,31 @@ public class CommonAttack : MonoBehaviour
         }
         //Debug.Log("Final Damage: " + damage);
 
+        float finalDamage =float.Parse(damage.ToString("N0")); // Truncates Decimals
 
         GameObject di = Instantiate(damageIndicator, targetPos.position, Quaternion.identity);
-        ConfigureDamageIndicator(di, targetPos, damage, criticalHit);
+        ConfigureDamageIndicator(di, targetPos, finalDamage, criticalHit);
 
-        return damage;
+        return finalDamage;
     }
 
 
-    private void ConfigureDamageIndicator(GameObject di, Transform newParent, float damage, bool criticalHit)
+    private void ConfigureDamageIndicator(GameObject di, Transform newParent, float damage, bool criticalHit) // The new parent is the attacked entity
     {
         di.transform.SetParent(newParent);
-        di.transform.position = newParent.position;
-        //di.GetComponent<TextMeshPro>().text = damage;
+        di.transform.position = newParent.position; // this might be redundant
+        di.GetComponent<TextMeshPro>().text = damage.ToString(); 
         if (criticalHit)
         {
             //di.GetComponent<TextMeshPro>().color = 000000;
         }
+    }
+
+    public void SpawnFerocityAnimation(Transform newParent)
+    {
+        GameObject fero = Instantiate(ferocityAnimation, newParent.position, Quaternion.identity);
+        fero.transform.SetParent(newParent);
+        fero.transform.position = newParent.position; // this might be redundant
     }
 
 

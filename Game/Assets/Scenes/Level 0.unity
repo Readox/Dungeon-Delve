@@ -2440,8 +2440,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88b8191e68e8e1f4388efed44e240b77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerTransform: {fileID: 2018586247}
   player: {fileID: 2018586241}
   statsScrollRect: {fileID: 1886349997}
+  screenText: {fileID: 1756199386625121662, guid: 20e470699e0ef8445b2088d6307dd070, type: 3}
   healthBarSlider: {fileID: 522347246}
   healthText: {fileID: 1238202457}
   abilityBarSlider: {fileID: 2016325595}
@@ -2456,7 +2458,7 @@ MonoBehaviour:
   Strength: 1
   CritChance: 25
   CritDamage: 0
-  Ferocity: 0
+  Ferocity: 100
   HealthRegen: 0.01
   AbilityRegen: 0.01
   MagicFind: 0
@@ -2468,7 +2470,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378433348}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.1, y: 6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2488,6 +2490,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManager: {fileID: 378433348}
   damageIndicator: {fileID: 1756199386625121662, guid: 20e470699e0ef8445b2088d6307dd070, type: 3}
+  ferocityAnimation: {fileID: 4203382400405476611, guid: 62aa1a35d6692ad45a1cb3fa2bf70089, type: 3}
 --- !u!114 &378433352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4783,9 +4786,25 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2128818344279455475, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2128818344279455475, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2128818344279455475, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4637744834213301506, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_Name
       value: Cairn the Indomitable
+      objectReference: {fileID: 0}
+    - target: {fileID: 4637744834213301506, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4637744834213301510, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_RootOrder
@@ -10772,5 +10791,13 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 378433348}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: damageIndicator
+      value: 
+      objectReference: {fileID: 1756199386625121662, guid: 20e470699e0ef8445b2088d6307dd070, type: 3}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: ferocityAnimation
+      value: 
+      objectReference: {fileID: 4203382400405476611, guid: 62aa1a35d6692ad45a1cb3fa2bf70089, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}

@@ -61,16 +61,19 @@ public class MeleeAttacks : CommonAttack
                 if (collision.collider.GetComponent<EnemyStats>() != null)
                 {
                     enemyStats_script = collision.collider.GetComponent<EnemyStats>();
-                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage)); // initial attack
+                    float finalDamage = CalculateDamage(weaponDamage, collision.collider.GetComponent<EnemyStats>().gameObject.transform);
+                    enemyStats_script.DealDamage(finalDamage); // initial attack
 
                     for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
                     {   
                 
                         enemyStats_script.DealDamage(CalculateDamage(weaponDamage));
                         //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+                        SpawnFerocityAnimation(collision.collider.GetComponent<EnemyStats>().gameObject.transform);
 
                         AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
                         //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
+                        
                         
                         
                         // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around

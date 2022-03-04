@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerStats : MonoBehaviour
 {
 
     // Because Domain and Scene reloading is off, I need to be wary about this being static, but it appears to be fine for now
+    public Transform playerTransform;
     public static PlayerStats playerStats;
     PlayerSkills playerSkills_script;
     public GameObject player;
     public GameObject statsScrollRect;
+    public GameObject screenText;
 
     public Slider healthBarSlider;
     public Text healthText;
@@ -100,7 +103,7 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            Debug.Log("Pop up Evade text on game screen!!!");
+            SpawnEvadeIndicator();
         }
         
     }
@@ -165,6 +168,14 @@ public class PlayerStats : MonoBehaviour
         currentHealth += healAmount;
         CheckHealthMax();
         SetHealthInfo();
+    }
+    private void SpawnEvadeIndicator()
+    {
+        GameObject ev = Instantiate(screenText, playerTransform.position, Quaternion.identity);
+        ev.transform.SetParent(playerTransform);
+        ev.transform.position = playerTransform.position; // this might be redundant
+        ev.GetComponent<TextMeshPro>().text = "Dodge"; 
+        // Change color here
     }
     public string GetClass()
     {

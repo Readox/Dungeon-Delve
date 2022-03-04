@@ -119,10 +119,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
+  damageIndicator: {fileID: 1756199386625121662, guid: 20e470699e0ef8445b2088d6307dd070, type: 3}
+  ferocityAnimation: {fileID: 4203382400405476611, guid: 62aa1a35d6692ad45a1cb3fa2bf70089, type: 3}
   weaponDamage: 0
   removeDelay: 1.5
   piercing: 0
-  ferocityLineObject: {fileID: 7096570754581355574, guid: b8b7dd745a01cfa489ba3bb1dbec775e, type: 3}
   feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}
 --- !u!61 &5072695142131514754
 BoxCollider2D:

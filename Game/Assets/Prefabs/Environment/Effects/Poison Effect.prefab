@@ -17,7 +17,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1276075416553252314, guid: 4c7fe8bad24e568479caf88b3d6f3cd3, type: 3}
       propertyPath: m_Name
-      value: Poison Effect Variant
+      value: Poison Effect
       objectReference: {fileID: 0}
     - target: {fileID: 1276075416553404576, guid: 4c7fe8bad24e568479caf88b3d6f3cd3, type: 3}
       propertyPath: m_RootOrder

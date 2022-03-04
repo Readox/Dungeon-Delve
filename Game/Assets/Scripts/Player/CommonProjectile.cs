@@ -11,8 +11,6 @@ public class CommonProjectile : CommonAttack
     public float removeDelay;
     public bool piercing;
 
-    public GameObject ferocityLineObject;
-
     public AudioClip feroAudioClip;
 
     EnemyStats enemyStats_script;
@@ -45,6 +43,7 @@ public class CommonProjectile : CommonAttack
             
                     enemyStats_script.DealDamage(finalDamage);
                     //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+                    SpawnFerocityAnimation(collision.GetComponent<EnemyStats>().gameObject.transform);
 
                     AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
                     //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
