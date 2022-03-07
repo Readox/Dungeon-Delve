@@ -8,6 +8,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -937447821387250357, guid: 4c7fe8bad24e568479caf88b3d6f3cd3, type: 3}
+      propertyPath: destroyTime
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: -937447821387250357, guid: 4c7fe8bad24e568479caf88b3d6f3cd3, type: 3}
       propertyPath: followPlayer
       value: 0
       objectReference: {fileID: 0}

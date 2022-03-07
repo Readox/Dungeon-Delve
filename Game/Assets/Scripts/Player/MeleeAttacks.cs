@@ -51,7 +51,7 @@ public class MeleeAttacks : CommonAttack
 
     void Attack()
     {
-        // Physics2D.Raycast(Vector2 origin, Vector2 DIRECTION, float distance, int LayerMask {bit shifting involved}, ......)
+        // Physics2D.Raycast(Vector2 origin, width, Vector2 DIRECTION, float distance, int LayerMask {bit shifting involved}, ......)
         RaycastHit2D collision = Physics2D.CircleCast(rb.position, attackWidth, (mousePos - rb.position).normalized, attackRange, enemyLayers.value);
         //Debug.DrawRay(rb.position, (mousePos - rb.position).normalized, Color.red, 3f);
         if (collision.collider != null)
@@ -60,14 +60,16 @@ public class MeleeAttacks : CommonAttack
             {
                 if (collision.collider.GetComponent<EnemyStats>() != null)
                 {
+                    
+                    SpawnMeleeAnimation(collision.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized);
+
                     enemyStats_script = collision.collider.GetComponent<EnemyStats>();
                     float finalDamage = CalculateDamage(weaponDamage, collision.collider.GetComponent<EnemyStats>().gameObject.transform);
                     enemyStats_script.DealDamage(finalDamage); // initial attack
 
                     for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
                     {   
-                
-                        enemyStats_script.DealDamage(CalculateDamage(weaponDamage));
+                        enemyStats_script.DealDamage(CalculateDamage(weaponDamage, collision.collider.GetComponent<EnemyStats>().gameObject.transform));
                         //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
                         SpawnFerocityAnimation(collision.collider.GetComponent<EnemyStats>().gameObject.transform);
 

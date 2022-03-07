@@ -41,7 +41,7 @@ public class CommonProjectile : CommonAttack
                 for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
                 {
             
-                    enemyStats_script.DealDamage(finalDamage);
+                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage, collision.GetComponent<EnemyStats>().gameObject.transform));
                     //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
                     SpawnFerocityAnimation(collision.GetComponent<EnemyStats>().gameObject.transform);
 
@@ -58,6 +58,10 @@ public class CommonProjectile : CommonAttack
             Destroy(gameObject);
         }
         else if (collision.tag == "Enemy" && !piercing)
+        {
+            Destroy(gameObject);
+        }
+        else if (collision.tag != "Player")
         {
             Destroy(gameObject);
         }
