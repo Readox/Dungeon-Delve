@@ -10,6 +10,8 @@ public class TestSpell : MonoBehaviour
     public float projectileSpeed;
     public float weaponDamage;
     public float removeDelay;
+    public float attackRate;
+    float nextAttackTime;
 
     // Start is called before the first frame update
     void Start()
@@ -24,23 +26,26 @@ public class TestSpell : MonoBehaviour
         Destroy spell;
     }
     */
-
     // Update is called once per frame
     void Update()
     {
-        // 0 is for left click, 1 is for right click
-        if (Input.GetMouseButtonDown(1) /*&& SceneManager.GetActiveScene().name.Equals("Level 0")*/ && Time.timeScale != 0)
+        if (Time.time >= nextAttackTime) // from https://www.youtube.com/watch?v=sPiVz1k-fEs
         {
-            GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
-            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            Vector2 playerPos = transform.position;
-            Vector2 direction = (mousePos - playerPos).normalized;
-            spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
-            spell.GetComponent<CommonProjectile>().weaponDamage = this.weaponDamage;
-            
-            //Destroy(spell, removeDelay);
-
+            if (Input.GetMouseButtonDown(1) /*&& SceneManager.GetActiveScene().name.Equals("Level 0")*/ && Time.timeScale != 0)
+            {
+                GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 playerPos = transform.position;
+                Vector2 direction = (mousePos - playerPos).normalized;
+                spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
+                spell.GetComponent<CommonProjectile>().weaponDamage = this.weaponDamage;
+                nextAttackTime = Time.time + 1f / attackRate;
+                
+                //Destroy(spell, removeDelay);
+            }
         }
+        // 0 is for left click, 1 is for right click
+        
         /*
         if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
         {

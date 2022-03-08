@@ -146,8 +146,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerObject: {fileID: 0}
+  puffAnimation: {fileID: 8005730577629841105, guid: 93c45a9fb2e1a5c45b647890e3d5bc9c, type: 3}
   playerSpeed: 3
   originalSpeed: 0
+  dodgeImmunityLength: 1
+  dodgeCooldown: 3
   animator: {fileID: 5082268277408502058}
   rb: {fileID: 2018586242}
   fighterDashCost: 3
@@ -167,6 +170,7 @@ MonoBehaviour:
   projectileSpeed: 4
   weaponDamage: 2
   removeDelay: 1.5
+  attackCooldown: 1
 --- !u!50 &2018586242
 Rigidbody2D:
   serializedVersion: 4
@@ -201,8 +205,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  damageIndicator: {fileID: 0}
-  damageIndicatorParent: {fileID: 0}
+  damageIndicator: {fileID: 1756199386625121662, guid: 20e470699e0ef8445b2088d6307dd070, type: 3}
+  ferocityAnimation: {fileID: 4203382400405476611, guid: 62aa1a35d6692ad45a1cb3fa2bf70089, type: 3}
+  meleeAnimation: {fileID: 5595182159843216465, guid: c6cadcbbbf616434ab2c74c35e7bec0f, type: 3}
   attackSizeX: 1
   attackSizeY: 1
   enemyLayers:
@@ -211,4 +216,5 @@ MonoBehaviour:
   weaponDamage: 8
   attackRange: 0.5
   attackWidth: 0.5
+  attackCooldown: 2
   feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}

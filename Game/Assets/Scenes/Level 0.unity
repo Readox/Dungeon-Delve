@@ -10597,22 +10597,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: dodgeCooldown
-      value: 3
+    - target: {fileID: 5082268277408502054, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: attackRate
+      value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: puffAnimation
-      value: 
-      objectReference: {fileID: 8005730577629841105, guid: 93c45a9fb2e1a5c45b647890e3d5bc9c, type: 3}
     - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: gameManagerObject
       value: 
       objectReference: {fileID: 378433348}
-    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: dodgeImmunityLength
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -10658,20 +10650,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: segments
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: attackRate
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: curveAmount
+      value: 360
+      objectReference: {fileID: 0}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 378433348}
-    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: meleeAnimation
-      value: 
-      objectReference: {fileID: 5595182159843216465, guid: c6cadcbbbf616434ab2c74c35e7bec0f, type: 3}
-    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: damageIndicator
-      value: 
-      objectReference: {fileID: 1756199386625121662, guid: 20e470699e0ef8445b2088d6307dd070, type: 3}
-    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: ferocityAnimation
-      value: 
-      objectReference: {fileID: 4203382400405476611, guid: 62aa1a35d6692ad45a1cb3fa2bf70089, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}

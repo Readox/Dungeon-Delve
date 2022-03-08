@@ -17,8 +17,10 @@ public class MeleeAttacks : CommonAttack
     public LayerMask enemyLayers;
 
     public float weaponDamage;
-    public float attackRange;
+    public float attackRange; 
     public float attackWidth; // Circlecast radius
+    public float attackRate;
+    float nextAttackTime = 0f;
 
     Vector2 mousePos;
     //Vector3 attackDir;
@@ -42,14 +44,75 @@ public class MeleeAttacks : CommonAttack
         //mousePos = mousePos.normalized;
         //mousePos = mousePos * attackRange;
         //Debug.DrawLine(rb.position, mousePos, Color.blue);
-
-        if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
+        if (Time.time >= nextAttackTime) // from https://www.youtube.com/watch?v=sPiVz1k-fEs
         {
-            Attack();
+            if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
+            {
+                CalculatePoints();
+                DrawLines();
+                CheckForHits();
+                //OldAttack();
+                nextAttackTime = Time.time + 1f / attackRate;
+            }
+        }
+
+        
+    }
+
+    public float radius;
+    public int segments;
+    public float curveAmount;
+    private float calcAngle;
+    private List<Vector2> nodes = new List<Vector2>();
+
+    private void CalculatePoints()
+    {
+        nodes.Clear();
+        calcAngle = 0;
+        for (int i = 0;  i < segments + 1; i++ )
+        {
+            float posX = transform.position.x + Mathf.Cos(calcAngle * Mathf.Deg2Rad) * radius;
+            float posY = transform.position.y + Mathf.Sin(calcAngle * Mathf.Deg2Rad) * radius;
+            Vector2 pVec = new Vector2 (posX, posY);
+            nodes.Add(pVec);
+            calcAngle += curveAmount / (float)segments;
+        }
+    }
+
+    private void CheckForHits()
+    {
+        RaycastHit2D hit;
+        for (int i = 0; i < nodes.Count - 1; i++)
+        {
+            hit = Physics2D.Linecast(nodes[i], nodes[i+1]);
+            if (hit)
+            {
+                Debug.Log("Hit: " + hit.collider.gameObject.name);
+            }
+        }
+    }
+
+    private void DrawLines()
+    {
+        for (int i = 0; i < nodes.Count - 1; i++)
+        {
+            Debug.DrawLine(rb.position, nodes[i + 1], Color.red, 1.5f);
+            //Debug.DrawLine(nodes[i], nodes[i + 1], Color.red, 1.5f);
         }
     }
 
     void Attack()
+    {
+        //Collider2D[] cols = Physics2D.OverlapPointAll((mousePos - rb.position).normalized, LayerMask.GetMask("background")); 
+
+
+        //SpawnMeleeAnimation()
+    }
+
+
+
+
+    void OldAttack()
     {
         // Physics2D.Raycast(Vector2 origin, width, Vector2 DIRECTION, float distance, int LayerMask {bit shifting involved}, ......)
         RaycastHit2D collision = Physics2D.CircleCast(rb.position, attackWidth, (mousePos - rb.position).normalized, attackRange, enemyLayers.value);

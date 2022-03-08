@@ -84,12 +84,25 @@ public class CommonAttack : MonoBehaviour
             fero.GetComponent<Animator>().SetFloat("Type", 0);
         }
         */
-        transform.rotation = Quaternion.LookRotation(direction);
+        //transform.rotation = Quaternion.LookRotation(direction);
         melee.transform.SetParent(newParent);
         //fero.gameObject.transform.localScale = new Vector3(newParent.transform.localScale.x, newParent.transform.localScale.y, newParent.transform.localScale.z);
         melee.transform.position = newParent.position; // this might be redundant
     }
 
+    public bool MakeCriticalHitAttempt()
+    {
+        bool r = false;
+        if (GetRandFloat(0,100) > GetCritChance()) // No Critical Hit
+        {
+            r = false;
+        }
+        else // Critical Hit
+        {
+            r = true;
+        }
+        return r;
+    }
 
 
     public int GetFerocityProcs()
