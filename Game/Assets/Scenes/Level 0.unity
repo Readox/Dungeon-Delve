@@ -4781,11 +4781,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2128818342978270836, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2128818342978270836, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2128818344279455475, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4805,7 +4805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4637744834213301506, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4637744834213301510, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_RootOrder
@@ -10597,10 +10597,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
-    - target: {fileID: 5082268277408502054, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: attackRate
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: gameManagerObject
       value: 
@@ -10648,22 +10644,6 @@ PrefabInstance:
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: radius
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: segments
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: attackRate
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
-      propertyPath: curveAmount
-      value: 360
       objectReference: {fileID: 0}
     - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: gameManager

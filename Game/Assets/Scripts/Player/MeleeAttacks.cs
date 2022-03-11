@@ -68,25 +68,34 @@ public class MeleeAttacks : CommonAttack
     private void CalculatePoints()
     {
         nodes.Clear();
-        calcAngle = 0;
-        for (int i = 0;  i < segments + 1; i++ )
+        Vector2 mouseDirection = (mousePos - rb.position);
+        //nodes.Add(mouseDirection);
+
+        Vector2 startDir = Vector2FromAngle(Vector2.Angle(transform.right, mouseDirection.normalized));
+        if (mouseDirection.x < 0);
         {
-            float posX = transform.position.x + Mathf.Cos(calcAngle * Mathf.Deg2Rad) * radius;
-            float posY = transform.position.y + Mathf.Sin(calcAngle * Mathf.Deg2Rad) * radius;
-            Vector2 pVec = new Vector2 (posX, posY);
-            nodes.Add(pVec);
-            calcAngle += curveAmount / (float)segments;
+            startDir.y *= -1;
         }
+
+
+        float startAngle = 90;
+        float endAngle = 0;
+        nodes.Add(Vector2FromAngle(startAngle));
+        nodes.Add(Vector2FromAngle(endAngle));
+        nodes.Add(startDir); // this works
     }
 
     private void CheckForHits()
     {
         RaycastHit2D hit;
-        for (int i = 0; i < nodes.Count - 1; i++)
+        for (int i = 0; i <= nodes.Count - 1; i++)
         {
-            hit = Physics2D.Linecast(nodes[i], nodes[i+1]);
+            hit = Physics2D.Raycast(rb.position, nodes[i], attackRange, enemyLayers.value);
+            //hit = Physics2D.CircleCast(rb.position, 1f, (mousePos - rb.position).normalized, attackRange, enemyLayers.value);
+            //hit = Physics2D.Linecast(rb.position, (mousePos - rb.position).normalized, enemyLayers.value);
             if (hit)
             {
+                Attack(hit);
                 Debug.Log("Hit: " + hit.collider.gameObject.name);
             }
         }
@@ -94,22 +103,46 @@ public class MeleeAttacks : CommonAttack
 
     private void DrawLines()
     {
-        for (int i = 0; i < nodes.Count - 1; i++)
+        for (int i = 0; i <= nodes.Count - 1; i++)
         {
-            Debug.DrawLine(rb.position, nodes[i + 1], Color.red, 1.5f);
+            Debug.DrawRay(rb.position, nodes[i], Color.red, 1.5f);
             //Debug.DrawLine(nodes[i], nodes[i + 1], Color.red, 1.5f);
         }
     }
 
-    void Attack()
+    void Attack(RaycastHit2D hit)
     {
-        //Collider2D[] cols = Physics2D.OverlapPointAll((mousePos - rb.position).normalized, LayerMask.GetMask("background")); 
+        if (hit.collider.GetComponent<EnemyStats>() != null)
+        {
+            SpawnMeleeAnimation(hit.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized);
 
+            enemyStats_script = hit.collider.GetComponent<EnemyStats>();
+            float finalDamage = CalculateDamage(weaponDamage, hit.collider.GetComponent<EnemyStats>().gameObject.transform);
+            enemyStats_script.DealDamage(finalDamage); // initial attack
 
-        //SpawnMeleeAnimation()
+            for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
+            {   
+                enemyStats_script.DealDamage(CalculateDamage(weaponDamage, hit.collider.GetComponent<EnemyStats>().gameObject.transform));
+                //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+                SpawnFerocityAnimation(hit.collider.GetComponent<EnemyStats>().gameObject.transform);
+
+                AudioSource.PlayClipAtPoint(feroAudioClip, hit.collider.gameObject.transform.position, 1); // plays ferocity proc audio
+                //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
+                
+                
+                
+                // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
+        
+
+            }
+        }
     }
 
-
+    private Vector2 Vector2FromAngle(float a)
+    {
+        a *= Mathf.Deg2Rad;
+        return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
+    }
 
 
     void OldAttack()

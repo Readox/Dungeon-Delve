@@ -170,7 +170,7 @@ MonoBehaviour:
   projectileSpeed: 4
   weaponDamage: 2
   removeDelay: 1.5
-  attackCooldown: 1
+  attackRate: 1
 --- !u!50 &2018586242
 Rigidbody2D:
   serializedVersion: 4
@@ -214,7 +214,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   weaponDamage: 8
-  attackRange: 0.5
+  attackRange: 0.8
   attackWidth: 0.5
-  attackCooldown: 2
+  attackRate: 2
   feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}
+  radius: 2
+  segments: 5
+  curveAmount: 360
