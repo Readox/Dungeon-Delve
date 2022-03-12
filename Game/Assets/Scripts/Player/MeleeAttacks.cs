@@ -61,7 +61,7 @@ public class MeleeAttacks : CommonAttack
 
     public float radius;
     public int segments;
-    public float curveAmount;
+    public float curveDegrees;
     private float calcAngle;
     private List<Vector2> nodes = new List<Vector2>();
 
@@ -71,33 +71,42 @@ public class MeleeAttacks : CommonAttack
         Vector2 mouseDirection = (mousePos - rb.position);
         //nodes.Add(mouseDirection);
 
-        Vector2 startDir = Vector2FromAngle(Vector2.Angle(transform.right, mouseDirection.normalized));
-        if (mouseDirection.x < 0);
-        {
-            startDir.y *= -1;
-        }
+        calcAngle = Vector2.SignedAngle(transform.right, mouseDirection.normalized);
+        Vector2 startDir = Vector2FromAngle(calcAngle);
 
 
-        float startAngle = 90;
-        float endAngle = 0;
+        float startAngle = calcAngle - (curveDegrees / 2);
+        float endAngle = calcAngle + (curveDegrees / 2);
+        /*
         nodes.Add(Vector2FromAngle(startAngle));
         nodes.Add(Vector2FromAngle(endAngle));
-        nodes.Add(startDir); // this works
+        */
+        nodes.Add(startDir); // this works 
+        for (float i = startAngle; i <= endAngle; i += (curveDegrees/segments))
+        {
+            nodes.Add(Vector2FromAngle(i));
+        }
     }
+
+    private List<GameObject> attackedEnemies = new List<GameObject>();
 
     private void CheckForHits()
     {
+        attackedEnemies.Clear();
         RaycastHit2D hit;
         for (int i = 0; i <= nodes.Count - 1; i++)
         {
             hit = Physics2D.Raycast(rb.position, nodes[i], attackRange, enemyLayers.value);
+            
             //hit = Physics2D.CircleCast(rb.position, 1f, (mousePos - rb.position).normalized, attackRange, enemyLayers.value);
             //hit = Physics2D.Linecast(rb.position, (mousePos - rb.position).normalized, enemyLayers.value);
             if (hit)
             {
                 Attack(hit);
                 Debug.Log("Hit: " + hit.collider.gameObject.name);
+                break;
             }
+            
         }
     }
 
@@ -105,7 +114,7 @@ public class MeleeAttacks : CommonAttack
     {
         for (int i = 0; i <= nodes.Count - 1; i++)
         {
-            Debug.DrawRay(rb.position, nodes[i], Color.red, 1.5f);
+            Debug.DrawRay(rb.position, nodes[i], Color.red, 1f);
             //Debug.DrawLine(nodes[i], nodes[i + 1], Color.red, 1.5f);
         }
     }
@@ -114,7 +123,7 @@ public class MeleeAttacks : CommonAttack
     {
         if (hit.collider.GetComponent<EnemyStats>() != null)
         {
-            SpawnMeleeAnimation(hit.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized);
+            SpawnMeleeAnimation(hit.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized, calcAngle);
 
             enemyStats_script = hit.collider.GetComponent<EnemyStats>();
             float finalDamage = CalculateDamage(weaponDamage, hit.collider.GetComponent<EnemyStats>().gameObject.transform);
@@ -157,7 +166,7 @@ public class MeleeAttacks : CommonAttack
                 if (collision.collider.GetComponent<EnemyStats>() != null)
                 {
                     
-                    SpawnMeleeAnimation(collision.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized);
+                    SpawnMeleeAnimation(collision.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized, calcAngle);
 
                     enemyStats_script = collision.collider.GetComponent<EnemyStats>();
                     float finalDamage = CalculateDamage(weaponDamage, collision.collider.GetComponent<EnemyStats>().gameObject.transform);

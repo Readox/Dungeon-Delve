@@ -33,8 +33,17 @@ public class EnemyStats : MonoBehaviour
             healthBar.SetActive(true);
             currentHealth -= damage;
             CheckDeath();
-            healthBarSlider.value = CalculateHealthPercentage();  
+            healthBarSlider.value = CalculateHealthPercentage();
+            //StartCoroutine(InvulnerabilityFrameCoroutine(0.1f)); // Invul frames
         }
+    }
+
+    IEnumerator InvulnerabilityFrameCoroutine(float time)
+    {
+        invulnerable = true;
+        yield return new WaitForSeconds(time);
+        invulnerable = false;
+
     }
 
     public void HealCharacter(float heal)

@@ -218,6 +218,6 @@ MonoBehaviour:
   attackWidth: 0.5
   attackRate: 2
   feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}
-  radius: 2
-  segments: 5
-  curveAmount: 360
+  radius: 3.5
+  segments: 10
+  curveDegrees: 120

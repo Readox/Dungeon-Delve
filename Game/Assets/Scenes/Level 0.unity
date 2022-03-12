@@ -2453,12 +2453,12 @@ MonoBehaviour:
   abilityPoolMax: 200
   currentAbilityPool: 0
   currentHealth: 0
-  maxHealth: 1000
+  maxHealth: 100
   Defense: 0
   Strength: 1
   CritChance: 25
   CritDamage: 0
-  Ferocity: 100
+  Ferocity: 0
   HealthRegen: 0.01
   AbilityRegen: 0.01
   MagicFind: 0
@@ -4781,11 +4781,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2128818342978270836, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2128818342978270836, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2128818344279455475, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_AnchorMax.x
@@ -4805,7 +4805,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4637744834213301506, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4637744834213301510, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
       propertyPath: m_RootOrder
@@ -10536,6 +10536,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
+      propertyPath: conditionName
+      value: Poison
+      objectReference: {fileID: 0}
     - target: {fileID: 8433834297086595105, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -10623,15 +10627,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502059, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
