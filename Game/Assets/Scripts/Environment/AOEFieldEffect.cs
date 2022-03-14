@@ -14,10 +14,11 @@ public class AOEFieldEffect : MonoBehaviour
     // Here are the damage and condition variables 
     public bool applyDamage; 
     public bool applyCondition;
+    public bool applyBoon;
     public float damage; // This is affected by player defense and other damage reduction
-    public string conditionName; // "Poison", "Bleeding", "Slowness", etc.
-    public int conditionStacks;
-    public float conditionDuration;
+    public string effectName; // "Poison", "Bleeding", "Slowness", "Aegis", etc.
+    public int effectStacks;
+    public float effectDuration;
 
 
     void Awake()
@@ -53,7 +54,11 @@ public class AOEFieldEffect : MonoBehaviour
                     {
                         // new Conditions("Effect Name", # Effect Stacks, Duration)
                         // new Conditions("Effect Name", Duration)
-                        conditionManager_script.AddCondition(new Conditions(conditionName, conditionStacks, conditionDuration));
+                        conditionManager_script.AddCondition(new Conditions(effectName, effectStacks, effectDuration));
+                    }
+                    if (applyBoon)
+                    {
+                        conditionManager_script.AddBoon(new Boons(effectName, effectStacks, effectDuration));
                     }
                 }
                 

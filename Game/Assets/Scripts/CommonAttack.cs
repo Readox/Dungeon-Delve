@@ -51,6 +51,10 @@ public class CommonAttack : MonoBehaviour
         {
             di.GetComponent<TextMeshPro>().color = new Color32(255, 0, 0, 255);
         }
+        else
+        {
+            di.GetComponent<TextMeshPro>().color = new Color32(255, 108, 0, 255);
+        }
     }
 
     public void SpawnFerocityAnimation(Transform newParent)

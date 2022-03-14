@@ -19,7 +19,8 @@ public class ConditionManager : MonoBehaviour
     public GameObject bleedingEffectObjectInst;
     private GameObject bleedingEffectObject;
     
-    
+    public GameObject aegisEffectObjectInst;
+    private GameObject aegisEffectObject;
 
     void Awake()
     {
@@ -59,57 +60,8 @@ public class ConditionManager : MonoBehaviour
         playerStats_script.DealConditionDamage(totalEffectStacks); // TODO do animations, do proper damage, take in effect name for anim, take in effectstacks for damage
     }
 
-    public void AddCondition(Conditions c)
+    void CreateConditionEffectAnimationPrefab(Conditions c)
     {
-        /*
-        for(int i = 0; i < conditionsList.Count; i++)
-        {
-            if (conditionsList[i].effectName.Equals(c.effectName))
-            {
-                conditionsList[i].effectStacks += c.effectStacks;
-                conditionsList[i].duration += c.duration;
-                conditionsList[i].ReStart(); //TODO need restart method
-                break();
-            }
-        }
-        
-        if (conditionDamageTickCoroutine == null)
-        {
-            StartConditionDamageCoroutine();
-        }
-        */
-        if (c.effectName.Equals("Slowness") || c.effectName.Equals("Immobility"))
-        {
-            bool inList = false;
-            for(int i = 0; i < conditionsList.Count; i++)
-            {
-                if (conditionsList[i].effectName.Equals(c.effectName))
-                {
-                    inList = true;
-                    conditionsList[i].duration += c.duration;
-                    break;
-                }
-            }
-            if (inList == false)
-            {
-                conditionsList.Add(c);
-                conditionsList[conditionsList.Count - 1].OnStart();
-            }
-        }
-        else
-        {
-            conditionsList.Add(c);
-            CreateEffectAnimationPrefab(c);
-            conditionsList[conditionsList.Count - 1].OnStart();
-        }
-
-        
-    }
-
-
-    void CreateEffectAnimationPrefab(Conditions c)
-    {
-        
         if (c.effectName.Equals("Poison") && poisonEffectObject == null)
         {
             poisonEffectObject = Instantiate(poisonEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
@@ -120,7 +72,22 @@ public class ConditionManager : MonoBehaviour
             bleedingEffectObject = Instantiate(bleedingEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
             bleedingEffectObject.transform.SetParent(storageGameObject);
         }
-        
+    }
+
+    void CreateBoonEffectAnimationPrefab(Boons b)
+    {
+        if (b.effectName.Equals("Aegis") && aegisEffectObject == null)
+        {
+            aegisEffectObject = Instantiate(aegisEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
+            aegisEffectObject.transform.SetParent(playerMovement_script.gameObject.transform);
+        }
+        /*
+        else if (c.effectName.Equals("Bleeding") && bleedingEffectObject == null)
+        {
+            bleedingEffectObject = Instantiate(bleedingEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
+            bleedingEffectObject.transform.SetParent(storageGameObject);
+        }
+        */
     }
 
     public bool CheckForInstanceOf(string type)
@@ -146,7 +113,70 @@ public class ConditionManager : MonoBehaviour
         {
             Destroy(bleedingEffectObject);
         }
+        else if (type.Equals("Aegis"))
+        {
+            Destroy(aegisEffectObject);
+        }
     }
+
+    public void AddCondition(Conditions c)
+    {
+        if (c.effectName.Equals("Slowness") || c.effectName.Equals("Immobility"))
+        {
+            bool inList = false;
+            for(int i = 0; i < conditionsList.Count; i++)
+            {
+                if (conditionsList[i].effectName.Equals(c.effectName))
+                {
+                    inList = true;
+                    conditionsList[i].duration += c.duration;
+                    break;
+                }
+            }
+            if (inList == false)
+            {
+                conditionsList.Add(c);
+                CreateConditionEffectAnimationPrefab(c);
+                conditionsList[conditionsList.Count - 1].OnStart();
+            }
+        }
+        else
+        {
+            conditionsList.Add(c);
+            CreateConditionEffectAnimationPrefab(c);
+            conditionsList[conditionsList.Count - 1].OnStart();
+        }
+    }
+
+    public void AddBoon(Boons b)
+    {
+        if (b.effectName.Equals("Aegis"))
+        {
+            bool inList = false;
+            for(int i = 0; i < boonsList.Count; i++)
+            {
+                if (boonsList[i].effectName.Equals(b.effectName))
+                {
+                    inList = true;
+                    boonsList[i].duration += b.duration;
+                    break;
+                }
+            }
+            if (inList == false)
+            {
+                boonsList.Add(b);
+                CreateBoonEffectAnimationPrefab(b);
+                boonsList[boonsList.Count - 1].OnStart();
+            }
+        }
+        else
+        {
+            boonsList.Add(b);
+            CreateBoonEffectAnimationPrefab(b);
+            boonsList[boonsList.Count - 1].OnStart();
+        }
+    }
+
 
     public void DoSlowness()
     {
@@ -167,6 +197,14 @@ public class ConditionManager : MonoBehaviour
     public void StopHealthRegen()
     {
         playerStats_script.StopHealthRegen();
+    }
+    public void ActivateAegis()
+    {
+        playerStats_script.invulnerable = true;
+    } 
+    public void RemoveAegis()
+    {
+        playerStats_script.invulnerable = false;
     }
 
 

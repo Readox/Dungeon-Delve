@@ -41,6 +41,10 @@ public class EffectAnimation : MonoBehaviour
         if (!anim.GetBool("Trigger"))
         {
             anim.SetBool("Trigger", true);
+            if (gameObject.name.Substring(0,5).Equals("Aegis"))
+            {
+                anim.SetBool("AegisEffect", true);
+            }
         }
         
         yield return new WaitForSeconds(repeatInterval);

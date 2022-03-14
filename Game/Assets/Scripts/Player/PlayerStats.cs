@@ -28,6 +28,7 @@ public class PlayerStats : MonoBehaviour
     private bool healthRegenIsRunning = false;
 
     private bool isEvading = false;
+    public bool invulnerable = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -92,7 +93,15 @@ public class PlayerStats : MonoBehaviour
 
     public void DealDamage(float damage)
     {
-        if (!isEvading)
+        if (isEvading)
+        {
+            SpawnEvadeIndicator();
+        }
+        else if (invulnerable)
+        {
+            SpawnInvulnerableIndicator();
+        }
+        else
         {
             float dmgredper = Defense / (Defense + 100);
             if (dmgredper == 0) { dmgredper = 1; }
@@ -100,10 +109,6 @@ public class PlayerStats : MonoBehaviour
             currentHealth -= finalDamage;
             CheckDeath();
             SetHealthInfo();
-        }
-        else
-        {
-            SpawnEvadeIndicator();
         }
         
     }
@@ -169,13 +174,21 @@ public class PlayerStats : MonoBehaviour
         CheckHealthMax();
         SetHealthInfo();
     }
+    private void SpawnInvulnerableIndicator()
+    {
+        GameObject inv = Instantiate(screenText, playerTransform.position, Quaternion.identity);
+        inv.transform.SetParent(playerTransform);
+        inv.transform.position = playerTransform.position;
+        inv.GetComponent<TextMeshPro>().text = "Invulnerable";
+        inv.GetComponent<TextMeshPro>().color = new Color32(0, 195, 147, 255);
+    }
     private void SpawnEvadeIndicator()
     {
         GameObject ev = Instantiate(screenText, playerTransform.position, Quaternion.identity);
         ev.transform.SetParent(playerTransform);
         ev.transform.position = playerTransform.position; // this might be redundant
         ev.GetComponent<TextMeshPro>().text = "Dodge"; 
-        // Change color here
+        ev.GetComponent<TextMeshPro>().color = new Color32(0, 207, 0, 255);
     }
     public string GetClass()
     {

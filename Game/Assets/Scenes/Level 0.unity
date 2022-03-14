@@ -2449,6 +2449,7 @@ MonoBehaviour:
   abilityBarSlider: {fileID: 2016325595}
   abilityText: {fileID: 1533181305}
   playerClass: fighter
+  invulnerable: 0
   abilityPoolColor: 
   abilityPoolMax: 200
   currentAbilityPool: 0
@@ -2564,6 +2565,7 @@ MonoBehaviour:
   storageGameObject: {fileID: 837827545}
   poisonEffectObjectInst: {fileID: 125664502301223601, guid: 52d497d9925fd374da076c81899b3730, type: 3}
   bleedingEffectObjectInst: {fileID: 5331262014403437011, guid: c494ff49e3bfda84a975a13037b42fa6, type: 3}
+  aegisEffectObjectInst: {fileID: 4890090238914366101, guid: beaf242ddc4b4774b84155129bdf8655, type: 3}
 --- !u!1 &381666071
 GameObject:
   m_ObjectHideFlags: 0
@@ -10537,8 +10539,28 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
+      propertyPath: applyBoon
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
+      propertyPath: effectName
+      value: Aegis
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
+      propertyPath: effectStacks
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: conditionName
       value: Poison
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
+      propertyPath: applyCondition
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
+      propertyPath: effectDuration
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 8433834297086595105, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: m_RootOrder

@@ -2,31 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boons : MonoBehaviour
+public class Boons
 {
     public string effectName;
-    public string affectedStat;
     public int effectStacks;
     public float duration;
-    public Coroutine damageTickCoroutine;
-    public float originalStat;
 
-    private PlayerMovement playerMovementScript;
-    private PlayerStats playerStats_script;
-
-    public Boons(string effectName, string affectedStat, int effectStacks, float duration)
-    {
-        this.effectName = effectName;
-        this.affectedStat = affectedStat;
-        this.effectStacks = effectStacks;
-        this.duration = duration;
-    }
+    private ConditionManager cm;
 
     public Boons(string effectName, int effectStacks, float duration)
     {
         this.effectName = effectName;
         this.effectStacks = effectStacks;
         this.duration = duration;
+        cm = GameObject.FindWithTag("GameController").GetComponent<ConditionManager>();
+    }
+
+    public Boons(string effectName, float duration)
+    {
+        this.effectName = effectName;
+        this.duration = duration;
+        cm = GameObject.FindWithTag("GameController").GetComponent<ConditionManager>();
     }
 
     public void DoEffect() // Make sure to subtract duration;
@@ -36,12 +32,19 @@ public class Boons : MonoBehaviour
 
     public void OnStart()
     {
-        
+        if (effectName.Equals("Aegis"))
+        {
+            cm.ActivateAegis();
+        }
     }
 
     public void OnDurationExpire()
     {
-        
+        if (effectName.Equals("Aegis"))
+        {
+            cm.RemoveAegis();
+            cm.RemoveEffectAnimation(effectName);
+        }
     }
 
 
