@@ -2451,7 +2451,7 @@ MonoBehaviour:
   playerClass: fighter
   invulnerable: 0
   abilityPoolColor: 
-  abilityPoolMax: 200
+  abilityPoolMax: 500
   currentAbilityPool: 0
   currentHealth: 0
   maxHealth: 100
@@ -2461,7 +2461,7 @@ MonoBehaviour:
   CritDamage: 0
   Ferocity: 0
   HealthRegen: 0.01
-  AbilityRegen: 0.01
+  AbilityRegen: 0.05
   MagicFind: 0
 --- !u!4 &378433350
 Transform:
@@ -2565,6 +2565,7 @@ MonoBehaviour:
   storageGameObject: {fileID: 837827545}
   poisonEffectObjectInst: {fileID: 125664502301223601, guid: 52d497d9925fd374da076c81899b3730, type: 3}
   bleedingEffectObjectInst: {fileID: 5331262014403437011, guid: c494ff49e3bfda84a975a13037b42fa6, type: 3}
+  burningEffectObjectInst: {fileID: 6217596966202202826, guid: 87b989c629010f846a28865c630d2c49, type: 3}
   aegisEffectObjectInst: {fileID: 4890090238914366101, guid: beaf242ddc4b4774b84155129bdf8655, type: 3}
 --- !u!1 &381666071
 GameObject:
@@ -7554,7 +7555,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8239812584061764967, guid: 81877ebb4a4aa8945a1139f828b4973b, type: 3}
       propertyPath: m_RootOrder
-      value: 9
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 8239812584061764967, guid: 81877ebb4a4aa8945a1139f828b4973b, type: 3}
       propertyPath: m_LocalScale.x
@@ -7704,7 +7705,7 @@ RectTransform:
   - {fileID: 238009045}
   - {fileID: 911951951}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -7777,7 +7778,7 @@ Transform:
   - {fileID: 1756447825}
   - {fileID: 1750337851}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1506899827
 PrefabInstance:
@@ -10545,6 +10546,10 @@ PrefabInstance:
     - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: effectName
       value: Aegis
+      objectReference: {fileID: 0}
+    - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
+      propertyPath: hitInterval
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8433834297086595104, guid: c276af70cfd6aea44840575aec8d3be7, type: 3}
       propertyPath: effectStacks

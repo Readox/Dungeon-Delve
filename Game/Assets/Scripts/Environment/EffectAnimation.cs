@@ -10,6 +10,8 @@ public class EffectAnimation : MonoBehaviour
     public bool followPlayer;
     public float destroyTime;
     public float repeatInterval;
+    public float xOffset;
+    public float yOffset;
     private Coroutine c;
 
     void Awake()
@@ -58,6 +60,11 @@ public class EffectAnimation : MonoBehaviour
         if (followPlayer)
         {
             transform.position = target.position;
+            //transform.position.y += 1;
+            Vector3 tempVector = transform.position; // For properly centering stuff
+            tempVector.y += yOffset;
+            tempVector.x += xOffset;
+            transform.position = tempVector;
         }
         /*
         if (!anim.GetBool("Trigger") && showConstantly)

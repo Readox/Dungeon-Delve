@@ -150,7 +150,8 @@ MonoBehaviour:
   playerSpeed: 3
   originalSpeed: 0
   dodgeImmunityLength: 1
-  dodgeCooldown: 3
+  dodgeCost: 100
+  dodgeSpeed: 3
   animator: {fileID: 5082268277408502058}
   rb: {fileID: 2018586242}
   fighterDashCost: 3

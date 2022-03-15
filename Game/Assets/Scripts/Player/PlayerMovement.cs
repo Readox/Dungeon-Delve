@@ -18,8 +18,8 @@ public class PlayerMovement : MonoBehaviour
     public float playerSpeed;
     public float originalSpeed; // for storing the original speed value for slowness condition
     public float dodgeImmunityLength;
-    public float dodgeCooldown;
-    private float dodgeCharges;
+    public float dodgeCost;
+    public float dodgeSpeed;
 
     // Move Vector
     private Vector2 animationVec;
@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Rigidbody2D rb;
     private Vector2 moveDirection;
+    private Vector2 dodgeDirection;
 
     // Fixed Update called at regular times (set amount), more consistent than Update(), do physics here
     void FixedUpdate()
@@ -39,7 +40,14 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         ProcessInputs();
-        Move();
+        if (playerStats_script.GetEvadingStatus())
+        {
+            rb.velocity = dodgeDirection.normalized * dodgeSpeed;
+        }
+        else
+        {
+            Move();
+        }
     }
 
     /*
@@ -79,9 +87,8 @@ public class PlayerMovement : MonoBehaviour
             // Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
             // Uncommenting the code makes a trail of animations, which could probably be used to deal damage
         }
-        if (Input.GetKey(KeyCode.LeftShift) && dodgeCharges > 0)
+        if (Input.GetKey(KeyCode.LeftShift) && playerStats_script.getCurrentAbilityPool() > dodgeCost && !playerStats_script.GetEvadingStatus())
         {
-            dodgeCharges -= 1;
             StartCoroutine(Dodge());
         }
     }
@@ -89,18 +96,17 @@ public class PlayerMovement : MonoBehaviour
     IEnumerator Timer(float time)
     {
         yield return new WaitForSeconds(time);
-        dodgeCharges += 1;
-        if (dodgeCharges > Mathf.Round(playerStats_script.abilityPoolMax / 100))
-        {
-            dodgeCharges -= 1;
-        }
-        StartCoroutine(Timer(dodgeCooldown));
+        // Do something here
+        StartCoroutine(Timer(1f));
     }
 
     IEnumerator Dodge()
     {
+        playerStats_script.AbilityExpend(dodgeCost);
         Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
-        transform.Translate(animationVec * (playerSpeed * 3) * Time.deltaTime);
+        //transform.Translate(animationVec * (playerSpeed * 3) * Time.deltaTime);
+        dodgeDirection = moveDirection;
+
         playerStats_script.FlipEvading(); // sets isEvading to true for [dodgeCooldown] length
         yield return new WaitForSeconds(dodgeImmunityLength);
         playerStats_script.FlipEvading(); // sets isEvading back to false
@@ -145,8 +151,7 @@ public class PlayerMovement : MonoBehaviour
         playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
         animator = GetComponent<Animator>();
         originalSpeed = playerSpeed;
-        dodgeCharges = Mathf.Round(playerStats_script.abilityPoolMax / 100);
-        StartCoroutine(Timer(dodgeCooldown));
+        //StartCoroutine(Timer(1f));
     }
 
     public void DoSlowness()
@@ -183,6 +188,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void UseFighterAbility()
     {
+        Debug.Log("Disabled Ability. Will be switched out for something else.");
+        /*
         //Debug.Log("Current Ability Pool: " + gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool());
         gameManagerObject.GetComponent<PlayerStats>().AbilityExpend(fighterDashCost);
         if (gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool() > 0)
@@ -191,7 +198,7 @@ public class PlayerMovement : MonoBehaviour
             //Debug.Log("Current Ability Pool: " + gameManagerObject.GetComponent<PlayerStats>().getCurrentAbilityPool());
         }
         //animationVec = PlayerMovement.GetPlayeranimationVec();
-        
+        */
     }
 
 

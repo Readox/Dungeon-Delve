@@ -100,6 +100,7 @@ public class PlayerStats : MonoBehaviour
         else if (invulnerable)
         {
             SpawnInvulnerableIndicator();
+            gameObject.GetComponent<ConditionManager>().RemoveAegis();
         }
         else
         {
@@ -193,6 +194,10 @@ public class PlayerStats : MonoBehaviour
     public string GetClass()
     {
         return playerClass;
+    }
+    public bool GetEvadingStatus()
+    {
+        return isEvading;
     }
     private float CalculateAbilityPercentage()
     {

@@ -18,6 +18,8 @@ public class ConditionManager : MonoBehaviour
     private GameObject poisonEffectObject;
     public GameObject bleedingEffectObjectInst;
     private GameObject bleedingEffectObject;
+    public GameObject burningEffectObjectInst;
+    private GameObject burningEffectObject;
     
     public GameObject aegisEffectObjectInst;
     private GameObject aegisEffectObject;
@@ -41,9 +43,20 @@ public class ConditionManager : MonoBehaviour
                 conditionsList.Remove(c);
                 c.OnDurationExpire();
             }
-            if (c.effectName.Equals("Bleeding") || c.effectName.Equals("Poison") || c.effectName.Equals("Burning"))
+            if (c.effectName.Equals("Bleeding") || c.effectName.Equals("Poison"))
             {
                 totalEffectStacks += c.effectStacks;
+            }
+            if (c.effectName.Equals("Burning"))
+            {
+                if (Input.GetAxisRaw("Vertical") == 0 && Input.GetAxisRaw("Horizontal") == 0)
+                {
+                    totalEffectStacks = c.effectStacks * 2;
+                }
+                else
+                {
+                    totalEffectStacks += c.effectStacks;
+                }
             }
         }
         for (int o = 0; o < boonsList.Count; o++)
@@ -72,6 +85,11 @@ public class ConditionManager : MonoBehaviour
             bleedingEffectObject = Instantiate(bleedingEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
             bleedingEffectObject.transform.SetParent(storageGameObject);
         }
+        else if (c.effectName.Equals("Burning") && burningEffectObject == null)
+        {
+            burningEffectObject = Instantiate(burningEffectObjectInst, playerMovement_script.gameObject.transform.position, Quaternion.identity);
+            burningEffectObject.transform.SetParent(storageGameObject);
+        }
     }
 
     void CreateBoonEffectAnimationPrefab(Boons b)
@@ -90,19 +108,6 @@ public class ConditionManager : MonoBehaviour
         */
     }
 
-    public bool CheckForInstanceOf(string type)
-    {
-        for (int i = 0; i < conditionsList.Count; i++)
-        {
-            Conditions c = conditionsList[i];
-            if (c.effectName.Equals(type))
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public void RemoveEffectAnimation(string type)
     {
         if (type.Equals("Poison"))
@@ -112,6 +117,10 @@ public class ConditionManager : MonoBehaviour
         else if (type.Equals("Bleeding"))
         {
             Destroy(bleedingEffectObject);
+        }
+        else if (type.Equals("Burning"))
+        {
+            Destroy(burningEffectObject);
         }
         else if (type.Equals("Aegis"))
         {
@@ -205,7 +214,42 @@ public class ConditionManager : MonoBehaviour
     public void RemoveAegis()
     {
         playerStats_script.invulnerable = false;
+        RemoveEffectAnimation("Aegis");
+        int i = GetIndexInBoonsList("Aegis");
+        if (i != -1)
+        {
+            boonsList.RemoveAt(i);
+        }
+        
     }
+
+
+    public bool CheckForInstanceOfCondition(string type)
+    {
+        for (int i = 0; i < conditionsList.Count; i++)
+        {
+            Conditions c = conditionsList[i];
+            if (c.effectName.Equals(type))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public int GetIndexInBoonsList(string type)
+    {
+        for (int i = 0; i < boonsList.Count; i++)
+        {
+            Boons b = boonsList[i];
+            if (b.effectName.Equals(type))
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
 
 }

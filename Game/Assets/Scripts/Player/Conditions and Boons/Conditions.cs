@@ -66,7 +66,7 @@ public class Conditions
     {
         if (effectName.Equals("Bleeding"))
         {
-            if (!cm.CheckForInstanceOf(effectName))
+            if (!cm.CheckForInstanceOfCondition(effectName))
             {
                 cm.RemoveEffectAnimation(effectName);
             }
@@ -74,14 +74,17 @@ public class Conditions
         else if (effectName.Equals("Poison"))
         {
             cm.StartHealthRegen();
-            if (!cm.CheckForInstanceOf(effectName))
+            if (!cm.CheckForInstanceOfCondition(effectName))
             {
                 cm.RemoveEffectAnimation(effectName);
             }
         }
         else if (effectName.Equals("Burning"))
         {
-            
+            if (!cm.CheckForInstanceOfCondition(effectName))
+            {
+                cm.RemoveEffectAnimation(effectName);
+            }
         }
         else if (effectName.Equals("Slowness"))
         {
