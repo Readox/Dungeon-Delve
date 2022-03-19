@@ -36,7 +36,7 @@ public class PlayerSkills : MonoBehaviour
             playerStats_script.SetStat(ref skillType, modifyBy);
         }
 
-        playerStats_script.UpdateHealthAbilityBars(); // Update the health and ability bars now before the player exits the menu so that they are ready
+        playerStats_script.UpdateHealthEnduranceBars(); // Update the health and ability bars now before the player exits the menu so that they are ready
     }
 
 
@@ -180,7 +180,7 @@ public class PlayerSkills : MonoBehaviour
     public void UpdateUIElements(GameObject parent, SkillType currentClass) // This one is for the Add and Subtract Points
     {
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
-        playerStats_script.UpdateHealthAbilityBars();
+        playerStats_script.UpdateHealthEnduranceBars();
 
         string colorVal = playerStats_script.GetColorForStat(currentClass.GetSkillType());
         parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{currentClass.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
@@ -190,7 +190,7 @@ public class PlayerSkills : MonoBehaviour
     public void UpdateUIElements()
     {
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
-        playerStats_script.UpdateHealthAbilityBars();
+        playerStats_script.UpdateHealthEnduranceBars();
 
 
     }

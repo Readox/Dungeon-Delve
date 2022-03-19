@@ -8,6 +8,8 @@ public class CommonAttack : MonoBehaviour
 {
 
     public GameObject gameManager;
+    public Transform playerPos;
+    public float meleeOffset;
     private PlayerStats playerStats_script;
     public GameObject damageIndicator; // damageIndicator prefab
     public GameObject ferocityAnimation;
@@ -74,15 +76,18 @@ public class CommonAttack : MonoBehaviour
         fero.transform.position = newParent.position; // this might be redundant
     }
 
-    public void SpawnMeleeAnimation(Transform newParent, Vector2 direction, float angle)
-    {
+    public void SpawnMeleeAnimation(Transform newParent, Vector2 direction2, float angle) // help with this acquired from: https://stackoverflow.com/questions/58050314/i-have-a-problem-with-instantiate-direction-and-offset
+    { 
+        Vector3 origin = playerPos.position; // + additional stuff?
+        Vector3 direction = direction2;
+        origin += direction * meleeOffset;
         //bool result  = (UnityEngine.Random.value > 0.5f); // https://gamedev.stackexchange.com/questions/110332/is-there-a-random-command-for-boolean-variables-in-unity-c
-        GameObject melee = Instantiate(meleeAnimation, newParent.position, Quaternion.identity);
-        melee.transform.Rotate(0, 0, angle, Space.World); // this works alright
+        GameObject melee = Instantiate(meleeAnimation, origin, Quaternion.identity);
+        melee.transform.Rotate(0, 0, angle, Space.World);
 
         melee.transform.SetParent(newParent);
         //melee.gameObject.transform.localScale = new Vector3(newParent.transform.localScale.x, newParent.transform.localScale.y, newParent.transform.localScale.z);
-        melee.transform.position = newParent.position; // this might be redundant
+        //melee.transform.position = newParent.position; // this might be redundant
     }
 
     public bool MakeCriticalHitAttempt()

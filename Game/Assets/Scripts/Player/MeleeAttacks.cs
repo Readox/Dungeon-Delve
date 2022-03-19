@@ -12,6 +12,7 @@ public class MeleeAttacks : CommonAttack
     //float attackOffset = 25f;
     // public string attackType; // Maybe later
 
+    public GameObject playerSword;
     public float attackSizeX;
     public float attackSizeY;
     public LayerMask enemyLayers;
@@ -29,21 +30,25 @@ public class MeleeAttacks : CommonAttack
     Rigidbody2D rb;
     EnemyStats enemyStats_script;
     public AudioClip feroAudioClip;
+    private Camera cam;
 
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        cam = Camera.main;
     }
 
     // Update is called once per frame
     void Update()
     {
         //mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         //mousePos = mousePos.normalized;
         //mousePos = mousePos * attackRange;
         //Debug.DrawLine(rb.position, mousePos, Color.blue);
+        SwordRotation();
+        
         if (Time.time >= nextAttackTime) // from https://www.youtube.com/watch?v=sPiVz1k-fEs
         {
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
@@ -58,6 +63,25 @@ public class MeleeAttacks : CommonAttack
 
         
     }
+
+    private void SwordRotation()
+    {
+        Vector2 dir = mousePos - rb.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        Quaternion rotation = Quaternion.AngleAxis(angle - 135, Vector3.forward);
+        playerSword.transform.rotation = rotation;
+        ConfigureSwordOffset(dir);
+    }
+
+    public void ConfigureSwordOffset(Vector2 dir)
+    {
+        Vector3 origin = transform.position; // + additional stuff?
+        Vector3 direction = dir;
+        origin += direction * 1f;
+        //bool result  = (UnityEngine.Random.value > 0.5f); // https://gamedev.stackexchange.com/questions/110332/is-there-a-random-command-for-boolean-variables-in-unity-c
+        playerSword.transform.position = origin;
+    }
+
 
     public float radius;
     public int segments;
@@ -123,6 +147,7 @@ public class MeleeAttacks : CommonAttack
     {
         if (hit.collider.GetComponent<EnemyStats>() != null)
         {
+            //StartCoroutine(ShowSword(1f));
             SpawnMeleeAnimation(hit.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized, calcAngle);
 
             enemyStats_script = hit.collider.GetComponent<EnemyStats>();
@@ -145,6 +170,14 @@ public class MeleeAttacks : CommonAttack
 
             }
         }
+    }
+
+    IEnumerator ShowSword(float time)
+    {
+        playerSword.SetActive(true);
+        //ConfigurePlayerSword(playerSword, (mousePos - rb.position).normalized, calcAngle);
+        yield return new WaitForSeconds(time);
+        playerSword.SetActive(false);
     }
 
     private Vector2 Vector2FromAngle(float a)

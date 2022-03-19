@@ -20,14 +20,15 @@ public class PlayerMovement : MonoBehaviour
     public float dodgeImmunityLength;
     public float dodgeCost;
     public float dodgeSpeed;
+    private bool dodgeAnimationLock = false;
 
     // Move Vector
     private Vector2 animationVec;
     public Animator animator;
 
     public Rigidbody2D rb;
-    private Vector2 moveDirection;
-    private Vector2 dodgeDirection;
+    private Vector3 moveDirection;
+    private Vector3 dodgeDirection;
 
     // Fixed Update called at regular times (set amount), more consistent than Update(), do physics here
     void FixedUpdate()
@@ -40,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     void Update()
     {
         ProcessInputs();
-        if (playerStats_script.GetEvadingStatus())
+        if (dodgeAnimationLock)
         {
             rb.velocity = dodgeDirection.normalized * dodgeSpeed;
         }
@@ -62,7 +63,7 @@ public class PlayerMovement : MonoBehaviour
         float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
         
-        moveDirection = new Vector2(moveX, moveY).normalized; // To fix diagonal movement
+        moveDirection = new Vector3(moveX, moveY, 0).normalized; // To fix diagonal movement
 
         animationVec = Vector2.zero;
         if (Input.GetKey(KeyCode.W))
@@ -87,9 +88,9 @@ public class PlayerMovement : MonoBehaviour
             // Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
             // Uncommenting the code makes a trail of animations, which could probably be used to deal damage
         }
-        if (Input.GetKey(KeyCode.LeftShift) && playerStats_script.getCurrentAbilityPool() > dodgeCost && !playerStats_script.GetEvadingStatus())
+        if (Input.GetKey(KeyCode.LeftShift) && playerStats_script.getCurrentEndurancePool() >= dodgeCost && !playerStats_script.GetEvadingStatus())
         {
-            StartCoroutine(Dodge());
+            StartCoroutine(Dodge());            
         }
     }
 
@@ -100,21 +101,41 @@ public class PlayerMovement : MonoBehaviour
         StartCoroutine(Timer(1f));
     }
 
+    IEnumerator DodgeAnimationLock(float time)
+    {
+        dodgeAnimationLock = true;
+        yield return new WaitForSeconds(time);
+        dodgeAnimationLock = false;
+    }
+
     IEnumerator Dodge()
     {
-        playerStats_script.AbilityExpend(dodgeCost);
+        dodgeDirection = moveDirection.normalized;
+        StartCoroutine(DodgeAnimationLock(dodgeImmunityLength / 2));
+        playerStats_script.EnduranceExpend(dodgeCost);
         Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
         //transform.Translate(animationVec * (playerSpeed * 3) * Time.deltaTime);
-        dodgeDirection = moveDirection;
 
         playerStats_script.FlipEvading(); // sets isEvading to true for [dodgeCooldown] length
         yield return new WaitForSeconds(dodgeImmunityLength);
         playerStats_script.FlipEvading(); // sets isEvading back to false
     }
 
+    private void StartDodgeRoll()
+    {
+        float tempSpeed = dodgeSpeed;
+        transform.position += dodgeDirection * dodgeSpeed * Time.deltaTime;
+        dodgeSpeed -= dodgeSpeed * 0.1f * Time.deltaTime;
+        if (dodgeSpeed < playerSpeed)
+        {
+            playerStats_script.FlipEvading();
+            dodgeSpeed = tempSpeed;
+        }
+    }
+
     void Move()
     {
-        rb.velocity = new Vector2(moveDirection.x * playerSpeed, moveDirection.y * playerSpeed);
+        rb.velocity = new Vector3(moveDirection.x * playerSpeed, moveDirection.y * playerSpeed, 0);
 
         animationVec = animationVec.normalized;
         //transform.Translate(animationVec * playerSpeed * Time.deltaTime);

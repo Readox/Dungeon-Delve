@@ -18,13 +18,13 @@ public class PlayerStats : MonoBehaviour
 
     public Slider healthBarSlider;
     public Text healthText;
-    public Slider abilityBarSlider;
-    public Text abilityText;
+    public Slider enduranceBarSlider;
+    public Text enduranceText;
 
     public string playerClass;
 
     public Coroutine healthRegenCoroutine;
-    public Coroutine abilityRegenCoroutine;
+    public Coroutine enduranceRegenCoroutine;
     private bool healthRegenIsRunning = false;
 
     private bool isEvading = false;
@@ -33,12 +33,12 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        currentAbilityPool = abilityPoolMax;
+        currentEndurancePool = endurancePoolMax;
 
 
         healthRegenCoroutine = StartCoroutine(HealthRegeneration()); 
         healthRegenIsRunning = true;
-        abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
+        enduranceRegenCoroutine = StartCoroutine(EnduranceRegeneration());
     }
     public IEnumerator HealthRegeneration()
     {
@@ -48,13 +48,13 @@ public class PlayerStats : MonoBehaviour
         SetHealthInfo();
         healthRegenCoroutine = StartCoroutine(HealthRegeneration());
     }
-    public IEnumerator AbilityRegeneration()
+    public IEnumerator EnduranceRegeneration()
     {
         yield return new WaitForSeconds(1);
-        currentAbilityPool += abilityPoolMax * AbilityRegen;
-        CheckAbilityMax();
-        SetAbilityInfo();
-        abilityRegenCoroutine = StartCoroutine(AbilityRegeneration());
+        currentEndurancePool += endurancePoolMax * EnduranceRegen;
+        CheckEnduranceMax();
+        SetEnduranceInfo();
+        enduranceRegenCoroutine = StartCoroutine(EnduranceRegeneration());
     }
 
     // Update is called once per frame
@@ -76,19 +76,19 @@ public class PlayerStats : MonoBehaviour
         UpdateScrollRectStats(statsScrollRect);
 
         Color color;
-        ColorUtility.TryParseHtmlString(abilityPoolColor, out color);
+        ColorUtility.TryParseHtmlString(endurancePoolColor, out color);
 
-        abilityBarSlider.gameObject.transform.Find("Fill Area").Find("Fill").GetComponent<Image>().color = color; // Sets ability pool color to: x
-        abilityBarSlider.gameObject.transform.Find("Text").GetComponent<Text>().color = color; // Sets ability pool text to x:
+        enduranceBarSlider.gameObject.transform.Find("Fill Area").Find("Fill").GetComponent<Image>().color = color; // Sets endurance pool color to: x
+        enduranceBarSlider.gameObject.transform.Find("Text").GetComponent<Text>().color = color; // Sets endurance pool text to x:
 
         currentHealth = maxHealth;
-        currentAbilityPool = abilityPoolMax;
+        currentEndurancePool = endurancePoolMax;
 
         healthBarSlider.value = 1;
         healthText.text = Mathf.Ceil(currentHealth).ToString() + " / " + Mathf.Ceil(maxHealth).ToString();
 
-        abilityBarSlider.value = 1;
-        abilityText.text = Mathf.Ceil(currentAbilityPool).ToString() + " / " + Mathf.Ceil(abilityPoolMax).ToString();
+        enduranceBarSlider.value = 1;
+        enduranceText.text = Mathf.Ceil(currentEndurancePool).ToString() + " / " + Mathf.Ceil(endurancePoolMax).ToString();
     }
 
     public void DealDamage(float damage)
@@ -151,22 +151,22 @@ public class PlayerStats : MonoBehaviour
         
     }
     
-    public void AbilityExpend(float abilityCost)
+    public void EnduranceExpend(float enduranceCost)
     {
-        currentAbilityPool -= abilityCost;
-        CheckAbilityMax();
-        SetAbilityInfo();
+        currentEndurancePool -= enduranceCost;
+        CheckEnduranceMax();
+        SetEnduranceInfo();
 
     }
-    public void CheckAbilityMax()
+    public void CheckEnduranceMax()
     {
-        if (currentAbilityPool > abilityPoolMax)
+        if (currentEndurancePool > endurancePoolMax)
         {
-            currentAbilityPool = abilityPoolMax;
+            currentEndurancePool = endurancePoolMax;
         }
-        if (currentAbilityPool < 0)
+        if (currentEndurancePool < 0)
         {
-            currentAbilityPool = 0;
+            currentEndurancePool = 0;
         }
     }
     public void HealCharacter(float healAmount)
@@ -199,27 +199,27 @@ public class PlayerStats : MonoBehaviour
     {
         return isEvading;
     }
-    private float CalculateAbilityPercentage()
+    private float CalculateEndurancePercentage()
     {
-        return currentAbilityPool / abilityPoolMax;
+        return currentEndurancePool / endurancePoolMax;
     }
     private float CalculateHealthPercentage()
     {
         return currentHealth / maxHealth;
     }
-    private void SetAbilityInfo()
+    private void SetEnduranceInfo()
     {
-        abilityBarSlider.value = CalculateAbilityPercentage();
-        abilityText.text = Mathf.Ceil(currentAbilityPool).ToString() + " / " + Mathf.Ceil(abilityPoolMax).ToString();
+        enduranceBarSlider.value = CalculateEndurancePercentage();
+        enduranceText.text = Mathf.Ceil(currentEndurancePool).ToString() + " / " + Mathf.Ceil(endurancePoolMax).ToString();
     }
     private void SetHealthInfo()
     {
         healthBarSlider.value = CalculateHealthPercentage();
         healthText.text = Mathf.Ceil(currentHealth).ToString() + " / " + Mathf.Ceil(maxHealth).ToString();
     }
-    public void UpdateHealthAbilityBars()
+    public void UpdateHealthEnduranceBars()
     {
-        SetAbilityInfo();
+        SetEnduranceInfo();
         SetHealthInfo();
     }
     public void CheckHealthMax()
@@ -268,9 +268,9 @@ public class PlayerStats : MonoBehaviour
         SceneManager.UnloadSceneAsync("Level 0");
     }
 
-    public float getCurrentAbilityPool()
+    public float getCurrentEndurancePool()
     {
-        return currentAbilityPool;
+        return currentEndurancePool;
     }
 
 
@@ -278,19 +278,19 @@ public class PlayerStats : MonoBehaviour
     {
         if (playerClass.Equals("fighter"))
         {
-            abilityPoolColor = "#FF2800";
+            endurancePoolColor = "#FF2800";
         }
         else if (playerClass.Equals("mage"))
         {
-            abilityPoolColor = "#43FFF8";
+            endurancePoolColor = "#43FFF8";
         }
         else if (playerClass.Equals("archer"))
         {
-            abilityPoolColor = "#02F805";
+            endurancePoolColor = "#02F805";
         }
         else if (playerClass.Equals("tank"))
         {
-            abilityPoolColor = "#335E2C";
+            endurancePoolColor = "#335E2C";
         }
         else
         {
@@ -321,8 +321,8 @@ public class PlayerStats : MonoBehaviour
             $" <color={cdColor}>Critical Damage: {CritDamage}</color> \n" +
             $" <color={ferocityColor}>Ferocity: {Ferocity}</color> \n" + 
             $" <color={healthColor}>Health Regeneration: {HealthRegen}</color> \n" +
-            $" <color={abilityPoolColor}>Ability Regeneration: {AbilityRegen}</color> \n" +
-            $" <color={abilityPoolColor}>Ability Pool: {abilityPoolMax}</color> \n" +
+            $" <color={endurancePoolColor}>Endurance Regeneration: {EnduranceRegen}</color> \n" +
+            $" <color={endurancePoolColor}>Endurance Pool: {endurancePoolMax}</color> \n" +
             $" <color={mfColor}>Magic Find: {MagicFind}</color> \n";
         childText.text = outputString;
     }
@@ -354,9 +354,9 @@ public class PlayerStats : MonoBehaviour
         {
             return ferocityColor;
         }
-        else if (skillType.Equals("abilityPoolMax") || skillType.Equals("AbilityRegen"))
+        else if (skillType.Equals("endurancePoolMax") || skillType.Equals("EnduranceRegen"))
         {
-            return abilityPoolColor;
+            return endurancePoolColor;
         }
         else if (skillType.Equals("MagicFind"))
         {
@@ -392,10 +392,10 @@ public class PlayerStats : MonoBehaviour
 
 
     // All this stuff is down here, because there is a lot
-    public string abilityPoolColor;
+    public string endurancePoolColor;
 
-    public float abilityPoolMax;
-    public float currentAbilityPool;
+    public float endurancePoolMax;
+    public float currentEndurancePool;
 
 
     // Current Health that the player has
@@ -431,9 +431,9 @@ public class PlayerStats : MonoBehaviour
     // Base Value: 1% = 0.01
     public float HealthRegen;
 
-    // Percentage of ability energy regenerated every second
+    // Percentage of endurance energy regenerated every second
     // Base value 2% = 0.02
-    public float AbilityRegen;
+    public float EnduranceRegen;
 
     // Chance for rare drops from boss chests and monsters
     // Formula = baseDropChance * (1 + (MagicFind / 100))

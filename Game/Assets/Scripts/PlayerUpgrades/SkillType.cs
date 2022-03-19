@@ -41,13 +41,13 @@ public class SkillType
         {
             finalText = "CritDamage";
         }
-        else if (finalText.Equals("Ability Max"))
+        else if (finalText.Equals("Endurance Max"))
         {
-            finalText = "abilityPoolMax";
+            finalText = "endurancePoolMax";
         }
-        else if (finalText.Equals("Ability Regen"))
+        else if (finalText.Equals("Endurance Regen"))
         {
-            finalText = "AbilityRegen";
+            finalText = "EnduranceRegen";
         }
         else if (finalText.Equals("Health Regen"))
         {
@@ -135,7 +135,7 @@ public class SkillType
         {
             finalVal = 10 * skillLevel;
         }
-        else if (skillType.Equals("AbilityRegen") || skillType.Equals("HealthRegen"))
+        else if (skillType.Equals("EnduranceRegen") || skillType.Equals("HealthRegen"))
         {
             finalVal = 0.01f; // No multiplacation by skill Level, only increases by set amount every level
         }
