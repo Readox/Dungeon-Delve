@@ -77,7 +77,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
             //enemyStats_script.invulnerable = true; 
             // Do Chaotic Release or something
         }
-        if (dist < (attackRange * 1.5)) // Multiply the attack range to give the enemy a slight boost in range to combat diagonal movement 
+        if (dist < attackRange)
         {
             playerStats_script.DealDamage(damage);
             attackCounter += 1; 

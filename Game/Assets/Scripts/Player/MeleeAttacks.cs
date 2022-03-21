@@ -13,13 +13,11 @@ public class MeleeAttacks : CommonAttack
     // public string attackType; // Maybe later
 
     public GameObject playerSword;
-    public float attackSizeX;
-    public float attackSizeY;
+    public float swordffsetDistance;
     public LayerMask enemyLayers;
 
     public float weaponDamage;
     public float attackRange; 
-    public float attackWidth; // Circlecast radius
     public float attackRate;
     float nextAttackTime = 0f;
 
@@ -67,10 +65,12 @@ public class MeleeAttacks : CommonAttack
     private void SwordRotation()
     {
         Vector2 dir = mousePos - rb.position;
-        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        float rads = Mathf.Atan2(dir.y, dir.x);
+        float angle = rads * Mathf.Rad2Deg;
+        playerSword.transform.localPosition = new Vector3(Mathf.Cos(rads) * swordffsetDistance, Mathf.Sin(rads) * swordffsetDistance, 0);
         Quaternion rotation = Quaternion.AngleAxis(angle - 135, Vector3.forward);
         playerSword.transform.rotation = rotation;
-        ConfigureSwordOffset(dir);
+        //ConfigureSwordOffset(dir);
     }
 
     public void ConfigureSwordOffset(Vector2 dir)
@@ -186,6 +186,13 @@ public class MeleeAttacks : CommonAttack
         return new Vector2(Mathf.Cos(a), Mathf.Sin(a));
     }
 
+
+
+
+
+    public float attackSizeX;
+    public float attackSizeY;
+    public float attackWidth; // Circlecast radius
 
     void OldAttack()
     {

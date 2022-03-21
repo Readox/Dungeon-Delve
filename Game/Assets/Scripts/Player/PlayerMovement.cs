@@ -110,8 +110,15 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator Dodge()
     {
-        dodgeDirection = moveDirection.normalized;
-        StartCoroutine(DodgeAnimationLock(dodgeImmunityLength / 2));
+        if (moveDirection == Vector3.zero) // If player is not currently moving
+        {
+            dodgeDirection = new Vector3(0, -1, 0);
+        }
+        else
+        {
+            dodgeDirection = moveDirection.normalized;
+        }
+        StartCoroutine(DodgeAnimationLock(dodgeImmunityLength / 2)); // This is here to lock the player into a dodge for a different time length than invulnerability
         playerStats_script.EnduranceExpend(dodgeCost);
         Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
         //transform.Translate(animationVec * (playerSpeed * 3) * Time.deltaTime);
