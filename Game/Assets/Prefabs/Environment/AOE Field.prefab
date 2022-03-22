@@ -95,11 +95,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c06e2de4be96b44a972addb773cf60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitInterval: 1
+  hitInterval: 0
   targetTag: Player
-  applyDamage: 0
-  applyCondition: 1
-  damage: 0
-  conditionName: Poison
-  conditionStacks: 1
-  conditionDuration: 1
+  applyDamage: 1
+  applyCondition: 0
+  applyBoon: 0
+  damage: 30
+  effectName: 
+  effectStacks: 0
+  effectDuration: 0
+  destroyAfterTime: 0.8
+  effectAfterTime: 0.3

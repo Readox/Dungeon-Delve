@@ -14,6 +14,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     public GameObject cairnProjectile;
     public float cairnProjectileSpeed;
     public float projectileRemoveDelay;
+    public GameObject cairnAOE;
 
     float damage;
     int attackCounter;
@@ -72,12 +73,16 @@ public class CairnTheIndomitableAttack : MonoBehaviour
                 projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
             }
         }
-        if (attackCounter % 6 == 0)
+        if (attackCounter % 6 == 0 && attackCounter != 0)
         {
-            //enemyStats_script.invulnerable = true; 
-            // Do Chaotic Release or something
+            InvulnerabilityTimer(5f);
+            for (int i = 0; i <= 10; i++)
+            {
+                Vector3 pos = new Vector3(transform.position.x + Random.Range(-10f, 10f), transform.position.y + Random.Range(-10f, 10f), 0);
+                GameObject cAOE = Instantiate(cairnAOE, pos, Quaternion.identity);
+            }
         }
-        if (dist < attackRange)
+        if (dist < attackRange * 1.5)
         {
             playerStats_script.DealDamage(damage);
             attackCounter += 1; 
@@ -106,6 +111,14 @@ public class CairnTheIndomitableAttack : MonoBehaviour
         }
         */
     }
+
+    IEnumerator InvulnerabilityTimer(float time)
+    {
+        enemyStats_script.invulnerable = true; 
+        yield return new WaitForSeconds(time);
+        enemyStats_script.invulnerable = false;
+    }
+
 
     public void AnimationStopMovement()
     {

@@ -50,7 +50,7 @@ public class EnemyMeleeAttack : MonoBehaviour
     public void AnimationEventDamage()
     {
         float dist = Vector3.Distance(transform.position, target.position);
-        if (dist < attackRange)
+        if (dist < attackRange * 1.5)
         {
             playerStats_script.DealDamage(damage); 
             if (gameObject.name.Substring(0,8).Equals("Scorpion"))

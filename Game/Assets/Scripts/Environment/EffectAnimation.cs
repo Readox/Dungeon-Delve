@@ -20,6 +20,7 @@ public class EffectAnimation : MonoBehaviour
         anim = GetComponent<Animator>();
         if (destroyTime > 0)
         {
+            anim.SetBool("Trigger", true);
             StartCoroutine(DestroyAfterTime());
         }
         if (showConstantly)

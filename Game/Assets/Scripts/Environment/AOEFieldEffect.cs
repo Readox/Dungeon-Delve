@@ -19,13 +19,38 @@ public class AOEFieldEffect : MonoBehaviour
     public string effectName; // "Poison", "Bleeding", "Slowness", "Aegis", etc.
     public int effectStacks;
     public float effectDuration;
-
+    public float destroyAfterTime;
+    public float effectAfterTime;
 
     void Awake()
     {
         conditionManager_script = GameObject.FindWithTag("GameController").GetComponent<ConditionManager>();
         playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
-        StartCoroutine(FindTargets());
+        if (destroyAfterTime > 0)
+        {
+            StartCoroutine(DestroyAfterTime());
+        }
+        if (effectAfterTime == 0)
+        {
+            StartCoroutine(FindTargets());
+        }
+        else
+        {
+            StartCoroutine(EffectAfterTime());
+        }
+    }
+
+    IEnumerator EffectAfterTime()
+    {
+        yield return new WaitForSeconds(effectAfterTime);
+        targets = Physics2D.OverlapCircleAll(transform.position, transform.localScale.x/2 /*gets radius*/); // I can't get the layer masks to work, so this is slower than it should be
+        DoAOEEffect(targets);
+    }
+
+    IEnumerator DestroyAfterTime()
+    {
+        yield return new WaitForSeconds(destroyAfterTime);
+        Destroy(gameObject);
     }
 
     IEnumerator FindTargets()
