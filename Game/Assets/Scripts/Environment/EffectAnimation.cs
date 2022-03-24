@@ -10,6 +10,7 @@ public class EffectAnimation : MonoBehaviour
     public bool followPlayer;
     public float destroyTime;
     public float repeatInterval;
+    public float activateAfterTime;
     public float xOffset;
     public float yOffset;
     private Coroutine c;
@@ -23,14 +24,26 @@ public class EffectAnimation : MonoBehaviour
             anim.SetBool("Trigger", true);
             StartCoroutine(DestroyAfterTime());
         }
+        else if (activateAfterTime > 0)
+        {
+            StartCoroutine(ActivateAfterTime(activateAfterTime));
+        }
         if (showConstantly)
         {
             c = StartCoroutine(ShowEffectConstantly(repeatInterval));
         }
+        /* // I don't know whether this is necessary to any of my effects, and I can't be bothered to test it
         else
         {
             anim.SetBool("Trigger", true);
         }
+        */
+    }
+
+    IEnumerator ActivateAfterTime(float time)
+    {
+        yield return new WaitForSeconds(time);
+        anim.SetBool("Trigger", true);
     }
 
     IEnumerator DestroyAfterTime()

@@ -20,6 +20,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     int attackCounter;
 
     private Transform target;
+    private Coroutine attackCheckCoroutine;
     public float attackDelay;
     public float attackRange;
     public float attackAnimationLength; // not quite sure if this is fully necessary
@@ -35,7 +36,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
         playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
         AIPath_script = transform.parent.gameObject.GetComponent<AIPath>();
         
-        StartCoroutine(CheckForAttacks());
+        attackCheckCoroutine = StartCoroutine(CheckForAttacks());
     }
 
 
@@ -51,7 +52,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
         }
         yield return new WaitForSeconds(attackDelay); // Pretty sure that the Attack Delay goes here
 
-        StartCoroutine(CheckForAttacks());
+        attackCheckCoroutine = StartCoroutine(CheckForAttacks());
     }
 
     public void AnimationEventDamage()
@@ -72,15 +73,14 @@ public class CairnTheIndomitableAttack : MonoBehaviour
                 projectile.GetComponent<TestEnemyProjectile>().removeDelay = projectileRemoveDelay;
                 projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
             }
+            attackCounter += 1;
         }
-        if (attackCounter % 6 == 0 && attackCounter != 0)
+        if (attackCounter % 6 == 0 && attackCounter != 0) // RockFall Attack
         {
-            InvulnerabilityTimer(5f);
-            for (int i = 0; i <= 10; i++)
-            {
-                Vector3 pos = new Vector3(transform.position.x + Random.Range(-10f, 10f), transform.position.y + Random.Range(-10f, 10f), 0);
-                GameObject cAOE = Instantiate(cairnAOE, pos, Quaternion.identity);
-            }
+            rockTicker = 0;
+            StartCoroutine(InvulnerabilityTimer(5f));
+            StartCoroutine(RockFallAttack());
+            attackCounter += 1;
         }
         if (dist < attackRange * 1.5)
         {
@@ -93,7 +93,6 @@ public class CairnTheIndomitableAttack : MonoBehaviour
             anim.SetBool("Walk", true);
             //anim.SetFloat("")
             //anim.Play("Walk", 0, 0.1f); // This seems to just delay the animation from occuring and locks the entity from moving
-            //anim.Play("KlackonAltWalk", 0, 0); // This crashed Unity
             anim.SetBool("Attack", false);
             AnimationStartMovement();
         }
@@ -112,11 +111,31 @@ public class CairnTheIndomitableAttack : MonoBehaviour
         */
     }
 
+    private int rockTicker;
+    private int rocksPerTick = 2;
+    
+    IEnumerator RockFallAttack()
+    {
+        for (int i = 0; i <= rocksPerTick; i++)
+        {
+            Instantiate(cairnAOE, new Vector3(transform.position.x + Random.Range(-10f, 10f), transform.position.y + Random.Range(-10f, 10f), 0), Quaternion.identity);
+        }
+        
+        yield return new WaitForSeconds(0.2f);
+        if (rockTicker < 30)
+        {
+            StartCoroutine(RockFallAttack());
+            rockTicker += 1;
+        }
+    }
+
     IEnumerator InvulnerabilityTimer(float time)
     {
+        StopCoroutine(attackCheckCoroutine);
         enemyStats_script.invulnerable = true; 
         yield return new WaitForSeconds(time);
         enemyStats_script.invulnerable = false;
+        attackCheckCoroutine = StartCoroutine(CheckForAttacks());
     }
 
 

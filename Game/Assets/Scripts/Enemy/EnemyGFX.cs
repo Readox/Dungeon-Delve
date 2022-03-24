@@ -75,7 +75,7 @@ public class EnemyGFX : MonoBehaviour
     void FixedUpdate()
     {
         // These are for setting animation states
-        if (aiPath.maxSpeed == wanderScript.wanderSpeed)
+        if (aiPath.maxSpeed == wanderScript.wanderSpeed && aiPath.canMove)
         {
             anim.SetBool("Walk", true);
         }

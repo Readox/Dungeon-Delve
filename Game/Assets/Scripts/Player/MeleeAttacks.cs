@@ -52,7 +52,7 @@ public class MeleeAttacks : CommonAttack
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
             {
                 CalculatePoints();
-                DrawLines();
+                //DrawLines(); // For debugging
                 CheckForHits();
                 //OldAttack();
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -127,7 +127,7 @@ public class MeleeAttacks : CommonAttack
             if (hit)
             {
                 Attack(hit);
-                Debug.Log("Hit: " + hit.collider.gameObject.name);
+                //Debug.Log("Hit: " + hit.collider.gameObject.name); VERY helpful debug
                 break;
             }
             
@@ -147,28 +147,34 @@ public class MeleeAttacks : CommonAttack
     {
         if (hit.collider.GetComponent<EnemyStats>() != null)
         {
+            EnemyStats tempES = hit.collider.GetComponent<EnemyStats>();
             //StartCoroutine(ShowSword(1f));
-            SpawnMeleeAnimation(hit.collider.GetComponent<EnemyStats>().gameObject.transform, (mousePos - rb.position).normalized, calcAngle);
+            
+            SpawnMeleeAnimation(tempES.gameObject.transform, (mousePos - rb.position).normalized, calcAngle);
 
-            enemyStats_script = hit.collider.GetComponent<EnemyStats>();
-            float finalDamage = CalculateDamage(weaponDamage, hit.collider.GetComponent<EnemyStats>().gameObject.transform);
-            enemyStats_script.DealDamage(finalDamage); // initial attack
+            if (!tempES.invulnerable)
+            {
+                enemyStats_script = tempES;
+                float finalDamage = CalculateDamage(weaponDamage, tempES.gameObject.transform);
+                enemyStats_script.DealDamage(finalDamage); // initial attack
 
-            for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
-            {   
-                enemyStats_script.DealDamage(CalculateDamage(weaponDamage, hit.collider.GetComponent<EnemyStats>().gameObject.transform));
-                //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
-                SpawnFerocityAnimation(hit.collider.GetComponent<EnemyStats>().gameObject.transform);
+                for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
+                {   
+                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage, tempES.gameObject.transform));
+                    //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
+                    SpawnFerocityAnimation(tempES.gameObject.transform);
 
-                AudioSource.PlayClipAtPoint(feroAudioClip, hit.collider.gameObject.transform.position, 1); // plays ferocity proc audio
-                //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
-                
-                
-                
-                // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
-        
+                    AudioSource.PlayClipAtPoint(feroAudioClip, hit.collider.gameObject.transform.position, 1); // plays ferocity proc audio
+                    //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
+                    
+                    
+                    
+                    // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
+            
 
+                }
             }
+            
         }
     }
 

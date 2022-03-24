@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8433834297086595105}
   - component: {fileID: 8433834297086595134}
+  - component: {fileID: 5480918850250189556}
   - component: {fileID: 8433834297086595104}
   m_Layer: 12
   m_Name: AOE Field
@@ -83,6 +84,25 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &5480918850250189556
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8433834297086595132}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 26523a8c1ed9fd94cbb03539ba8795b1, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &8433834297086595104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,12 +117,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hitInterval: 0
   targetTag: Player
-  applyDamage: 1
+  applyDamage: 0
   applyCondition: 0
   applyBoon: 0
-  damage: 30
+  damage: 0
   effectName: 
   effectStacks: 0
   effectDuration: 0
-  destroyAfterTime: 0.8
-  effectAfterTime: 0.3
+  destroyAfterTime: 0
+  effectAfterTime: 0

@@ -102,4 +102,10 @@ public class AOEFieldEffect : MonoBehaviour
         
     }
 
+
+    public void AnimationEventExit()
+    {
+        GetComponent<Animator>().SetBool("Exit", true);
+    }
+
 }

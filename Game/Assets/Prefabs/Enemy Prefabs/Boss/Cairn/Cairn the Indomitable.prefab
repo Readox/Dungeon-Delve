@@ -78,7 +78,7 @@ MonoBehaviour:
   version: 5
   radius: 0.65
   height: 2
-  canMove: 1
+  canMove: 0
   maxSpeed: 0
   gravity: {x: 0, y: 0, z: 0}
   groundMask:
@@ -144,6 +144,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4637744834213301510}
     m_Modifications:
+    - target: {fileID: 1882002984581209784, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
+      propertyPath: aiPath
+      value: 
+      objectReference: {fileID: 4637744834213301509}
     - target: {fileID: 5056030672047105434, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -199,6 +203,14 @@ PrefabInstance:
     - target: {fileID: 5056030673007397016, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
       propertyPath: m_Name
       value: Cairn the Indomitable
+      objectReference: {fileID: 0}
+    - target: {fileID: 5333418055920255735, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
+      propertyPath: cairnAOE
+      value: 
+      objectReference: {fileID: 1617391711301470735, guid: d9406c8271335e949a7616c67bc20e93, type: 3}
+    - target: {fileID: 5333418055920255735, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
+      propertyPath: attackRange
+      value: 3.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
