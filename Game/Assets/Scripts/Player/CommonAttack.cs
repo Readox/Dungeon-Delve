@@ -46,8 +46,7 @@ public class CommonAttack : MonoBehaviour
 
     private void ConfigureDamageIndicator(GameObject di, Transform newParent, float damage, bool criticalHit) // The new parent is the attacked entity
     {
-        di.transform.SetParent(newParent);
-        di.transform.position = newParent.position; // this might be redundant
+        di.transform.SetParent(newParent.parent);
         di.GetComponent<TextMeshPro>().text = damage.ToString(); 
         if (criticalHit)
         {

@@ -58,7 +58,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     public void AnimationEventDamage()
     {
         float dist = Vector3.Distance(transform.position, target.position);
-        if (attackCounter % 3 == 0)
+        if (attackCounter % 3 == 0) // this is used in addition to other attacks
         {
             for (int i = 0; i < 360; i += 45)
             {
@@ -73,7 +73,6 @@ public class CairnTheIndomitableAttack : MonoBehaviour
                 projectile.GetComponent<TestEnemyProjectile>().removeDelay = projectileRemoveDelay;
                 projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
             }
-            attackCounter += 1;
         }
         if (attackCounter % 6 == 0 && attackCounter != 0) // RockFall Attack
         {
