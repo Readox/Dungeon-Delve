@@ -43,7 +43,7 @@ public class PlayerStats : MonoBehaviour
     public IEnumerator HealthRegeneration()
     {
         yield return new WaitForSeconds(1);
-        currentHealth += maxHealth * HealthRegen;
+        currentHealth += maxHealth * (HealthRegen / 100);
         CheckHealthMax();
         SetHealthInfo();
         healthRegenCoroutine = StartCoroutine(HealthRegeneration());
@@ -51,7 +51,7 @@ public class PlayerStats : MonoBehaviour
     public IEnumerator EnduranceRegeneration()
     {
         yield return new WaitForSeconds(1);
-        currentEndurancePool += endurancePoolMax * EnduranceRegen;
+        currentEndurancePool += endurancePoolMax * (EnduranceRegen / 100);
         CheckEnduranceMax();
         SetEnduranceInfo();
         enduranceRegenCoroutine = StartCoroutine(EnduranceRegeneration());
@@ -320,8 +320,8 @@ public class PlayerStats : MonoBehaviour
             $" <color={ccColor}>Critical Chance: {CritChance}</color> \n" +
             $" <color={cdColor}>Critical Damage: {CritDamage}</color> \n" +
             $" <color={ferocityColor}>Ferocity: {Ferocity}</color> \n" + 
-            $" <color={healthColor}>Health Regeneration: {HealthRegen}</color> \n" +
-            $" <color={endurancePoolColor}>Endurance Regeneration: {EnduranceRegen}</color> \n" +
+            $" <color={healthColor}>Health Regeneration: {HealthRegen}%</color> \n" +
+            $" <color={endurancePoolColor}>Endurance Regeneration: {EnduranceRegen}%</color> \n" +
             $" <color={endurancePoolColor}>Endurance Pool: {endurancePoolMax}</color> \n" +
             $" <color={mfColor}>Magic Find: {MagicFind}</color> \n";
         childText.text = outputString;
@@ -428,11 +428,11 @@ public class PlayerStats : MonoBehaviour
     public float Ferocity;
 
     // Percentage of MaxHealth regenerated every second
-    // Base Value: 1% = 0.01
+    // Base Value: 1% = 1
     public float HealthRegen;
 
     // Percentage of endurance energy regenerated every second
-    // Base value 2% = 0.02
+    // Base value 2% = 2
     public float EnduranceRegen;
 
     // Chance for rare drops from boss chests and monsters

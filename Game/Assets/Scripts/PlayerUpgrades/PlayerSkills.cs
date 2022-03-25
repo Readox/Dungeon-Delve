@@ -131,13 +131,14 @@ public class PlayerSkills : MonoBehaviour
     {
         string nameOfSkill = childButton.transform.parent.name;
         SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID() == nameOfSkill);
-        float modifyBy = currentClass.GetModifyValue(true) * -1; // Have to do this here, before I subtract the skill level below
+        
         if (currentClass.GetSkillLevel() < 1)
         {
             Debug.Log("Skill at Lowest Level");
         }
         else
         {
+            float modifyBy = currentClass.GetModifyValue(true) * -1; // Have to do this here, before I subtract the skill level below
             int currencyCost = currentClass.SubtractSkillLevel(1); // function returns the currency cost of the operation
             playerUpgradeCurrency += currencyCost;
             string skillType = currentClass.UpdateDropdownText();
@@ -162,7 +163,6 @@ public class PlayerSkills : MonoBehaviour
 
     public void OpenUpgradesMenuStart()
     {
-        UpdateValues();
         UpdateUIElements();
     }
 

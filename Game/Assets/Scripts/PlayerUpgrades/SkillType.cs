@@ -93,6 +93,7 @@ public class SkillType
     }
     public int GetSkillLevel()
     {
+        Debug.Log("Skill Level: " + skillLevel);
         return skillLevel;
     }
 
@@ -137,7 +138,7 @@ public class SkillType
         }
         else if (skillType.Equals("EnduranceRegen") || skillType.Equals("HealthRegen"))
         {
-            finalVal = 0.01f; // No multiplacation by skill Level, only increases by set amount every level
+            finalVal = 1; // No multiplacation by skill Level, only increases by set amount every level
         }
         else // Default is 1 (Defaults: Defense, Strength, Critical Chance, Critical Damage, Ferocity, Magic Find)
         {

@@ -78,7 +78,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
         {
             rockTicker = 0;
             StartCoroutine(InvulnerabilityTimer(5f));
-            StartCoroutine(RockFallAttack());
+            StartCoroutine(RockFallAttack(2)); // Takes in argument for rocks per tick
             attackCounter += 1;
         }
         if (dist < attackRange * 1.5)
@@ -111,20 +111,19 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     }
 
     private int rockTicker;
-    private int rocksPerTick = 2;
     
-    IEnumerator RockFallAttack()
+    IEnumerator RockFallAttack(int rocksPerTick)
     {
-        for (int i = 0; i <= rocksPerTick; i++)
+        yield return new WaitForSeconds(0.2f);
+
+        for (int i = 0; i <= rocksPerTick; i++) // I put this down here because it eliminates some king of bug where some AOE fields spawn in and then disappear almost immediately
         {
             Instantiate(cairnAOE, new Vector3(transform.position.x + Random.Range(-10f, 10f), transform.position.y + Random.Range(-10f, 10f), 0), Quaternion.identity);
         }
-        
-        yield return new WaitForSeconds(0.2f);
         if (rockTicker < 30)
         {
-            StartCoroutine(RockFallAttack());
             rockTicker += 1;
+            StartCoroutine(RockFallAttack(rocksPerTick));
         }
     }
 

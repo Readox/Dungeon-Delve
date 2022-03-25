@@ -14,6 +14,7 @@ public class CommonAttack : MonoBehaviour
     public GameObject damageIndicator; // damageIndicator prefab
     public GameObject ferocityAnimation;
     public GameObject meleeAnimation;
+    public Transform storage;
 
     public float CalculateDamage(float weaponDamage, Transform targetPos) // Takes in Transform for damage indicator location
     {
@@ -84,7 +85,7 @@ public class CommonAttack : MonoBehaviour
         GameObject melee = Instantiate(meleeAnimation, origin, Quaternion.identity);
         melee.transform.Rotate(0, 0, angle, Space.World);
 
-        melee.transform.SetParent(newParent);
+        melee.transform.SetParent(storage);
         //melee.gameObject.transform.localScale = new Vector3(newParent.transform.localScale.x, newParent.transform.localScale.y, newParent.transform.localScale.z);
         //melee.transform.position = newParent.position; // this might be redundant
     }
