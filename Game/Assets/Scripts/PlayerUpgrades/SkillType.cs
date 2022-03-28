@@ -93,7 +93,7 @@ public class SkillType
     }
     public int GetSkillLevel()
     {
-        Debug.Log("Skill Level: " + skillLevel);
+        //Debug.Log("Skill Level: " + skillLevel);
         return skillLevel;
     }
 

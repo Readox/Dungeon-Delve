@@ -9,6 +9,7 @@ TagManager:
   - enemyView
   - PauseMenu
   - Doorway
+  - Wall
   layers:
   - Default
   - TransparentFX

@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 4637744834213301506}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2128818344549661669}
   m_Father: {fileID: 0}
@@ -70,7 +70,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4637744834213301506}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6eb1402c17e84a9282a7f0f62eb584f, type: 3}
   m_Name: 
@@ -126,7 +126,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4637744834213301506}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fa038a77b61efd54eb0403166cb88c19, type: 3}
   m_Name: 
@@ -144,10 +144,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4637744834213301510}
     m_Modifications:
-    - target: {fileID: 1882002984581209784, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
-      propertyPath: aiPath
+    - target: {fileID: 746030542344735189, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
+      propertyPath: self
       value: 
-      objectReference: {fileID: 4637744834213301509}
+      objectReference: {fileID: 4637744834213301510}
     - target: {fileID: 5056030672047105434, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -192,25 +192,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5056030672542590987, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5056030672542590987, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5056030673007397016, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
       propertyPath: m_Name
       value: Cairn the Indomitable
-      objectReference: {fileID: 0}
-    - target: {fileID: 5333418055920255735, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
-      propertyPath: cairnAOE
-      value: 
-      objectReference: {fileID: 1617391711301470735, guid: d9406c8271335e949a7616c67bc20e93, type: 3}
-    - target: {fileID: 5333418055920255735, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}
-      propertyPath: attackRange
-      value: 3.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdee7fe3dca59c440ade687cbbe4c82a, type: 3}

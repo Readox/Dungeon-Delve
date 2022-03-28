@@ -62,7 +62,7 @@ public class PlayerSkills : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not enough tokens!");
+            //Debug.Log("Not enough tokens!");
         }
         
         // UpdateUIElements() is not kept here
@@ -108,7 +108,7 @@ public class PlayerSkills : MonoBehaviour
         SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
         if (currentClass.GetCurrencyCost() > playerUpgradeCurrency)
         {
-            Debug.Log("Not enough currency!");
+            //Debug.Log("Not enough currency!");
         }
         else
         {
@@ -134,7 +134,7 @@ public class PlayerSkills : MonoBehaviour
         
         if (currentClass.GetSkillLevel() < 1)
         {
-            Debug.Log("Skill at Lowest Level");
+            //Debug.Log("Skill at Lowest Level");
         }
         else
         {

@@ -400,7 +400,7 @@ GameObject:
   - component: {fileID: 5056030673007397027}
   - component: {fileID: 5056030673007397028}
   - component: {fileID: 5056030673007397030}
-  - component: {fileID: 1882002984581209784}
+  - component: {fileID: 746030542344735189}
   - component: {fileID: 5333418055920255735}
   m_Layer: 6
   m_Name: Cairn the Indomitable Stats
@@ -416,9 +416,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5056030673007397016}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 4, y: 4, z: 1}
   m_Children:
   - {fileID: 5056030673213975293}
   m_Father: {fileID: 0}
@@ -541,7 +541,7 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1882002984581209784
+--- !u!114 &746030542344735189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -550,12 +550,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5056030673007397016}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4861df55c68698143840cd59a232c532, type: 3}
+  m_Script: {fileID: 11500000, guid: 249bee6990451a4458f00032526ce8ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  aiPath: {fileID: 0}
-  updateSprite: 0
-  spriteSheet: []
+  attackTarget: {fileID: 0}
+  self: {fileID: 0}
+  anim: {fileID: 5056030673007397030}
+  targetDistance: 6
 --- !u!114 &5333418055920255735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,8 +572,9 @@ MonoBehaviour:
   cairnProjectile: {fileID: 6647960612705429361, guid: ec2faa7b72e6d1748b5a7a9a2eac49c3, type: 3}
   cairnProjectileSpeed: 3
   projectileRemoveDelay: 5
-  attackDelay: 0.5
-  attackRange: 2.5
+  cairnAOE: {fileID: 1617391711301470735, guid: d9406c8271335e949a7616c67bc20e93, type: 3}
+  attackDelay: 1
+  attackRange: 3.6
   attackAnimationLength: 0.4
 --- !u!1 &5056030673213975294
 GameObject:

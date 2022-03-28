@@ -42,6 +42,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
 
     IEnumerator CheckForAttacks()
     {
+        Debug.Log("Cairn Check for Attacks");
         float dist = Vector3.Distance(transform.position, target.position);
         //Debug.Log("Distance: " + dist);
         if (dist < attackRange)
@@ -74,7 +75,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
                 projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
             }
         }
-        if (attackCounter % 6 == 0 && attackCounter != 0) // RockFall Attack
+        if (attackCounter % 8 == 0 && attackCounter != 0) // RockFall Attack
         {
             rockTicker = 0;
             StartCoroutine(InvulnerabilityTimer(5f));
