@@ -42,7 +42,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
 
     IEnumerator CheckForAttacks()
     {
-        Debug.Log("Cairn Check for Attacks");
+        //Debug.Log("Cairn Check for Attacks");
         float dist = Vector3.Distance(transform.position, target.position);
         //Debug.Log("Distance: " + dist);
         if (dist < attackRange)

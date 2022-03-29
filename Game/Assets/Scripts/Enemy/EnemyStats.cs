@@ -17,6 +17,7 @@ public class EnemyStats : MonoBehaviour
 
     public GameObject upgradeCurrencyDrop;
     public GameObject deathAnimation;
+    private GameObject homeSpawner;
     public float upgradeCurrencyDropChance;
 
     float playerMagicFind;
@@ -95,16 +96,23 @@ public class EnemyStats : MonoBehaviour
                 // Destruction
                 if (transform.parent != null) // Is there a parent?
                 {
+                    homeSpawner.GetComponent<SpawnPoint>().RemoveFromList(gameObject.transform.parent.gameObject);
                     Destroy(gameObject.transform.parent.gameObject);
                 }
                 else
                 {
+                    homeSpawner.GetComponent<SpawnPoint>().RemoveFromList(gameObject.transform.parent.gameObject);
                     Destroy(gameObject);
                 }
                 
             }
             
         }
+    }
+
+    public void SetHomeSpawner(GameObject s)
+    {
+        homeSpawner = s;
     }
 
     public float GetRandFloat(float min, float max)

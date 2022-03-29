@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
     //private PlayerStats script_PlayerStats;
 
     public GameObject gameManagerObject;
+    private RoomGenerationManager rmg_Script;
     private PlayerStats playerStats_script;
     public GameObject puffAnimation;
     // Entity Values
@@ -29,6 +30,25 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
     private Vector3 moveDirection;
     private Vector3 dodgeDirection;
+
+
+    // Start is called before the first frame update
+    void Awake()
+    {
+        // Get animator component from player
+        playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
+        animator = GetComponent<Animator>();
+        originalSpeed = playerSpeed;
+        //StartCoroutine(Timer(1f));
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Doorway") /* && notInCombat*/)
+        {
+            col.gameObject.transform.parent.parent.gameObject.GetComponent<RoomManager>().IsDoorwayAccessible();
+        }
+    }
 
     // Fixed Update called at regular times (set amount), more consistent than Update(), do physics here
     void FixedUpdate()
@@ -169,17 +189,6 @@ public class PlayerMovement : MonoBehaviour
         animator.SetLayerWeight(1, 1);
         animator.SetFloat("XDir", animationVec.x);
         animator.SetFloat("YDir", animationVec.y);
-    }
-
-
-    // Start is called before the first frame update
-    void Awake()
-    {
-        // Get animator component from player
-        playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
-        animator = GetComponent<Animator>();
-        originalSpeed = playerSpeed;
-        //StartCoroutine(Timer(1f));
     }
 
     public void DoSlowness()

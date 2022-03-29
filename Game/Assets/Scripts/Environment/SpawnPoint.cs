@@ -6,11 +6,13 @@ public class SpawnPoint : MonoBehaviour
 {
 
     public GameObject prefab;
+    private List<GameObject> spawnedEnemyList = new List<GameObject>();
 
     public float repeatInterval;
 
     public float maxEnemyCount;
     float enemyCount;
+    public bool isSpawnCycleCompleted = false;
 
     // Start is called before the first frame update
     public void Start()
@@ -27,10 +29,23 @@ public class SpawnPoint : MonoBehaviour
         if (prefab != null && !(enemyCount >= maxEnemyCount))
         {
             enemyCount += 1;
-            return Instantiate(prefab, transform.position, Quaternion.identity);
+            GameObject enemy = Instantiate(prefab, transform.position, Quaternion.identity);
+            enemy.GetComponentInChildren<EnemyStats>().SetHomeSpawner(gameObject);
+            spawnedEnemyList.Add(enemy);
+            return enemy;
+        }
+        
+        if (spawnedEnemyList.Count == 0)
+        {
+            isSpawnCycleCompleted = true;
         }
 
         return null;
+    }
+
+    public void RemoveFromList(GameObject g)
+    {
+        spawnedEnemyList.Remove(g);
     }
 
     // Update is called once per frame
