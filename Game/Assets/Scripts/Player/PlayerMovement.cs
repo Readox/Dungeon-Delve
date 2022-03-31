@@ -46,7 +46,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (col.gameObject.CompareTag("Doorway") /* && notInCombat*/)
         {
-            col.gameObject.transform.parent.parent.gameObject.GetComponent<RoomManager>().IsDoorwayAccessible();
+            col.gameObject.transform.parent.parent.gameObject.GetComponent<RoomManager>().IsDoorwayAccessible(col.gameObject);
         }
     }
 
