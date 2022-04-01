@@ -5,7 +5,8 @@ using Pathfinding;
 
 public class RoomGenerationManager : MonoBehaviour
 {
-    
+    // This script handles creation of rooms, while the RoomManager handles creation of stuff inside that room
+
     public Transform playerPos;
     public GameObject twentyByTwenty_Room;
     public AstarPath pathfinder_Script;
@@ -13,9 +14,12 @@ public class RoomGenerationManager : MonoBehaviour
     private Vector3 currentRoomCenterPos; // is set to startingRoom.position to prevent starting room from getting shuffled around
     public Transform startingRoom;
 
-    public List<GameObject> rooms = new List<GameObject>();
 
-    [HideInInspector] public GameObject[,] roomMap = new GameObject[10,10];
+    public int maximumMapX;
+    public int maximumMapY;
+    public int startingRoomX;
+    public int startingRoomY;
+    [HideInInspector] public GameObject[,] roomMap; // this seems to not be 0 based?
     private int currentX;
     private int currentY;
 
@@ -23,10 +27,12 @@ public class RoomGenerationManager : MonoBehaviour
     {
         currentRoomCenterPos = startingRoom.position;
         InitializeRoomMap();
+        //PrintRoomMap();
     }
 
-    private void InitializeRoomMap()
+    private void InitializeRoomMap() // Initializes the RoomMap with null values and the starting room
     {
+        roomMap = new GameObject[maximumMapX, maximumMapY];
         for (int i = 0; i < roomMap.GetLength(0); i++)
         {
             for (int j = 0; j < roomMap.GetLength(1); j++)
@@ -34,28 +40,35 @@ public class RoomGenerationManager : MonoBehaviour
                 roomMap[i, j] = null;
             }
         }
-        roomMap[5,5] = startingRoom.gameObject;
-        currentX = 5;
-        currentY = 5;
+        roomMap[startingRoomX, startingRoomY] = startingRoom.gameObject;
+        currentX = startingRoomX;
+        currentY = startingRoomY;
+        startingRoom.GetComponent<RoomManager>().roomMapX = startingRoomX;
+        startingRoom.GetComponent<RoomManager>().roomMapY = startingRoomY;
+        DisableOutOfBoundsDoors(startingRoom.gameObject);
     }
 
-    public void DoRoomChange(int currentX, int currentY, string doorDirection)
+    // This function is called by RoomManagers when a room is exited with a door, and finds whether the room is occupied or not
+    // If the room is occupied, then the player is moved into the room with HandleRoomChange()
+    // If the room is not occupied, then a new room is created, and the player is moved into it
+    public void DoRoomChange(int roomX, int roomY, string doorDirection) // Note to self, do NOT name the variables the same thing as the ones in the script bc/ it will prioritize the inputs
     {
         GetMapChangeFromDirection(doorDirection);
         if (roomMap[currentX, currentY] != null)
         {
-            HandleRoomChange(roomMap[currentX, currentY]);
+            HandleRoomChange(roomMap[currentX, currentY], doorDirection);
         }
         else
         {
             roomMap[currentX, currentY] = CreateNewRoom(doorDirection);
-            HandleRoomChange(roomMap[currentX, currentY]);
+            HandleRoomChange(roomMap[currentX, currentY], doorDirection);
         }
         
-        //TODO
-        //PrintRoomMap(); // Add method for debugging
+        //PrintRoomMap(); // Method for debugging
     }
 
+    // This method creates a new room based on the direction of the door entered by the player
+    // It sets all necessary values after instantiating it and disables any doorways that should not be accessible
     private GameObject CreateNewRoom(string doorDirection)
     {
         string connectedDoorOrientation = GetConnectedDoorDirection(doorDirection);
@@ -63,28 +76,53 @@ public class RoomGenerationManager : MonoBehaviour
         GameObject newRoom = Instantiate(twentyByTwenty_Room, newPos, Quaternion.identity);
         newRoom.GetComponent<RoomManager>().roomMapX = currentX;
         newRoom.GetComponent<RoomManager>().roomMapY = currentY;
+        DisableOutOfBoundsDoors(newRoom);
         // rooms.Add(newRoom);
 
         return newRoom;
     }
 
-    private void HandleRoomChange(GameObject destination) // For generating a new room, returns the connected door
+    // This moves the player into a new room, though it currently moves them to the center
+    // Takes in the destination room GameObject and the direction of the door that was entered from
+    private void HandleRoomChange(GameObject destination, string doorDirection) // For generating a new room, returns the connected door
     {
         MovePathfindingGraph(destination.transform.position);
         currentRoomCenterPos = destination.transform.position;
-        playerPos.position = currentRoomCenterPos;
+        playerPos.position = destination.transform.Find(GetConnectedDoorDirection(doorDirection)).Find("Doorway").position;
     }
 
+    // This method is key to making sure that the RoomMap is not exceeded, and disables any doors that do not lead anywhere
+    // There might be a faster way to do this, but whatever
+    private void DisableOutOfBoundsDoors(GameObject room)
+    {
+        if (room.GetComponent<RoomManager>().roomMapX == maximumMapX - 1)
+        {
+            room.transform.Find("East").Find("Doorway").gameObject.SetActive(false);
+        }
+        else if (room.GetComponent<RoomManager>().roomMapX == 1)
+        {
+            room.transform.Find("West").Find("Doorway").gameObject.SetActive(false);
+        }
+        if (room.GetComponent<RoomManager>().roomMapY == maximumMapY - 1)
+        {
+            room.transform.Find("South").Find("Doorway").gameObject.SetActive(false);
+        }
+        else if (room.GetComponent<RoomManager>().roomMapY == 1)
+        {
+            room.transform.Find("North").Find("Doorway").gameObject.SetActive(false);
+        }
+    }
 
-    private void GetMapChangeFromDirection(string doorDirection) // Changes the current map values
+    // Changes the currentX and currentY values based on the direction of the door the player left from
+    private void GetMapChangeFromDirection(string doorDirection) // Changes the current map values, returns whether player is at farthest out room
     {
         if (doorDirection.Equals("North"))
         {
-            currentY += 1;
+            currentY -= 1;
         }
         else if (doorDirection.Equals("South"))
         {
-            currentY -= 1;
+            currentY += 1;
         }
         else if (doorDirection.Equals("West"))
         {
@@ -96,26 +134,31 @@ public class RoomGenerationManager : MonoBehaviour
         }
     }
 
+
+    // Creates the position a room needs to be spawned at
+    // The offset value can be changed if more space is needed for oddly sized rooms
     private Vector3 GetNewRoomPosition(string doorDirection) // I may have to increase the dimensions of stuff if some rooms are really weirdly shaped intentionally
     {
+        int offset = 25;
         if (doorDirection.Equals("North"))
         {
-            return new Vector3(currentRoomCenterPos.x, currentRoomCenterPos.y + 25, 0);
+            return new Vector3(currentRoomCenterPos.x, currentRoomCenterPos.y + offset, 0);
         }
         else if (doorDirection.Equals("South"))
         {
-            return new Vector3(currentRoomCenterPos.x, currentRoomCenterPos.y - 25, 0);
+            return new Vector3(currentRoomCenterPos.x, currentRoomCenterPos.y - offset, 0);
         }
         else if (doorDirection.Equals("West"))
         {
-            return new Vector3(currentRoomCenterPos.x - 25, currentRoomCenterPos.y, 0);
+            return new Vector3(currentRoomCenterPos.x - offset, currentRoomCenterPos.y, 0);
         }
         else // "East"
         {
-            return new Vector3(currentRoomCenterPos.x + 25, currentRoomCenterPos.y, 0);
+            return new Vector3(currentRoomCenterPos.x + offset, currentRoomCenterPos.y, 0);
         }
     }
 
+    // Gets the string name of the connected door that the player is going to
     private string GetConnectedDoorDirection(string doorDirection)
     {
         if (doorDirection.Equals("North"))
@@ -136,7 +179,30 @@ public class RoomGenerationManager : MonoBehaviour
         }
     }
 
+    // Is a method for debugging, and prints a map of the dungeon with "1" meaning a room exists and "0" meaning nothing has been generated
+    private void PrintRoomMap()
+    {
+        string toPrint = "";
+        for (int i = 0; i < roomMap.GetLength(0); i++)
+        {
+            for (int j = 0; j < roomMap.GetLength(1); j++)
+            {
+                if (roomMap[i, j] != null)
+                {
+                    toPrint += "1";
+                }
+                else
+                {
+                    toPrint += "0";
+                }
+            }
+            toPrint += "|\n";
+        }
 
+        Debug.Log(toPrint);
+    }
+
+    // Moves the singular pathfinding graph to the new room
     private void MovePathfindingGraph(Vector3 roomCenter)
     {
         var pathGraph = AstarPath.active.data.gridGraph;
@@ -145,47 +211,7 @@ public class RoomGenerationManager : MonoBehaviour
         //pathGraph.SetDimensions() // Changes the graph's dimenstions if the room is differently shaped
     }
 
-    
 
-    /* Old
-
-    public void HandleRoomChange()
-    {
-        Vector3 newPos = new Vector3(currentRoomCenterPos.x, currentRoomCenterPos.y + 20, 0);
-        GameObject newRoom = Instantiate(twentyByTwenty_Room, newPos, Quaternion.identity);
-        MovePathfindingGraph(newRoom.transform.position);
-        currentRoomCenterPos = newRoom.transform.position;
-        playerPos.position = currentRoomCenterPos;
-    }
-
-    public GameObject HandleRoomChange(string doorDirection) // For generating a new room, returns the connected door
-    {
-        string connectedDoorOrientation = GetConnectedDoorDirection(doorDirection);
-        Vector3 newPos = GetNewRoomPosition(doorDirection); // Must put in this value or else it will flip stuff around and things will get GOOFY fast
-        GameObject newRoom = Instantiate(twentyByTwenty_Room, newPos, Quaternion.identity);
-        rooms.Add(newRoom);
-        MovePathfindingGraph(newRoom.transform.position);
-        currentRoomCenterPos = newRoom.transform.position;
-        playerPos.position = currentRoomCenterPos;
-
-        return newRoom.transform.Find(connectedDoorOrientation).gameObject;
-    }
-
-    public void HandleRoomChange(GameObject connectedDoor) // For going to a previously created room
-    {
-        foreach (GameObject g in rooms)
-        {
-            if (g.transform.Find(connectedDoor) != null)
-            {
-                MovePathfindingGraph(g.transform.position);
-                currentRoomCenterPos = g.transform.position;
-                playerPos.position = currentRoomCenterPos;
-            }
-        }
-    }
-
-    */
-    
 
 
 

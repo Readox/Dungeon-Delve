@@ -2335,6 +2335,10 @@ MonoBehaviour:
   startingRoom: {fileID: 1495123168}
   rooms:
   - {fileID: 1893512352}
+  maximumMapX: 5
+  maximumMapY: 5
+  startingRoomX: 2
+  startingRoomY: 2
 --- !u!1 &381666071
 GameObject:
   m_ObjectHideFlags: 0
@@ -8796,6 +8800,10 @@ PrefabInstance:
     - target: {fileID: 5082268277408502053, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: playerSpeed
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: gameManagerObject

@@ -20,11 +20,12 @@ public class MeleeAttacks : CommonAttack
     public float attackRange; 
     public float attackRate;
     float nextAttackTime = 0f;
-
-    Vector2 mousePos;
+    private bool inCombat = false;
+    
     //Vector3 attackDir;
     //Vector3 attackPosition;
 
+    Vector2 mousePos;
     Rigidbody2D rb;
     EnemyStats enemyStats_script;
     public AudioClip feroAudioClip;
@@ -45,12 +46,22 @@ public class MeleeAttacks : CommonAttack
         //mousePos = mousePos.normalized;
         //mousePos = mousePos * attackRange;
         //Debug.DrawLine(rb.position, mousePos, Color.blue);
-        SwordRotation();
+        if (inCombat)
+        {
+            SwordRotation();
+        }
+        else
+        {
+            playerSword.transform.rotation = Quaternion.identity;
+            playerSword.transform.position = transform.position;
+        }
         
         if (Time.time >= nextAttackTime) // from https://www.youtube.com/watch?v=sPiVz1k-fEs
         {
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
             {
+                inCombat = true;
+                StartCoroutine(ExitCombat(8f));
                 CalculatePoints();
                 //DrawLines(); // For debugging
                 CheckForHits();
@@ -60,6 +71,12 @@ public class MeleeAttacks : CommonAttack
         }
 
         
+    }
+
+    IEnumerator ExitCombat(float time)
+    {
+        yield return new WaitForSeconds(time);
+        inCombat = false;
     }
 
     private void SwordRotation()
