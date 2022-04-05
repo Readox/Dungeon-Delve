@@ -25,6 +25,8 @@ public class MeleeAttacks : CommonAttack
     //Vector3 attackDir;
     //Vector3 attackPosition;
 
+    SpriteRenderer swordSR; // Sprite Renderer of sword for rendering sword on back of player properly
+    Animator anim; // Player's Animator for rendering sword on back of player properly
     Vector2 mousePos;
     Rigidbody2D rb;
     EnemyStats enemyStats_script;
@@ -35,6 +37,8 @@ public class MeleeAttacks : CommonAttack
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
+        swordSR = playerSword.GetComponent<SpriteRenderer>();
         cam = Camera.main;
     }
 
@@ -52,6 +56,14 @@ public class MeleeAttacks : CommonAttack
         }
         else
         {
+            if (anim.GetFloat("YDir") > 0)
+            {
+                swordSR.sortingOrder = 3;
+            }
+            else
+            {
+                swordSR.sortingOrder = 1;
+            }
             playerSword.transform.rotation = Quaternion.identity;
             playerSword.transform.position = transform.position;
         }
