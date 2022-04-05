@@ -8,6 +8,7 @@ public class SpawnPoint : MonoBehaviour
     public GameObject prefab;
     private List<GameObject> spawnedEnemyList = new List<GameObject>();
 
+    public bool spawnImmediately;
     public float repeatInterval;
 
     public float maxEnemyCount;
@@ -15,8 +16,15 @@ public class SpawnPoint : MonoBehaviour
     public bool isSpawnCycleCompleted = false;
 
     // Start is called before the first frame update
-    public void Start()
+    void Awake()
     {
+        if (spawnImmediately && prefab != null && !(enemyCount >= maxEnemyCount))
+        {
+            enemyCount += 1;
+            GameObject enemy = Instantiate(prefab, transform.position, Quaternion.identity);
+            enemy.GetComponentInChildren<EnemyStats>().SetHomeSpawner(gameObject);
+            spawnedEnemyList.Add(enemy);
+        }
         //SpawnObject(); // spawn one object on game start
         if (repeatInterval > 0)
         {
