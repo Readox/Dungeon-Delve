@@ -2164,10 +2164,10 @@ GameObject:
   m_Component:
   - component: {fileID: 378433350}
   - component: {fileID: 378433349}
-  - component: {fileID: 378433351}
   - component: {fileID: 378433353}
   - component: {fileID: 378433354}
   - component: {fileID: 378433352}
+  - component: {fileID: 378433351}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: GameController
@@ -2204,7 +2204,7 @@ MonoBehaviour:
   maxHealth: 500
   Defense: 0
   Strength: 1
-  CritChance: 1000
+  CritChance: 25
   CritDamage: 0
   Ferocity: 0
   HealthRegen: 1
@@ -2231,7 +2231,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 378433348}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d78e4b6777ccb4b40898dca936f17c5e, type: 3}
   m_Name: 
@@ -4192,6 +4192,11 @@ GameObject:
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1485151543389396741, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
   m_PrefabInstance: {fileID: 746604560}
+  m_PrefabAsset: {fileID: 0}
+--- !u!212 &807506463 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 1189525806, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+  m_PrefabInstance: {fileID: 8644193270402261332}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &837827544
 GameObject:
@@ -8847,11 +8852,22 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1189525806, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502053, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+<<<<<<< Updated upstream
+=======
+      propertyPath: playerSpeed
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5082268277408502055, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+>>>>>>> Stashed changes
       propertyPath: gameManagerObject
       value: 
       objectReference: {fileID: 378433348}
@@ -8903,6 +8919,10 @@ PrefabInstance:
       propertyPath: storage
       value: 
       objectReference: {fileID: 837827545}
+    - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
+      propertyPath: swordSR
+      value: 
+      objectReference: {fileID: 807506463}
     - target: {fileID: 7680500884252180260, guid: 8a385645f0c326e418ee216aec9d59e1, type: 3}
       propertyPath: gameManager
       value: 
