@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 0}
+  spawnImmediately: 0
   repeatInterval: 5
   maxEnemyCount: 3
+  isSpawnCycleCompleted: 0

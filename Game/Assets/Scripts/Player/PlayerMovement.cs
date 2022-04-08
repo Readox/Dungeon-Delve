@@ -23,6 +23,9 @@ public class PlayerMovement : MonoBehaviour
     public float dodgeSpeed;
     private bool dodgeAnimationLock = false;
 
+    private Collider2D doorCol;
+    private bool canInteract = true; // is true when the player CAN interact with things
+    public GameObject UIInteractTextObject;
     // Move Vector
     private Vector2 animationVec;
     public Animator animator;
@@ -44,9 +47,19 @@ public class PlayerMovement : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D col)
     {
-        if (col.gameObject.CompareTag("Doorway") /* && notInCombat*/)
+        if (col.gameObject.CompareTag("Doorway"))
         {
-            col.gameObject.transform.parent.parent.gameObject.GetComponent<RoomManager>().IsDoorwayAccessible(col.gameObject);
+            doorCol = col;
+            UIInteractTextObject.SetActive(true);
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D col)
+    {
+        if (col.gameObject.CompareTag("Doorway"))
+        {
+            doorCol = null;
+            UIInteractTextObject.SetActive(false);
         }
     }
 
@@ -106,12 +119,24 @@ public class PlayerMovement : MonoBehaviour
         {
             UseFighterAbility();
             // Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
-            // Uncommenting the code makes a trail of animations, which could probably be used to deal damage
+            // Uncommenting the code makes a trail of animations, which could probably be used to deal damage as a fire trail or something
         }
         if (Input.GetKey(KeyCode.LeftShift) && playerStats_script.getCurrentEndurancePool() >= dodgeCost && !playerStats_script.GetEvadingStatus())
         {
             StartCoroutine(Dodge());            
         }
+        if (Input.GetKey(KeyCode.F) && doorCol != null && canInteract)
+        {
+            doorCol.gameObject.transform.parent.parent.gameObject.GetComponent<RoomManager>().IsDoorwayAccessible(doorCol.gameObject);
+            StartCoroutine(InteractionTimer(1f));
+        }
+    }
+
+    IEnumerator InteractionTimer(float time)
+    {
+        canInteract = false;
+        yield return new WaitForSeconds(time);
+        canInteract = true;
     }
 
     IEnumerator Timer(float time)

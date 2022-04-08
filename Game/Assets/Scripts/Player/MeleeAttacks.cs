@@ -20,7 +20,8 @@ public class MeleeAttacks : CommonAttack
     public float attackRange; 
     public float attackRate;
     float nextAttackTime = 0f;
-    private bool inCombat = false;
+    private bool inCombat;
+    Coroutine inCombatCoroutine;
     
     //Vector3 attackDir;
     //Vector3 attackPosition;
@@ -40,6 +41,7 @@ public class MeleeAttacks : CommonAttack
         anim = GetComponent<Animator>();
         swordSR = playerSword.GetComponent<SpriteRenderer>();
         cam = Camera.main;
+        inCombat = false;
     }
 
     // Update is called once per frame
@@ -73,7 +75,11 @@ public class MeleeAttacks : CommonAttack
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
             {
                 inCombat = true;
-                StartCoroutine(ExitCombat(8f));
+                if (inCombatCoroutine != null)
+                {
+                    StopCoroutine(inCombatCoroutine);
+                }
+                inCombatCoroutine = StartCoroutine(ExitCombat(8f));
                 CalculatePoints();
                 //DrawLines(); // For debugging
                 CheckForHits();
