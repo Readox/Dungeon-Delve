@@ -235,6 +235,7 @@ MonoBehaviour:
   dodgeImmunityLength: 1
   dodgeCost: 100
   dodgeSpeed: 5
+  UIInteractTextObject: {fileID: 0}
   animator: {fileID: 5082268277408502058}
   rb: {fileID: 2018586242}
   fighterDashCost: 3
