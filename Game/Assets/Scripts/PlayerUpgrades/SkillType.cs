@@ -76,6 +76,25 @@ public class SkillType
         return this.skillType;
     }
 
+    public bool IsMaxLevel()
+    {
+        if (skillType.Equals("HealthRegen") && skillLevel == 25) 
+        {
+            return true;
+        }
+        else if (skillType.Equals("EnduranceRegen") && skillLevel == 25) 
+        {
+            return true;
+        }
+        /*
+        else if (skillType.Equals("CritChance") && skillLevel == 20) 
+        {
+            return true;
+        }
+        */
+
+        return false;
+    }
 
     public float GetSkillAmountIncreased()
     {

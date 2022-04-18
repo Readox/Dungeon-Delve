@@ -82,6 +82,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 848642791848129147, guid: 194070465ddacb541b108882d6e3f55f, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1858766045386813537, guid: 194070465ddacb541b108882d6e3f55f, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5032190486975432408, guid: 194070465ddacb541b108882d6e3f55f, type: 3}
       propertyPath: m_Name
       value: Training Dummy

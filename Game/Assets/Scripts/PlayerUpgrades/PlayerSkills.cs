@@ -106,9 +106,9 @@ public class PlayerSkills : MonoBehaviour
     {
         string nameOfSkill = childButton.transform.parent.name;
         SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
-        if (currentClass.GetCurrencyCost() > playerUpgradeCurrency)
+        if (currentClass.GetCurrencyCost() > playerUpgradeCurrency || currentClass.IsMaxLevel())
         {
-            //Debug.Log("Not enough currency!");
+            Debug.Log("Not enough currency or stat already increased to max level!");
         }
         else
         {

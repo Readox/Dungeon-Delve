@@ -220,7 +220,14 @@ public class ConditionManager : MonoBehaviour
         {
             boonsList.RemoveAt(i);
         }
-        
+    }
+    public void DecreaseHealAmount()
+    {
+        playerStats_script.poisoned = true;
+    }
+    public void ResetHealAmount()
+    {
+        playerStats_script.poisoned = false;
     }
 
 

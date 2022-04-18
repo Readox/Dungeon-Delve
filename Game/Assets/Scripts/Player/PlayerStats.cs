@@ -20,24 +20,31 @@ public class PlayerStats : MonoBehaviour
     public Text healthText;
     public Slider enduranceBarSlider;
     public Text enduranceText;
+    public Text healthPotionText;
 
     public string playerClass;
 
-    public Coroutine healthRegenCoroutine;
-    public Coroutine enduranceRegenCoroutine;
+    [HideInInspector] public Coroutine healthRegenCoroutine;
     private bool healthRegenIsRunning = false;
+    [HideInInspector] public Coroutine enduranceRegenCoroutine;
+
+    public float healthPotionAmount; // I am making it so that players get an amount of health potions to use per room or dungeon (base heal potions will not be crafted but higher tiers will)
+    private float currentHealthPotionAmount;
+    public float healthPotionBaseHeal;
+    [HideInInspector] public bool poisoned; // if true, divide all health potion heals by 2
 
     private bool isEvading = false;
-    public bool invulnerable = false;
+    [HideInInspector] public bool invulnerable = false;
     // Start is called before the first frame update
     void Start()
     {
         currentHealth = maxHealth;
         currentEndurancePool = endurancePoolMax;
+        currentHealthPotionAmount = healthPotionAmount;
 
 
-        healthRegenCoroutine = StartCoroutine(HealthRegeneration()); 
-        healthRegenIsRunning = true;
+        // healthRegenCoroutine = StartCoroutine(HealthRegeneration()); 
+        // healthRegenIsRunning = true;
         enduranceRegenCoroutine = StartCoroutine(EnduranceRegeneration());
     }
     public IEnumerator HealthRegeneration()
@@ -58,9 +65,12 @@ public class PlayerStats : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() // I am using update to detect whether the player is using a Heal Potion
     {
-        
+        if (Input.GetKey(KeyCode.H))
+        {
+            UseHealthPotion();
+        }
     }
 
     void Awake()
@@ -89,6 +99,39 @@ public class PlayerStats : MonoBehaviour
 
         enduranceBarSlider.value = 1;
         enduranceText.text = Mathf.Ceil(currentEndurancePool).ToString() + " / " + Mathf.Ceil(endurancePoolMax).ToString();
+    }
+
+    private bool onCooldown = false;
+    private void UseHealthPotion()
+    {
+        if (currentHealthPotionAmount > 0 && !onCooldown)
+        {
+            if (poisoned)
+            {
+                currentHealth += (healthPotionBaseHeal + (maxHealth * (HealthRegen / 100))) / 2;
+            }
+            else
+            {
+                currentHealth += healthPotionBaseHeal + (maxHealth * (HealthRegen / 100));
+            }
+            currentHealthPotionAmount -= 1;
+            CheckHealthMax();
+            SetHealthInfo();
+            SetHealthPotionIndicatorInfo();
+            StartCoroutine(HealthPotionCooldown(1));
+        }
+    }
+    public void ResetHealthPotionAmount()
+    {
+        currentHealthPotionAmount = healthPotionAmount;
+        SetHealthPotionIndicatorInfo();
+    }
+    IEnumerator HealthPotionCooldown(float time)
+    {
+        onCooldown = true;
+        yield return new WaitForSeconds(time);
+        onCooldown = false;
+
     }
 
     public void DealDamage(float damage)
@@ -216,6 +259,10 @@ public class PlayerStats : MonoBehaviour
     {
         healthBarSlider.value = CalculateHealthPercentage();
         healthText.text = Mathf.Ceil(currentHealth).ToString() + " / " + Mathf.Ceil(maxHealth).ToString();
+    }
+    private void SetHealthPotionIndicatorInfo()
+    {
+        healthPotionText.text = currentHealthPotionAmount.ToString();
     }
     public void UpdateHealthEnduranceBars()
     {

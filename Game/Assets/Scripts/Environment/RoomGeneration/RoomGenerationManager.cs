@@ -53,6 +53,7 @@ public class RoomGenerationManager : MonoBehaviour
     // If the room is not occupied, then a new room is created, and the player is moved into it
     public void DoRoomChange(int roomX, int roomY, string doorDirection) // Note to self, do NOT name the variables the same thing as the ones in the script bc/ it will prioritize the inputs
     {
+        gameObject.GetComponent<PlayerStats>().ResetHealthPotionAmount();
         GetMapChangeFromDirection(doorDirection);
         if (roomMap[currentX, currentY] != null)
         {
@@ -77,6 +78,7 @@ public class RoomGenerationManager : MonoBehaviour
         newRoom.GetComponent<RoomManager>().roomMapX = currentX;
         newRoom.GetComponent<RoomManager>().roomMapY = currentY;
         DisableOutOfBoundsDoors(newRoom);
+        newRoom.GetComponent<RoomManager>().CreateRoomContent();
         // rooms.Add(newRoom);
 
         return newRoom;
@@ -88,7 +90,7 @@ public class RoomGenerationManager : MonoBehaviour
     {
         MovePathfindingGraph(destination.transform.position);
         currentRoomCenterPos = destination.transform.position;
-        playerPos.position = destination.transform.Find(GetConnectedDoorDirection(doorDirection)).Find("Doorway").position;
+        playerPos.position = destination.transform.Find(GetConnectedDoorDirection(doorDirection)).Find("Doorway").Find("EntryPos").position;
     }
 
     // This method is key to making sure that the RoomMap is not exceeded, and disables any doors that do not lead anywhere

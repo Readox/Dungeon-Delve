@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5c06e2de4be96b44a972addb773cf60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitInterval: 0
+  hitInterval: 1
   targetTag: Player
   applyDamage: 0
   applyCondition: 0

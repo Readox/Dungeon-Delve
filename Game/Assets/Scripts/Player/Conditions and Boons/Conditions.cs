@@ -38,7 +38,8 @@ public class Conditions
         }
         else if (effectName.Equals("Poison"))
         {
-            cm.StopHealthRegen();
+            // cm.StopHealthRegen();
+            cm.DecreaseHealAmount();
         }
         else if (effectName.Equals("Burning"))
         {
@@ -73,7 +74,8 @@ public class Conditions
         }
         else if (effectName.Equals("Poison"))
         {
-            cm.StartHealthRegen();
+            // cm.StartHealthRegen();
+            cm.ResetHealAmount();
             if (!cm.CheckForInstanceOfCondition(effectName))
             {
                 cm.RemoveEffectAnimation(effectName);
