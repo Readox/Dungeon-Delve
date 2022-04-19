@@ -32,9 +32,32 @@ public class RoomManager : MonoBehaviour
         }
     }
 
-    public void CreateRoomContent()
+
+    // The generation doesnt take into account the difficulty of floors increasing yet, so I need to create either monster prefabs with higher stats or a script that scales them
+    public bool floorBossRoom; // set to true if the floor's final boss spawns in this room
+
+    public void CreateRoomContent(int internalDifficultyLevel) // This goes from 1-5, for the room itself, with 5 being a boss room
     {
-        
+        if (internalDifficultyLevel == 5) // then spawn boss monster
+        {
+            GameObject ns = rmg_Script.GenerateBossSpawner(gameObject.transform.position.x, gameObject.transform.position.y, floorBossRoom); 
+            enemySpawnerList.Add(ns.GetComponent<SpawnPoint>());
+        }
+        else // do regular spawners
+        {
+            for (int i = 0; i <= internalDifficultyLevel; i++)
+            {
+                GameObject ns = rmg_Script.GenerateRandomSpawner(gameObject.transform.position.x, gameObject.transform.position.y, internalDifficultyLevel);
+                enemySpawnerList.Add(ns.GetComponent<SpawnPoint>()); 
+            }
+        }
+
+
+        // Once all that is done, turn on mob spawners
+        foreach(SpawnPoint sp in enemySpawnerList)
+        {
+            sp.gameObject.SetActive(true);
+        }
     }
 
 

@@ -6,14 +6,14 @@ using Pathfinding;
 public class RoomGenerationManager : MonoBehaviour
 {
     // This script handles creation of rooms, while the RoomManager handles creation of stuff inside that room
-
+    public bool disableMobSpawning;
     public Transform playerPos;
     public GameObject twentyByTwenty_Room;
     public AstarPath pathfinder_Script;
 
     private Vector3 currentRoomCenterPos; // is set to startingRoom.position to prevent starting room from getting shuffled around
     public Transform startingRoom;
-
+    public List<GameObject> enemyObjects;
 
     public int maximumMapX;
     public int maximumMapY;
@@ -23,10 +23,21 @@ public class RoomGenerationManager : MonoBehaviour
     private int currentX;
     private int currentY;
 
+
+    // Boss spawners are not in enemyObjects list because they are not spawned regularly
+    public GameObject cairnTheIndomitable;
+    public GameObject reaper;
+
+    void Start()
+    {
+        DisableOutOfBoundsDoors(startingRoom.gameObject);
+    }
+
     void Awake()
     {
         currentRoomCenterPos = startingRoom.position;
         InitializeRoomMap();
+
         //PrintRoomMap();
     }
 
@@ -53,7 +64,7 @@ public class RoomGenerationManager : MonoBehaviour
     // If the room is not occupied, then a new room is created, and the player is moved into it
     public void DoRoomChange(int roomX, int roomY, string doorDirection) // Note to self, do NOT name the variables the same thing as the ones in the script bc/ it will prioritize the inputs
     {
-        gameObject.GetComponent<PlayerStats>().ResetHealthPotionAmount();
+        //gameObject.GetComponent<PlayerStats>().ResetHealthPotionAmount(); // I have this here in case I want to reset health potions on room change instead of on dungeon start
         GetMapChangeFromDirection(doorDirection);
         if (roomMap[currentX, currentY] != null)
         {
@@ -78,7 +89,10 @@ public class RoomGenerationManager : MonoBehaviour
         newRoom.GetComponent<RoomManager>().roomMapX = currentX;
         newRoom.GetComponent<RoomManager>().roomMapY = currentY;
         DisableOutOfBoundsDoors(newRoom);
-        newRoom.GetComponent<RoomManager>().CreateRoomContent();
+        if (!disableMobSpawning)
+        {
+            newRoom.GetComponent<RoomManager>().CreateRoomContent(Random.Range(1, 5)); // Puts in pseudo-random number from 1 - 5
+        }
         // rooms.Add(newRoom);
 
         return newRoom;
@@ -92,6 +106,38 @@ public class RoomGenerationManager : MonoBehaviour
         currentRoomCenterPos = destination.transform.position;
         playerPos.position = destination.transform.Find(GetConnectedDoorDirection(doorDirection)).Find("Doorway").Find("EntryPos").position;
     }
+
+
+
+    public GameObject GenerateRandomSpawner(float x, float y, int internalDifficultyLevel)
+    {
+        GameObject temp = Instantiate(enemyObjects[Random.Range(0, enemyObjects.Count)], new Vector3(x + Random.Range(-8f, 8f), y + Random.Range(-8f, 8f), 0), Quaternion.identity);
+        temp.SetActive(false);
+        SpawnPoint sp = temp.GetComponent<SpawnPoint>();
+        sp.repeatInterval = Random.Range(1, 9);
+        sp.maxEnemyCount = Random.Range(1, 3);
+
+        return temp;
+    }
+
+    public GameObject GenerateBossSpawner(float x, float y, bool floorBossRoom)
+    {
+        if (floorBossRoom)
+        {
+            GameObject temp = Instantiate(cairnTheIndomitable, new Vector3(x, y, 0), Quaternion.identity);
+            temp.SetActive(false);
+            return temp;
+        }
+        else
+        {
+            GameObject temp = Instantiate(reaper, new Vector3(x + Random.Range(-3f, 3f), y + Random.Range(-3f, 3f), 0), Quaternion.identity);
+            temp.SetActive(false);
+            return temp;
+        }
+    }
+
+
+
 
     // This method is key to making sure that the RoomMap is not exceeded, and disables any doors that do not lead anywhere
     // There might be a faster way to do this, but whatever

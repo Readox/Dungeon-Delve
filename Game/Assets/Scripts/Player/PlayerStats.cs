@@ -21,6 +21,7 @@ public class PlayerStats : MonoBehaviour
     public Slider enduranceBarSlider;
     public Text enduranceText;
     public Text healthPotionText;
+    public Button healthPotionButton;
 
     public string playerClass;
 
@@ -104,6 +105,7 @@ public class PlayerStats : MonoBehaviour
     private bool onCooldown = false;
     private void UseHealthPotion()
     {
+        HealthPotionButtonColorChange();
         if (currentHealthPotionAmount > 0 && !onCooldown)
         {
             if (poisoned)
@@ -120,6 +122,19 @@ public class PlayerStats : MonoBehaviour
             SetHealthPotionIndicatorInfo();
             StartCoroutine(HealthPotionCooldown(1));
         }
+    }
+    void HealthPotionButtonColorChange()
+    {
+        SetPressedColor();
+        Invoke("SetNormalColor", 1); // Time set to cooldown
+    }
+    void SetPressedColor()
+    {
+        healthPotionButton.image.color = healthPotionButton.colors.pressedColor;
+    }
+    void SetNormalColor()
+    {
+        healthPotionButton.image.color = healthPotionButton.colors.normalColor;
     }
     public void ResetHealthPotionAmount()
     {
