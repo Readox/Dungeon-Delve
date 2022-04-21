@@ -23,7 +23,7 @@ public class RoomGenerationManager : MonoBehaviour
     private int currentX;
     private int currentY;
 
-
+    private int numberRoomsGenerated;
     // Boss spawners are not in enemyObjects list because they are not spawned regularly
     public GameObject cairnTheIndomitable;
     public GameObject reaper;
@@ -57,6 +57,7 @@ public class RoomGenerationManager : MonoBehaviour
         startingRoom.GetComponent<RoomManager>().roomMapX = startingRoomX;
         startingRoom.GetComponent<RoomManager>().roomMapY = startingRoomY;
         DisableOutOfBoundsDoors(startingRoom.gameObject);
+        numberRoomsGenerated += 1;
     }
 
     // This function is called by RoomManagers when a room is exited with a door, and finds whether the room is occupied or not
@@ -91,9 +92,19 @@ public class RoomGenerationManager : MonoBehaviour
         DisableOutOfBoundsDoors(newRoom);
         if (!disableMobSpawning)
         {
-            newRoom.GetComponent<RoomManager>().CreateRoomContent(Random.Range(1, 5)); // Puts in pseudo-random number from 1 - 5
+            
+            if ((numberRoomsGenerated + 1) == (maximumMapX - 1) * (maximumMapY - 1))
+            {
+                newRoom.GetComponent<RoomManager>().floorBossRoom = true;
+                newRoom.GetComponent<RoomManager>().CreateRoomContent(5); // guaranteed boss room
+            }
+            else
+            {
+                // VERY IMPORTANT NOTE: THE INT VERSION FOR RANDOM.RANGE IS MAX EXCLUSIVE!!!
+                newRoom.GetComponent<RoomManager>().CreateRoomContent(Random.Range(1, 6)); // Puts in pseudo-random number from 1 - 5
+            }
         }
-        // rooms.Add(newRoom);
+        numberRoomsGenerated += 1;
 
         return newRoom;
     }

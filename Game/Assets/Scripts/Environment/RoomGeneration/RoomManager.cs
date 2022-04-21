@@ -38,6 +38,7 @@ public class RoomManager : MonoBehaviour
 
     public void CreateRoomContent(int internalDifficultyLevel) // This goes from 1-5, for the room itself, with 5 being a boss room
     {
+        Debug.Log("Internal Difficulty Level: " + internalDifficultyLevel);
         if (internalDifficultyLevel == 5) // then spawn boss monster
         {
             GameObject ns = rmg_Script.GenerateBossSpawner(gameObject.transform.position.x, gameObject.transform.position.y, floorBossRoom); 
@@ -45,7 +46,7 @@ public class RoomManager : MonoBehaviour
         }
         else // do regular spawners
         {
-            for (int i = 0; i <= internalDifficultyLevel; i++)
+            for (int i = 0; i < internalDifficultyLevel; i++)
             {
                 GameObject ns = rmg_Script.GenerateRandomSpawner(gameObject.transform.position.x, gameObject.transform.position.y, internalDifficultyLevel);
                 enemySpawnerList.Add(ns.GetComponent<SpawnPoint>()); 

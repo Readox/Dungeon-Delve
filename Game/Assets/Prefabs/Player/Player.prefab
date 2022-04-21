@@ -230,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameManagerObject: {fileID: 0}
   puffAnimation: {fileID: 8005730577629841105, guid: 93c45a9fb2e1a5c45b647890e3d5bc9c, type: 3}
-  playerSpeed: 3
+  playerSpeed: 4
   originalSpeed: 0
   dodgeImmunityLength: 1
   dodgeCost: 100

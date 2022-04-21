@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class SpawnPoint : MonoBehaviour
 {
-
+    public SpriteRenderer sr;
+    public Animator anim;
     public GameObject prefab;
     private List<GameObject> spawnedEnemyList = new List<GameObject>();
 
@@ -18,6 +19,11 @@ public class SpawnPoint : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
+        if (spawnImmediately)
+        {
+            sr.enabled = false;
+            anim.enabled = false;
+        }
         if (spawnImmediately && prefab != null && !(enemyCount >= maxEnemyCount))
         {
             enemyCount += 1;
@@ -28,8 +34,37 @@ public class SpawnPoint : MonoBehaviour
         //SpawnObject(); // spawn one object on game start
         if (repeatInterval > 0)
         {
-            InvokeRepeating("SpawnObject", 2f, repeatInterval);
+            InvokeRepeating("StartAnimation", 2f, repeatInterval);
         }
+    }
+
+    public GameObject StartAnimation()
+    {
+        if (isSpawnCycleCompleted)
+        {
+            SetFinished();
+        }
+        else
+        {
+            SetRunSpawn(true);
+        }
+
+        return null;
+    }
+
+    public void SetFinished()
+    {
+        anim.SetBool("Finished", true);
+    }
+
+    public void SetRunSpawn(bool val)
+    {
+        anim.SetBool("RunSpawn", val);
+    }
+
+    public void SetRunSpawnFalse()
+    {
+        anim.SetBool("RunSpawn", false);
     }
 
     public GameObject SpawnObject()
@@ -42,7 +77,6 @@ public class SpawnPoint : MonoBehaviour
             spawnedEnemyList.Add(enemy);
             return enemy;
         }
-        
         if (spawnedEnemyList.Count == 0)
         {
             isSpawnCycleCompleted = true;

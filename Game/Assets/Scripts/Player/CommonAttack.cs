@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 using TMPro;
 
 public class CommonAttack : MonoBehaviour
@@ -20,7 +19,7 @@ public class CommonAttack : MonoBehaviour
     {
         float damage = 10 + weaponDamage; // Base Weapon Damage = 10
         bool criticalHit = false;
-        if (GetRandFloat(0,100) > GetCritChance()) // No Critical Hit
+        if (Random.Range(0, 100) > GetCritChance()) // No Critical Hit
         {
             damage = (10 + weaponDamage) * (1 + GetStrength()/100);
         }
@@ -47,7 +46,8 @@ public class CommonAttack : MonoBehaviour
 
     private void ConfigureDamageIndicator(GameObject di, Transform newParent, float damage, bool criticalHit) // The new parent is the attacked entity
     {
-        di.transform.SetParent(newParent.parent);
+        di.transform.SetParent(storage);
+        di.transform.position = new Vector3(newParent.position.x + Random.Range(-1.5f, 1.5f), newParent.position.y + Random.Range(-1.5f, 1.5f), newParent.position.z);
         di.GetComponent<TextMeshPro>().text = damage.ToString(); 
         if (criticalHit)
         {

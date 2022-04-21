@@ -85,6 +85,8 @@ public class PlayerStats : MonoBehaviour
 
         PlayerClassSetup();
         UpdateScrollRectStats(statsScrollRect);
+        currentHealthPotionAmount = healthPotionAmount;
+        SetHealthPotionIndicatorInfo();
 
         Color color;
         ColorUtility.TryParseHtmlString(endurancePoolColor, out color);
