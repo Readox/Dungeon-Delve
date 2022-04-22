@@ -105,7 +105,7 @@ public class PlayerStats : MonoBehaviour
     }
 
     private bool onCooldown = false;
-    private void UseHealthPotion()
+    public void UseHealthPotion()
     {
         HealthPotionButtonColorChange();
         if (currentHealthPotionAmount > 0 && !onCooldown)
