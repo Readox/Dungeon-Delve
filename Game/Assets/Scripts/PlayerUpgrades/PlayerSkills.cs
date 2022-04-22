@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System;
 
 public class PlayerSkills : MonoBehaviour
 {
-
+    private string filePath;
     //private List<SkillType> unlockedSkillList;
     public List<SkillType> unlockedSkillLevels = new List<SkillType>();
 
@@ -16,7 +18,54 @@ public class PlayerSkills : MonoBehaviour
     
     private PlayerStats playerStats_script;
 
-    
+    public void Save() // Dont use Binary Formatter apparently
+    {
+        Save data = new Save();
+        data.name = "SavedUpgrades"; // Save name here
+        data.playerUpgradeCurrency = this.playerUpgradeCurrency;
+        data.playerUpgradeTokens = this.playerUpgradeTokens;
+        // Save all data here
+        foreach (SkillType st in unlockedSkillLevels)
+        {
+            data.upgrades.Add(st);
+            data.totalCurrencyCost += st.GetTotalCurrencyCost();
+        }
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(filePath, json);
+
+        Debug.Log("Data Saved into JSON: " + json);
+    }
+
+    public void Load()
+    {
+        if (File.Exists(filePath))
+        {
+            Save data = JsonUtility.FromJson<Save>(File.ReadAllText(filePath));
+            // Load info here
+            Debug.Log("Save Name: " + data.name);
+            Debug.Log("Total Currency Cost: " + data.totalCurrencyCost);
+
+            foreach (SkillType st in data.upgrades)
+            {
+                Debug.Log("Skill Name: " + st.skillID + "\nSkill Type: " + st.skillType + "\nSkill Level: " + st.skillLevel);
+            }
+            // Put data back into game here
+            playerUpgradeCurrency = data.playerUpgradeCurrency;
+            playerUpgradeTokens = data.playerUpgradeTokens;
+
+            unlockedSkillLevels = data.upgrades;
+
+            UpdateUIElements();
+        }
+        else
+        {
+            Debug.Log("File does not exist");
+        }
+        
+        
+    }
+
 
     // Transitioning this so that it only occurs on + and - and switched dropdown, but will still exist for when Awake() happens
     public void UpdateValues()
@@ -152,8 +201,12 @@ public class PlayerSkills : MonoBehaviour
     public void Awake()
     {
         gameManager = GameObject.FindWithTag("GameController");
-        // I think I have to clear the list of everything when the game restarts, because it is saving values
         ClearList();
+
+        filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
+        Save();
+
+        // TODO: I need to add player upgrades in here that were saved
 
         playerStats_script = gameManager.GetComponent<PlayerStats>();
 
@@ -217,3 +270,18 @@ public class PlayerSkills : MonoBehaviour
         
     }
 }
+
+[Serializable]
+public class Save 
+{
+    // All of this from https://stackoverflow.com/questions/40078490/saving-loading-data-in-unity/40097623#40097623
+    public List<int> ID = new List<int>();
+    public List<int> Amounts = new List<int>();
+    public string name;
+    public int totalCurrencyCost;
+    public List<SkillType> upgrades = new List<SkillType>();
+    public int playerUpgradeCurrency;
+    public int playerUpgradeTokens;
+}
+
+
