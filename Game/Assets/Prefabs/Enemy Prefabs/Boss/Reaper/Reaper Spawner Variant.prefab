@@ -56,6 +56,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 111595877509166904, guid: 646a7ff4a1106b74c9a9e009913adb91, type: 3}
     - target: {fileID: 647408464521861357, guid: 6bd2582490a007345840a986a14449a8, type: 3}
+      propertyPath: bossSpawner
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 647408464521861357, guid: 6bd2582490a007345840a986a14449a8, type: 3}
       propertyPath: maxEnemyCount
       value: 1
       objectReference: {fileID: 0}
@@ -65,7 +69,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1194932373261796851, guid: 6bd2582490a007345840a986a14449a8, type: 3}
       propertyPath: m_Name
-      value: Reaper Spawner
+      value: Reaper Spawner Variant
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bd2582490a007345840a986a14449a8, type: 3}

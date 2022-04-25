@@ -56,6 +56,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 4637744834213301506, guid: 818df58b0aa496d459cc77307ee52308, type: 3}
     - target: {fileID: 647408464521861357, guid: 6bd2582490a007345840a986a14449a8, type: 3}
+      propertyPath: bossSpawner
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 647408464521861357, guid: 6bd2582490a007345840a986a14449a8, type: 3}
       propertyPath: maxEnemyCount
       value: 1
       objectReference: {fileID: 0}

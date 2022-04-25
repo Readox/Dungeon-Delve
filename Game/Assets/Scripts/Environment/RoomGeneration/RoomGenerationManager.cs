@@ -120,22 +120,24 @@ public class RoomGenerationManager : MonoBehaviour
 
 
 
-    public GameObject GenerateRandomSpawner(float x, float y, int internalDifficultyLevel)
+    public GameObject GenerateRandomSpawner(Transform newParent, float x, float y, int internalDifficultyLevel)
     {
         GameObject temp = Instantiate(enemyObjects[Random.Range(0, enemyObjects.Count)], new Vector3(x + Random.Range(-8f, 8f), y + Random.Range(-8f, 8f), 0), Quaternion.identity);
+        temp.transform.parent = newParent;
         temp.SetActive(false);
         SpawnPoint sp = temp.GetComponent<SpawnPoint>();
-        sp.repeatInterval = Random.Range(1, 9);
-        sp.maxEnemyCount = Random.Range(1, 3);
+        sp.repeatInterval = Random.Range(1f, 8f); // Random number from 1 - 8
+        sp.maxEnemyCount = Random.Range(1, 4); // Random number from 1 - 3
 
         return temp;
     }
 
-    public GameObject GenerateBossSpawner(float x, float y, bool floorBossRoom)
+    public GameObject GenerateBossSpawner(Transform newParent, float x, float y, bool floorBossRoom)
     {
         if (floorBossRoom)
         {
             GameObject temp = Instantiate(cairnTheIndomitable, new Vector3(x, y, 0), Quaternion.identity);
+            temp.transform.parent = newParent;
             temp.SetActive(false);
             return temp;
         }
@@ -170,6 +172,14 @@ public class RoomGenerationManager : MonoBehaviour
         {
             room.transform.Find("North").Find("Doorway").gameObject.SetActive(false);
         }
+    }
+
+    private void DisableAllRoomDoors(GameObject room)
+    {
+        room.transform.Find("East").Find("Doorway").gameObject.SetActive(false);
+        room.transform.Find("West").Find("Doorway").gameObject.SetActive(false);
+        room.transform.Find("South").Find("Doorway").gameObject.SetActive(false);
+        room.transform.Find("North").Find("Doorway").gameObject.SetActive(false);
     }
 
     // Changes the currentX and currentY values based on the direction of the door the player left from

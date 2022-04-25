@@ -6,9 +6,12 @@ public class SpawnPoint : MonoBehaviour
 {
     public SpriteRenderer sr;
     public Animator anim;
+    public Rigidbody2D rb;
+    public BoxCollider2D bc;
     public GameObject prefab;
     private List<GameObject> spawnedEnemyList = new List<GameObject>();
 
+    public bool bossSpawner;
     public bool spawnImmediately;
     public float repeatInterval;
 
@@ -19,28 +22,32 @@ public class SpawnPoint : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        if (spawnImmediately)
+        if (bossSpawner) 
         {
             sr.enabled = false;
-            anim.enabled = false;
+            bc.enabled = false;
+            SpawnObject();
         }
-        if (spawnImmediately && prefab != null && !(enemyCount >= maxEnemyCount))
+        if (spawnImmediately && prefab != null && !(enemyCount >= maxEnemyCount) && !bossSpawner)
         {
+            StartAnimation();
+            /*
             enemyCount += 1;
             GameObject enemy = Instantiate(prefab, transform.position, Quaternion.identity);
             enemy.GetComponentInChildren<EnemyStats>().SetHomeSpawner(gameObject);
             spawnedEnemyList.Add(enemy);
+            */
         }
         //SpawnObject(); // spawn one object on game start
         if (repeatInterval > 0)
         {
-            InvokeRepeating("StartAnimation", 2f, repeatInterval);
+            InvokeRepeating("StartAnimation", Random.Range(1f, 3f), repeatInterval);
         }
     }
 
     public GameObject StartAnimation()
     {
-        if (isSpawnCycleCompleted)
+        if (enemyCount >= maxEnemyCount)
         {
             SetFinished();
         }
@@ -67,12 +74,28 @@ public class SpawnPoint : MonoBehaviour
         anim.SetBool("RunSpawn", false);
     }
 
+    public void CheckFinished()
+    {
+        if (enemyCount >= maxEnemyCount)
+        {
+            anim.SetBool("Finished", true);
+        }
+    }
+
+    public void CheckSpawnCycleCompleted()
+    {
+        if (spawnedEnemyList.Count == 0)
+        {
+            isSpawnCycleCompleted = true;
+        }
+    }
+
     public GameObject SpawnObject()
     {
         if (prefab != null && !(enemyCount >= maxEnemyCount))
         {
             enemyCount += 1;
-            GameObject enemy = Instantiate(prefab, transform.position, Quaternion.identity);
+            GameObject enemy = Instantiate(prefab, new Vector3 (transform.position.x + Random.Range(-1f, 1f), transform.position.y + Random.Range(-1f, 1f), transform.position.z), Quaternion.identity);
             enemy.GetComponentInChildren<EnemyStats>().SetHomeSpawner(gameObject);
             spawnedEnemyList.Add(enemy);
             return enemy;

@@ -7027,7 +7027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.46226418, g: 0.46226418, b: 0.46226418, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -7195,6 +7195,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822c7af35cf149f4eb0f7da528b4b500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  unlockedSkillLevels: []
   playerUpgradeCurrency: 10000
   playerUpgradeTokens: 10
   gameManager: {fileID: 378433348}

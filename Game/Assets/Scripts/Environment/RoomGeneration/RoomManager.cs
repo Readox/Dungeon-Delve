@@ -41,14 +41,14 @@ public class RoomManager : MonoBehaviour
         Debug.Log("Internal Difficulty Level: " + internalDifficultyLevel);
         if (internalDifficultyLevel == 5) // then spawn boss monster
         {
-            GameObject ns = rmg_Script.GenerateBossSpawner(gameObject.transform.position.x, gameObject.transform.position.y, floorBossRoom); 
+            GameObject ns = rmg_Script.GenerateBossSpawner(gameObject.transform, gameObject.transform.position.x, gameObject.transform.position.y, floorBossRoom); 
             enemySpawnerList.Add(ns.GetComponent<SpawnPoint>());
         }
         else // do regular spawners
         {
             for (int i = 0; i < internalDifficultyLevel; i++)
             {
-                GameObject ns = rmg_Script.GenerateRandomSpawner(gameObject.transform.position.x, gameObject.transform.position.y, internalDifficultyLevel);
+                GameObject ns = rmg_Script.GenerateRandomSpawner(gameObject.transform, gameObject.transform.position.x, gameObject.transform.position.y, internalDifficultyLevel);
                 enemySpawnerList.Add(ns.GetComponent<SpawnPoint>()); 
             }
         }

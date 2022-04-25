@@ -136,7 +136,7 @@ MonoBehaviour:
   searchRadius: 10
   targetDistance: 7
   wanderSpeed: 2
-  attackSpeed: 4
+  attackSpeed: 5
 --- !u!1001 &2902171095461817147
 PrefabInstance:
   m_ObjectHideFlags: 0
