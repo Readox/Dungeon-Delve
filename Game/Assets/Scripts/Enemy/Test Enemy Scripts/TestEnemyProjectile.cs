@@ -22,7 +22,7 @@ public class TestEnemyProjectile : MonoBehaviour
             PlayerStats.playerStats.DealDamage(damage);
             Destroy(gameObject);
         }
-        if (collision.tag == "PlayerProjectile")
+        if (collision.tag == "PlayerProjectile" || collision.tag == "Wall") // If the projectile hits either the player's projectile or a wall
         {
             Destroy(gameObject);
         }

@@ -810,6 +810,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 381666071}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1436,6 +1440,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 742940402}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -2478,8 +2486,8 @@ MonoBehaviour:
   - {fileID: 5145878177655460719, guid: 916f7e900db12a84ab843b3bb68e7944, type: 3}
   - {fileID: 7321879165430718138, guid: 825e6ee3766ebfa4589dabf9673f8030, type: 3}
   - {fileID: 7988362663323718246, guid: 8ee7d742c178c554bb2d0b6b4939d036, type: 3}
-  maximumMapX: 3
-  maximumMapY: 3
+  maximumMapX: 2
+  maximumMapY: 2
   startingRoomX: 1
   startingRoomY: 1
   cairnTheIndomitable: {fileID: 4799500891954043627, guid: 006fbb4b8714b114ca9346be171cf300, type: 3}
@@ -3336,6 +3344,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 617694899}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4238,6 +4250,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 17160754}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4810,6 +4826,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 1557979988}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -5806,6 +5826,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 17160754}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -7199,6 +7223,17 @@ MonoBehaviour:
   playerUpgradeCurrency: 10000
   playerUpgradeTokens: 10
   gameManager: {fileID: 378433348}
+  upgradeList: {fileID: 278279235}
+  playerUpgrades:
+  - {fileID: 1485151542488514919}
+  - {fileID: 746604565}
+  - {fileID: 1072956223}
+  - {fileID: 1506899832}
+  - {fileID: 212015778}
+  - {fileID: 246210402}
+  - {fileID: 884254077}
+  - {fileID: 611045659}
+  - {fileID: 2113540882}
   playerUpgradeCurrencyTokensText: {fileID: 350589281}
 --- !u!4 &1495123168 stripped
 Transform:
@@ -7212,6 +7247,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 1802573423}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -8844,6 +8883,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 885796605}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -9239,6 +9282,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
+    - target: {fileID: -2071959356947460299, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
+      propertyPath: linkedGameObject
+      value: 
+      objectReference: {fileID: 840189265}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1

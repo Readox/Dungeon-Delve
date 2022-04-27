@@ -43,7 +43,7 @@ public class RoomGenerationManager : MonoBehaviour
 
     private void InitializeRoomMap() // Initializes the RoomMap with null values and the starting room
     {
-        roomMap = new GameObject[maximumMapX, maximumMapY];
+        roomMap = new GameObject[maximumMapX + 1, maximumMapY + 1];
         for (int i = 0; i < roomMap.GetLength(0); i++)
         {
             for (int j = 0; j < roomMap.GetLength(1); j++)
@@ -93,7 +93,7 @@ public class RoomGenerationManager : MonoBehaviour
         if (!disableMobSpawning)
         {
             
-            if ((numberRoomsGenerated + 1) == (maximumMapX - 1) * (maximumMapY - 1))
+            if ((numberRoomsGenerated + 1) == (maximumMapX) * (maximumMapY))
             {
                 newRoom.GetComponent<RoomManager>().floorBossRoom = true;
                 newRoom.GetComponent<RoomManager>().CreateRoomContent(5); // guaranteed boss room
@@ -156,7 +156,7 @@ public class RoomGenerationManager : MonoBehaviour
     // There might be a faster way to do this, but whatever
     private void DisableOutOfBoundsDoors(GameObject room)
     {
-        if (room.GetComponent<RoomManager>().roomMapX == maximumMapX - 1)
+        if (room.GetComponent<RoomManager>().roomMapX == maximumMapX)
         {
             room.transform.Find("East").Find("Doorway").gameObject.SetActive(false);
         }
@@ -164,7 +164,7 @@ public class RoomGenerationManager : MonoBehaviour
         {
             room.transform.Find("West").Find("Doorway").gameObject.SetActive(false);
         }
-        if (room.GetComponent<RoomManager>().roomMapY == maximumMapY - 1)
+        if (room.GetComponent<RoomManager>().roomMapY == maximumMapY)
         {
             room.transform.Find("South").Find("Doorway").gameObject.SetActive(false);
         }

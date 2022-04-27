@@ -15,6 +15,8 @@ public class PlayerSkills : MonoBehaviour
     public int playerUpgradeTokens;
 
     public GameObject gameManager;
+    public GameObject upgradeList;
+    public List<GameObject> playerUpgrades = new List<GameObject>();
     
     private PlayerStats playerStats_script;
 
@@ -46,15 +48,43 @@ public class PlayerSkills : MonoBehaviour
             Debug.Log("Save Name: " + data.name);
             Debug.Log("Total Currency Cost: " + data.totalCurrencyCost);
 
+            for (int i = 0; i < playerUpgrades.Count; i++) 
+            {
+                bool inList = false;
+                for (int j = 0; j < data.upgrades.Count; j ++)
+                {
+                    if (playerUpgrades[i].name == data.upgrades[j].skillID)
+                    {
+                        inList = true;
+                        break;
+                    }
+                }
+                if (inList)
+                {
+                    playerUpgrades[i].GetComponent<LinkedGameObject>().linkedGameObject.SetActive(false);
+                }
+                else
+                {
+                    playerUpgrades[i].GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
+                }
+                
+            }
+            
+            /*
             foreach (SkillType st in data.upgrades)
             {
                 Debug.Log("Skill Name: " + st.skillID + "\nSkill Type: " + st.skillType + "\nSkill Level: " + st.skillLevel);
             }
+            */
             // Put data back into game here
             playerUpgradeCurrency = data.playerUpgradeCurrency;
             playerUpgradeTokens = data.playerUpgradeTokens;
 
-            unlockedSkillLevels = data.upgrades;
+            unlockedSkillLevels.Clear();
+            foreach (SkillType st in data.upgrades)
+            {
+                unlockedSkillLevels.Add(st);
+            }
 
             UpdateUIElements();
         }
@@ -154,14 +184,30 @@ public class PlayerSkills : MonoBehaviour
     public void AddPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
-        SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
-        if (currentClass.GetCurrencyCost() > playerUpgradeCurrency || currentClass.IsMaxLevel())
+
+        
+        SkillType currentClass = null;
+        for (int i = 0; i < unlockedSkillLevels.Count; i++)
         {
-            Debug.Log("Not enough currency or stat already increased to max level!");
+            if (unlockedSkillLevels[i].GetSkillID().Equals(nameOfSkill))
+            {
+                currentClass = unlockedSkillLevels[i];
+                break;
+            }
+        }
+
+        // I am fairly certain that the next line is what is causing my problems
+        //SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
+        
+        
+        if (currentClass.GetCurrencyCost() > playerUpgradeCurrency || currentClass.IsMaxLevel() || currentClass == null)
+        {
+            Debug.Log("Not enough currency, stat already increased to max level, or the skill is null!");
         }
         else
         {
             int currencyCost = currentClass.AddSkillLevel(1); // Have to get the currency cost of the operation
+            Debug.Log("Currency Cost: " + currencyCost);
             
             playerUpgradeCurrency -= currencyCost;
 
