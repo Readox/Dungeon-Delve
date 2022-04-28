@@ -18,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     // Entity Values
     public float playerSpeed;
     public float originalSpeed; // for storing the original speed value for slowness condition
+    private bool frozen; // For freezing the animation 
     public float dodgeImmunityLength;
     public float dodgeCost;
     public float dodgeSpeed;
@@ -209,11 +210,33 @@ public class PlayerMovement : MonoBehaviour
         
     }
 
+    public void FreezePlayerForTime(float time)
+    {
+        StartCoroutine(FreezeForTime(time));
+    }
+
+    IEnumerator FreezeForTime(float time)
+    {
+        frozen = true;
+        float tempSpeed = playerSpeed;
+        playerSpeed = 0;
+        yield return new WaitForSeconds(time);
+        frozen = false;
+        playerSpeed = tempSpeed;
+    }
+
     private void AnimatorMovement(Vector2 animationVec)
     {
-        animator.SetLayerWeight(1, 1);
-        animator.SetFloat("XDir", animationVec.x);
-        animator.SetFloat("YDir", animationVec.y);
+        if (!frozen)
+        {
+            animator.SetLayerWeight(1, 1);
+            animator.SetFloat("XDir", animationVec.x);
+            animator.SetFloat("YDir", animationVec.y);
+        }
+        else
+        {
+            animator.SetLayerWeight(1, 0); // Set to idle animation
+        }
     }
 
     public void DoSlowness()

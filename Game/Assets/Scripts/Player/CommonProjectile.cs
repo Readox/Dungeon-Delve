@@ -61,7 +61,7 @@ public class CommonProjectile : CommonAttack
         {
             Destroy(gameObject);
         }
-        else if (collision.tag != "Player")
+        else if (collision.tag != "PlayerProjectileSafe" && collision.tag != "Player")
         {
             Destroy(gameObject);
         }

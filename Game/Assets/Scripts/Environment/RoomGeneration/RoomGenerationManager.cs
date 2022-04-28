@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Pathfinding;
+using UnityEngine.UI;
 
 public class RoomGenerationManager : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class RoomGenerationManager : MonoBehaviour
     public Transform playerPos;
     public GameObject twentyByTwenty_Room;
     public AstarPath pathfinder_Script;
+    public Image fadeToBlackSquare;
 
     private Vector3 currentRoomCenterPos; // is set to startingRoom.position to prevent starting room from getting shuffled around
     public Transform startingRoom;
@@ -65,8 +67,12 @@ public class RoomGenerationManager : MonoBehaviour
     // If the room is not occupied, then a new room is created, and the player is moved into it
     public void DoRoomChange(int roomX, int roomY, string doorDirection) // Note to self, do NOT name the variables the same thing as the ones in the script bc/ it will prioritize the inputs
     {
+        StartCoroutine(FadeFromBlack(1.5f));
+
         //gameObject.GetComponent<PlayerStats>().ResetHealthPotionAmount(); // I have this here in case I want to reset health potions on room change instead of on dungeon start
-        GetMapChangeFromDirection(doorDirection);
+        
+        roomMap[currentX, currentY].SetActive(false);
+        GetMapChangeFromDirection(doorDirection); // Changes the currentX and currentY values
         if (roomMap[currentX, currentY] != null)
         {
             HandleRoomChange(roomMap[currentX, currentY], doorDirection);
@@ -76,7 +82,7 @@ public class RoomGenerationManager : MonoBehaviour
             roomMap[currentX, currentY] = CreateNewRoom(doorDirection);
             HandleRoomChange(roomMap[currentX, currentY], doorDirection);
         }
-        
+
         //PrintRoomMap(); // Method for debugging
     }
 
@@ -106,16 +112,20 @@ public class RoomGenerationManager : MonoBehaviour
         }
         numberRoomsGenerated += 1;
 
+        newRoom.SetActive(false);
         return newRoom;
     }
 
     // This moves the player into a new room, though it currently moves them to the center
     // Takes in the destination room GameObject and the direction of the door that was entered from
-    private void HandleRoomChange(GameObject destination, string doorDirection) // For generating a new room, returns the connected door
+    private void HandleRoomChange(GameObject destination, string doorDirection)
     {
+        destination.SetActive(true);
         MovePathfindingGraph(destination.transform.position);
         currentRoomCenterPos = destination.transform.position;
         playerPos.position = destination.transform.Find(GetConnectedDoorDirection(doorDirection)).Find("Doorway").Find("EntryPos").position;
+        GameObject.FindWithTag("MainCamera").transform.position = new Vector3 (playerPos.position.x, playerPos.position.y, -10);
+
     }
 
 
@@ -149,7 +159,26 @@ public class RoomGenerationManager : MonoBehaviour
         }
     }
 
+    IEnumerator FadeToBlack(float time)
+    {
+        for (float t = 0f; t < 1.0f; t += Time.deltaTime / time)
+        {
+            Color newColor = new Color(1, 1, 1, Mathf.Lerp(0, 1.0f, t));
+            fadeToBlackSquare.color = newColor;
+            yield return null;
+        }
+        StartCoroutine(FadeFromBlack(1));
+    }
 
+    IEnumerator FadeFromBlack(float time)
+    {
+        for (float t = 0f; t < 1.0f; t += Time.deltaTime / time)
+        {
+            Color newColor = new Color(1, 1, 1, Mathf.Lerp(1.0f, 0, t));
+            fadeToBlackSquare.color = newColor;
+            yield return null;
+        }
+    }
 
 
     // This method is key to making sure that the RoomMap is not exceeded, and disables any doors that do not lead anywhere

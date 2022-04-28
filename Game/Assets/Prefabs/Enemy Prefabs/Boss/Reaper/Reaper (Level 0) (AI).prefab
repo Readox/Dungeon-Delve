@@ -133,8 +133,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackTarget: {fileID: 0}
   self: {fileID: 111595877509166908}
-  searchRadius: 8
-  targetDistance: 7
+  searchRadius: 10
+  targetDistance: 9
   wanderSpeed: 1.5
   attackSpeed: 3
 --- !u!1001 &5391390644254647912

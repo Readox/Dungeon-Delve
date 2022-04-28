@@ -10,6 +10,7 @@ TagManager:
   - PauseMenu
   - Doorway
   - Wall
+  - PlayerProjectileSafe
   layers:
   - Default
   - TransparentFX
