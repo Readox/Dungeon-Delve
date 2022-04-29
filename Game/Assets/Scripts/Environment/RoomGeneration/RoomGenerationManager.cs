@@ -67,7 +67,7 @@ public class RoomGenerationManager : MonoBehaviour
     // If the room is not occupied, then a new room is created, and the player is moved into it
     public void DoRoomChange(int roomX, int roomY, string doorDirection) // Note to self, do NOT name the variables the same thing as the ones in the script bc/ it will prioritize the inputs
     {
-        StartCoroutine(FadeFromBlack(1.5f));
+        StartCoroutine(FadeFromBlack(1.0f));
 
         //gameObject.GetComponent<PlayerStats>().ResetHealthPotionAmount(); // I have this here in case I want to reset health potions on room change instead of on dungeon start
         

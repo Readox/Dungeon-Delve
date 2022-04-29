@@ -7,7 +7,11 @@ using System;
 
 public class PlayerSkills : MonoBehaviour
 {
-    private string filePath;
+    private string filePath1; // = Application.persistentDataPath + "/playerUpgradeInfo1.json"; // Build 1
+    private string filePath2; // = Application.persistentDataPath + "/playerUpgradeInfo2.json"; // Build 2
+    private string filePath3; // = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
+    private string currentBuildDropdownPath;
+
     //private List<SkillType> unlockedSkillList;
     public List<SkillType> unlockedSkillLevels = new List<SkillType>();
 
@@ -20,7 +24,37 @@ public class PlayerSkills : MonoBehaviour
     
     private PlayerStats playerStats_script;
 
-    public void Save() // Dont use Binary Formatter apparently
+    public void OnChangeBuildDropdown(GameObject dropdown)
+    {
+        Save(currentBuildDropdownPath);
+
+        ResetAll();
+
+        string temp = dropdown.GetComponent<Dropdown>().captionText.text;
+        Debug.Log("Dropdown Caption Text: " + temp);
+        if (temp.Equals("Build 1"))
+        {
+            currentBuildDropdownPath = filePath1;
+        }
+        else if (temp.Equals("Build 2"))
+        {
+            currentBuildDropdownPath = filePath2;
+        }
+        else if (temp.Equals("Build 3"))
+        {
+            currentBuildDropdownPath = filePath3;
+        }
+        else
+        {
+            currentBuildDropdownPath = null;
+            Debug.Log("Bad String Value");
+        }
+
+        Load(currentBuildDropdownPath);
+    }
+
+
+    public void Save(string filePath) // Dont use Binary Formatter apparently
     {
         Save data = new Save();
         data.name = "SavedUpgrades"; // Save name here
@@ -39,7 +73,7 @@ public class PlayerSkills : MonoBehaviour
         Debug.Log("Data Saved into JSON: " + json);
     }
 
-    public void Load()
+    public void Load(string filePath)
     {
         if (File.Exists(filePath))
         {
@@ -48,6 +82,31 @@ public class PlayerSkills : MonoBehaviour
             Debug.Log("Save Name: " + data.name);
             Debug.Log("Total Currency Cost: " + data.totalCurrencyCost);
 
+
+            foreach (GameObject gameObj in playerUpgrades)
+            {
+                bool inList = false;
+                foreach (SkillType st in data.upgrades)
+                {
+                    if (gameObj.name == st.skillID)
+                    {
+                        inList = true;
+                        break;
+                    }
+                }
+                if (inList)
+                {
+                    gameObj.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(false);
+                    gameObj.SetActive(true);
+                }
+                else
+                {
+                    gameObj.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
+                    gameObj.SetActive(false);
+                }
+            }
+
+            /*
             for (int i = 0; i < playerUpgrades.Count; i++) 
             {
                 bool inList = false;
@@ -62,13 +121,16 @@ public class PlayerSkills : MonoBehaviour
                 if (inList)
                 {
                     playerUpgrades[i].GetComponent<LinkedGameObject>().linkedGameObject.SetActive(false);
+                    playerUpgrades[i].SetActive(true);
                 }
                 else
                 {
                     playerUpgrades[i].GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
+                    playerUpgrades[i].SetActive(false);
                 }
                 
             }
+            */
             
             /*
             foreach (SkillType st in data.upgrades)
@@ -85,6 +147,7 @@ public class PlayerSkills : MonoBehaviour
             {
                 unlockedSkillLevels.Add(st);
             }
+            PutInValues();
 
             UpdateUIElements();
         }
@@ -96,6 +159,31 @@ public class PlayerSkills : MonoBehaviour
         
     }
 
+    public void ResetAll()
+    {
+        foreach (SkillType st in unlockedSkillLevels)
+        {
+            playerUpgradeCurrency += st.GetTotalCurrencyCost();
+            playerUpgradeTokens += 1;
+
+            string skillType = st.GetSkillType();
+            float modifyBy = st.GetSkillAmountIncreased() * -1;
+            playerStats_script.SetStat(ref skillType, modifyBy);
+            st.dropdown.gameObject.transform.parent.gameObject.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
+            st.dropdown.gameObject.transform.parent.gameObject.SetActive(false);
+        }
+        unlockedSkillLevels.Clear();
+    }
+
+    public void PutInValues()
+    {
+        foreach (SkillType st in unlockedSkillLevels)
+        {
+            string skillType = st.GetSkillType();
+            float modifyBy = st.GetSkillAmountIncreased();
+            playerStats_script.SetStat(ref skillType, modifyBy);
+        }
+    }
 
     // Transitioning this so that it only occurs on + and - and switched dropdown, but will still exist for when Awake() happens
     public void UpdateValues()
@@ -249,8 +337,8 @@ public class PlayerSkills : MonoBehaviour
         gameManager = GameObject.FindWithTag("GameController");
         ClearList();
 
-        filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
-        Save();
+        //filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
+        //Save(currentBuildDropdownPath);
 
         // TODO: I need to add player upgrades in here that were saved
 
@@ -307,7 +395,15 @@ public class PlayerSkills : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        filePath1 = Application.persistentDataPath + "/playerUpgradeInfo1.json"; // Build 1
+        filePath2 = Application.persistentDataPath + "/playerUpgradeInfo2.json"; // Build 2
+        filePath3 = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
+        currentBuildDropdownPath = filePath1;
+
+        // Initializes all the files
+        Save(filePath1);
+        Save(filePath2);
+        Save(filePath3);
     }
 
     // Update is called once per frame
