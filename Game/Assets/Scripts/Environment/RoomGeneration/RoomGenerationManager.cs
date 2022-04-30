@@ -12,6 +12,7 @@ public class RoomGenerationManager : MonoBehaviour
     public GameObject twentyByTwenty_Room;
     public AstarPath pathfinder_Script;
     public Image fadeToBlackSquare;
+    private AudioSource cairnsTheme_Music; // Gets assigned when Cairn is spawned
 
     private Vector3 currentRoomCenterPos; // is set to startingRoom.position to prevent starting room from getting shuffled around
     public Transform startingRoom;
@@ -149,6 +150,10 @@ public class RoomGenerationManager : MonoBehaviour
             GameObject temp = Instantiate(cairnTheIndomitable, new Vector3(x, y, 0), Quaternion.identity);
             temp.transform.parent = newParent;
             temp.SetActive(false);
+
+            cairnsTheme_Music = cairnTheIndomitable.GetComponentInChildren<AudioSource>();
+            StartCoroutine(CairnsThemeTimer(1.5f));
+            
             return temp;
         }
         else
@@ -157,6 +162,12 @@ public class RoomGenerationManager : MonoBehaviour
             temp.SetActive(false);
             return temp;
         }
+    }
+
+    IEnumerator CairnsThemeTimer(float time)
+    {
+        yield return new WaitForSeconds(time);
+        //cairnsTheme_Music.Play();
     }
 
     IEnumerator FadeToBlack(float time)
