@@ -309,11 +309,7 @@ public class PlayerStats : MonoBehaviour
     {
         playerSkills_script.playerUpgradeCurrency += amount;
     }
-
-    public void AddUpgradeTokens(int amount)
-    {
-        playerSkills_script.playerUpgradeTokens += amount;
-    }
+    
     public void FlipEvading()
     {
         isEvading = !isEvading;

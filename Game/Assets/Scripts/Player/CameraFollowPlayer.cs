@@ -21,9 +21,10 @@ public class CameraFollowPlayer : MonoBehaviour
         
     }
 
-    public void GetPlayerLoc()
+    public Transform GetPlayerLoc()
     {
         playerLoc = GameObject.FindWithTag("Player").transform;
+        return playerLoc;
     }
 
     void FixedUpdate()

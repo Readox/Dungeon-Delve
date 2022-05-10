@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour
     public GameObject mainMenuPanel;
     public GameObject playerMenuPanel;
 
+    private PlayerSkills playerSkills_script;
+
+    private int resetPresses = 0;
 
     public void OpenPlayerMenu()
     {
@@ -31,10 +34,24 @@ public class MainMenu : MonoBehaviour
         //mainMenuPanel.SetActive(false);
     }
 
-    public void CloeSettings()
+    public void CloseSettings()
     {
         settingsPanel.SetActive(false);
         //mainMenuPanel.SetActive(true);
+    }
+
+    public void ResetAllPlayerSaveFiles()
+    {
+        if (resetPresses < 2)
+        {
+            Debug.Log("WARNING: This action cannot be undone!");
+            resetPresses += 1;
+        }
+        else
+        {
+            playerSkills_script.ResetAllSaveFiles();
+            Debug.Log("All player save files have been reset!");
+        }
     }
 
     public void StartGame()
@@ -60,7 +77,7 @@ public class MainMenu : MonoBehaviour
             GameObject mainCam = GameObject.FindWithTag("MainCamera");
             GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().SetUIActiveState("true");
             CameraFollowPlayer camFollow_Script = mainCam.GetComponent<CameraFollowPlayer>();
-            camFollow_Script.GetPlayerLoc();
+            mainCam.transform.position = camFollow_Script.GetPlayerLoc().position;
 
             yield return null;
             SceneManager.UnloadSceneAsync("MainMenu");
@@ -91,7 +108,7 @@ public class MainMenu : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerSkills_script = GameObject.Find("Pause Menu").GetComponent<PlayerSkills>();
     }
 
     // Update is called once per frame

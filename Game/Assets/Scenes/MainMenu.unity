@@ -315,10 +315,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 300
+    m_FontSize: 1
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 300
     m_Alignment: 4
     m_AlignByGeometry: 0
@@ -326,9 +326,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player Menu
-
-'
+  m_Text: Reset
 --- !u!222 &119341852
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1253,7 +1251,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1696951565}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: CloeSettings
+        m_MethodName: CloseSettings
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1693,7 +1691,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1696951565}
         m_TargetAssemblyTypeName: MainMenu, Assembly-CSharp
-        m_MethodName: OpenPlayerMenu
+        m_MethodName: ResetAllPlayerSaveFiles
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

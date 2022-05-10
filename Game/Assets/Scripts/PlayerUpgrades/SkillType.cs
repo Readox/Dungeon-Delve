@@ -13,7 +13,7 @@ public class SkillType
     public string skillID;
 
     public float skillAmountIncreased;
-    private int currencyCostIncrease = 10;
+    private int currencyCostIncrease;
 
     private GameObject gameManager;
 
@@ -24,6 +24,7 @@ public class SkillType
         this.skillLevel = skillLevel;
         this.skillID = skillID;
         this.skillAmountIncreased = 0; // Starts at 0
+        this.currencyCostIncrease = 10;
         //gameManager = GameObject.FindWithTag("GameController");
     }
 
@@ -132,7 +133,9 @@ public class SkillType
     // Only use this method for finding the currency cost for upgrading (eg, AddPoints())
     public int GetCurrencyCost()
     {
+        currencyCostIncrease = 10;
         int currencyCost = (GetSkillLevel() + 1) * currencyCostIncrease;
+        Debug.Log("Currency Cost: " + currencyCost + "    Skill Level: " + GetSkillLevel() + "    Currency Cost Increase: " + currencyCostIncrease);
         return currencyCost;
     }
 
