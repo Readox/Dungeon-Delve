@@ -6,10 +6,7 @@ using Pathfinding;
 public class EnemyGFX : MonoBehaviour
 {
     public AIPath aiPath;
-<<<<<<< Updated upstream
     private Transform target; // the player
-=======
->>>>>>> Stashed changes
     Animator anim;
     WanderingDestinationSetter wanderScript;
 
@@ -21,10 +18,7 @@ public class EnemyGFX : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
-<<<<<<< Updated upstream
         target = GameObject.FindWithTag("Player").GetComponent<Transform>();
-=======
->>>>>>> Stashed changes
         if (gameObject.transform.parent != null)
         {
             wanderScript = gameObject.transform.parent.gameObject.GetComponent<WanderingDestinationSetter>();
