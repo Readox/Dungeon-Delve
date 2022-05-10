@@ -142,11 +142,13 @@ public class SkillType
     // Also returns the cost in currency
     public int AddSkillLevel(int x)
     {
+        currencyCostIncrease = 10;
         this.skillLevel += x;
         return GetSkillLevel() * currencyCostIncrease;
     }
     public int SubtractSkillLevel(int x)
     {
+        currencyCostIncrease = 10;
         this.skillLevel -= x;
         return (GetSkillLevel() + 1) * currencyCostIncrease; // needs to be +1 account for subtraction (currency cost only for that operation)
     }

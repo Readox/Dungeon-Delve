@@ -16,7 +16,6 @@ public class PlayerSkills : MonoBehaviour
     public List<SkillType> unlockedSkillLevels = new List<SkillType>();
 
     public int playerUpgradeCurrency;
-    public int playerUpgradeTokens;
 
     public GameObject gameManager;
     public GameObject upgradeList;
@@ -59,7 +58,6 @@ public class PlayerSkills : MonoBehaviour
         Save data = new Save();
         data.name = "SavedUpgrades"; // Save name here
         data.playerUpgradeCurrency = this.playerUpgradeCurrency;
-        data.playerUpgradeTokens = this.playerUpgradeTokens;
         // Save all data here
         foreach (SkillType st in unlockedSkillLevels)
         {
@@ -70,6 +68,8 @@ public class PlayerSkills : MonoBehaviour
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(filePath, json);
 
+        UpdateAllUIElements();
+
         Debug.Log("Data Saved into JSON: " + json);
     }
 
@@ -77,70 +77,16 @@ public class PlayerSkills : MonoBehaviour
     {
         if (File.Exists(filePath))
         {
+            // TODO: Need to save existing data and reset values here
             Save data = JsonUtility.FromJson<Save>(File.ReadAllText(filePath));
             // Load info here
             Debug.Log("Save Name: " + data.name);
             Debug.Log("Total Currency Cost: " + data.totalCurrencyCost);
 
 
-            foreach (GameObject gameObj in playerUpgrades)
-            {
-                bool inList = false;
-                foreach (SkillType st in data.upgrades)
-                {
-                    if (gameObj.name == st.skillID)
-                    {
-                        inList = true;
-                        break;
-                    }
-                }
-                if (inList)
-                {
-                    gameObj.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(false);
-                    gameObj.SetActive(true);
-                }
-                else
-                {
-                    gameObj.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
-                    gameObj.SetActive(false);
-                }
-            }
-
-            /*
-            for (int i = 0; i < playerUpgrades.Count; i++) 
-            {
-                bool inList = false;
-                for (int j = 0; j < data.upgrades.Count; j ++)
-                {
-                    if (playerUpgrades[i].name == data.upgrades[j].skillID)
-                    {
-                        inList = true;
-                        break;
-                    }
-                }
-                if (inList)
-                {
-                    playerUpgrades[i].GetComponent<LinkedGameObject>().linkedGameObject.SetActive(false);
-                    playerUpgrades[i].SetActive(true);
-                }
-                else
-                {
-                    playerUpgrades[i].GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
-                    playerUpgrades[i].SetActive(false);
-                }
-                
-            }
-            */
             
-            /*
-            foreach (SkillType st in data.upgrades)
-            {
-                Debug.Log("Skill Name: " + st.skillID + "\nSkill Type: " + st.skillType + "\nSkill Level: " + st.skillLevel);
-            }
-            */
             // Put data back into game here
             playerUpgradeCurrency = data.playerUpgradeCurrency;
-            playerUpgradeTokens = data.playerUpgradeTokens;
 
             unlockedSkillLevels.Clear();
             foreach (SkillType st in data.upgrades)
@@ -164,15 +110,14 @@ public class PlayerSkills : MonoBehaviour
         foreach (SkillType st in unlockedSkillLevels)
         {
             playerUpgradeCurrency += st.GetTotalCurrencyCost();
-            playerUpgradeTokens += 1;
 
             string skillType = st.GetSkillType();
             float modifyBy = st.GetSkillAmountIncreased() * -1;
             playerStats_script.SetStat(ref skillType, modifyBy);
-            st.dropdown.gameObject.transform.parent.gameObject.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
-            st.dropdown.gameObject.transform.parent.gameObject.SetActive(false);
         }
         unlockedSkillLevels.Clear();
+        PopulateList();
+        UpdateAllUIElements();
     }
 
     public void PutInValues()
@@ -214,35 +159,15 @@ public class PlayerSkills : MonoBehaviour
     // Format for adding new skill types is: (Dropdown GameObject, skill level, Name of GameObject in editor)
     public void UnlockSkill(GameObject parentButton)
     {
-        if (playerUpgradeTokens > 0)
-        {
-            playerUpgradeTokens -= 1; // Subtract from skill tokens
-            GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
+        GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
 
-            dropdown.GetComponent<Dropdown>().captionText.text = dropdown.GetComponent<Dropdown>().options[0].text; // I need this here, because often the default value isn't what it should be, so this changes it so that it will be the first option in the dropdown
+        dropdown.GetComponent<Dropdown>().captionText.text = dropdown.GetComponent<Dropdown>().options[0].text; // I need this here, because often the default value isn't what it should be, so this changes it so that it will be the first option in the dropdown
 
-            SkillType newSkill = new SkillType(dropdown, 0, dropdown.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
-            unlockedSkillLevels.Add(newSkill);
-            parentButton.SetActive(true);
+        SkillType newSkill = new SkillType(dropdown, 0, dropdown.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
+        unlockedSkillLevels.Add(newSkill);
+        UpdateUIElements(dropdown, newSkill);
+    }
 
-            UpdateUIElements(dropdown, newSkill);
-        }
-        else
-        {
-            //Debug.Log("Not enough tokens!");
-        }
-        
-        // UpdateUIElements() is not kept here
-    }
-    // Extension of UnlockSkill() bc/ I needed two functions to accomplish one thing
-    public void SetInactiveUnlockButton(GameObject caller)
-    {
-        caller.SetActive(false);
-    }
-    public void SetInactiveButtonComponent(GameObject caller) // Unused, and doesn't accomplish what I want
-    {
-        caller.GetComponent<Button>().interactable = false;
-    }
 
     // I need this to find out what the previous skill was, and then subtract that bonus from the PlayerStats
     // A notable problem is that when adding new Upgrades, they default to having the incorrect Dropdown name, causing them to become HealthDef dropdowns
@@ -272,21 +197,7 @@ public class PlayerSkills : MonoBehaviour
     public void AddPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
-
-        
-        SkillType currentClass = null;
-        for (int i = 0; i < unlockedSkillLevels.Count; i++)
-        {
-            if (unlockedSkillLevels[i].GetSkillID().Equals(nameOfSkill))
-            {
-                currentClass = unlockedSkillLevels[i];
-                break;
-            }
-        }
-
-        // I am fairly certain that the next line is what is causing my problems
-        //SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
-        
+        SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
         
         if (currentClass.GetCurrencyCost() > playerUpgradeCurrency || currentClass.IsMaxLevel() || currentClass == null)
         {
@@ -335,17 +246,26 @@ public class PlayerSkills : MonoBehaviour
     public void Awake()
     {
         gameManager = GameObject.FindWithTag("GameController");
-        ClearList();
+        playerStats_script = gameManager.GetComponent<PlayerStats>();
+
 
         //filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
         //Save(currentBuildDropdownPath);
 
         // TODO: I need to add player upgrades in here that were saved
 
-        playerStats_script = gameManager.GetComponent<PlayerStats>();
+        PopulateList(); //this is now located down in Start()
 
-        UpdateValues();
+        UpdateValues(); // Causing bugs again!!!
         UpdateUIElements();
+    }
+
+    void PopulateList()
+    {
+        foreach(GameObject g in playerUpgrades)
+        {
+            UnlockSkill(g);
+        }
     }
 
     public void OpenUpgradesMenuStart()
@@ -366,7 +286,7 @@ public class PlayerSkills : MonoBehaviour
 
     public void UpdateUIElements(GameObject parent, SkillType currentClass) // This one is for the Add and Subtract Points
     {
-        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency;
         playerStats_script.UpdateHealthEnduranceBars();
 
         string colorVal = playerStats_script.GetColorForStat(currentClass.GetSkillType());
@@ -376,34 +296,50 @@ public class PlayerSkills : MonoBehaviour
 
     public void UpdateUIElements()
     {
-        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency;
         playerStats_script.UpdateHealthEnduranceBars();
 
 
     }
 
-
-    private void ClearList()
+    public void UpdateAllUIElements()
     {
-        unlockedSkillLevels.Clear();
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency;
+        playerStats_script.UpdateHealthEnduranceBars();
+
+        foreach(SkillType st in unlockedSkillLevels)
+        {
+            var parent = st.dropdown;
+            string colorVal = playerStats_script.GetColorForStat(st.GetSkillType());
+            parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{st.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
+        }
+
     }
 
 
 
+    public void ResetAllSaveFiles()
+    {
+        unlockedSkillLevels.Clear();
+        PopulateList();
 
+        Save(filePath1);
+        Save(filePath2);
+        Save(filePath3);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
+        //PopulateList();
+        // Initializes all the file paths
         filePath1 = Application.persistentDataPath + "/playerUpgradeInfo1.json"; // Build 1
         filePath2 = Application.persistentDataPath + "/playerUpgradeInfo2.json"; // Build 2
         filePath3 = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
         currentBuildDropdownPath = filePath1;
+        
+        Load(filePath1); // Problems here
 
-        // Initializes all the files
-        Save(filePath1);
-        Save(filePath2);
-        Save(filePath3);
     }
 
     // Update is called once per frame
@@ -423,7 +359,6 @@ public class Save
     public int totalCurrencyCost;
     public List<SkillType> upgrades = new List<SkillType>();
     public int playerUpgradeCurrency;
-    public int playerUpgradeTokens;
 }
 
 
