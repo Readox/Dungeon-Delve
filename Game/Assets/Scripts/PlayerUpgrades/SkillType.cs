@@ -132,6 +132,7 @@ public class SkillType
     // Only use this method for finding the currency cost for upgrading (eg, AddPoints())
     public int GetCurrencyCost()
     {
+        currencyCostIncrease = 10;
         int currencyCost = (GetSkillLevel() + 1) * currencyCostIncrease;
         return currencyCost;
     }
