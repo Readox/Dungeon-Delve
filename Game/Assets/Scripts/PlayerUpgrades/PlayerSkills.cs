@@ -16,7 +16,6 @@ public class PlayerSkills : MonoBehaviour
     public List<SkillType> unlockedSkillLevels = new List<SkillType>();
 
     public int playerUpgradeCurrency;
-    public int playerUpgradeTokens;
 
     public GameObject gameManager;
     public GameObject upgradeList;
@@ -24,6 +23,12 @@ public class PlayerSkills : MonoBehaviour
     
     private PlayerStats playerStats_script;
 
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+    
+=======
+>>>>>>> Stashed changes
     public void OnChangeBuildDropdown(GameObject dropdown)
     {
         Save(currentBuildDropdownPath);
@@ -51,14 +56,23 @@ public class PlayerSkills : MonoBehaviour
         }
 
         Load(currentBuildDropdownPath);
+<<<<<<< Updated upstream
     }
 
 
     public void Save(string filePath) // Dont use Binary Formatter apparently
+=======
+        UpdateAllUIElements();
+    }
+
+
+    public void Save(string filePath)
+>>>>>>> Stashed changes
     {
         Save data = new Save();
         data.name = "SavedUpgrades"; // Save name here
         data.playerUpgradeCurrency = this.playerUpgradeCurrency;
+<<<<<<< Updated upstream
         data.playerUpgradeTokens = this.playerUpgradeTokens;
         // Save all data here
         foreach (SkillType st in unlockedSkillLevels)
@@ -66,6 +80,10 @@ public class PlayerSkills : MonoBehaviour
             data.upgrades.Add(st);
             data.totalCurrencyCost += st.GetTotalCurrencyCost();
         }
+=======
+        // Save all data here
+        data.upgrades = unlockedSkillLevels;
+>>>>>>> Stashed changes
 
         string json = JsonUtility.ToJson(data);
         File.WriteAllText(filePath, json);
@@ -82,6 +100,7 @@ public class PlayerSkills : MonoBehaviour
             Debug.Log("Save Name: " + data.name);
             Debug.Log("Total Currency Cost: " + data.totalCurrencyCost);
 
+<<<<<<< Updated upstream
 
             foreach (GameObject gameObj in playerUpgrades)
             {
@@ -147,6 +166,15 @@ public class PlayerSkills : MonoBehaviour
             {
                 unlockedSkillLevels.Add(st);
             }
+=======
+            for(int i = 0; i < unlockedSkillLevels.Count; i++)
+            {
+                unlockedSkillLevels[i] = data.upgrades[i];
+            }
+            
+            playerUpgradeCurrency = data.playerUpgradeCurrency;
+
+>>>>>>> Stashed changes
             PutInValues();
 
             UpdateUIElements();
@@ -164,15 +192,26 @@ public class PlayerSkills : MonoBehaviour
         foreach (SkillType st in unlockedSkillLevels)
         {
             playerUpgradeCurrency += st.GetTotalCurrencyCost();
+<<<<<<< Updated upstream
             playerUpgradeTokens += 1;
+=======
+>>>>>>> Stashed changes
 
             string skillType = st.GetSkillType();
             float modifyBy = st.GetSkillAmountIncreased() * -1;
             playerStats_script.SetStat(ref skillType, modifyBy);
+<<<<<<< Updated upstream
             st.dropdown.gameObject.transform.parent.gameObject.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
             st.dropdown.gameObject.transform.parent.gameObject.SetActive(false);
         }
         unlockedSkillLevels.Clear();
+=======
+            //st.dropdown.gameObject.transform.parent.gameObject.GetComponent<LinkedGameObject>().linkedGameObject.SetActive(true);
+            //st.dropdown.gameObject.transform.parent.gameObject.SetActive(false);
+        }
+
+        UpdateAllUIElements();
+>>>>>>> Stashed changes
     }
 
     public void PutInValues()
@@ -184,6 +223,10 @@ public class PlayerSkills : MonoBehaviour
             playerStats_script.SetStat(ref skillType, modifyBy);
         }
     }
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
     // Transitioning this so that it only occurs on + and - and switched dropdown, but will still exist for when Awake() happens
     public void UpdateValues()
@@ -214,23 +257,25 @@ public class PlayerSkills : MonoBehaviour
     // Format for adding new skill types is: (Dropdown GameObject, skill level, Name of GameObject in editor)
     public void UnlockSkill(GameObject parentButton)
     {
-        if (playerUpgradeTokens > 0)
-        {
-            playerUpgradeTokens -= 1; // Subtract from skill tokens
-            GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
 
-            dropdown.GetComponent<Dropdown>().captionText.text = dropdown.GetComponent<Dropdown>().options[0].text; // I need this here, because often the default value isn't what it should be, so this changes it so that it will be the first option in the dropdown
+        GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
 
-            SkillType newSkill = new SkillType(dropdown, 0, dropdown.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
-            unlockedSkillLevels.Add(newSkill);
-            parentButton.SetActive(true);
+        dropdown.GetComponent<Dropdown>().captionText.text = dropdown.GetComponent<Dropdown>().options[0].text; // I need this here, because often the default value isn't what it should be, so this changes it so that it will be the first option in the dropdown
 
+<<<<<<< Updated upstream
             UpdateUIElements(dropdown, newSkill);
         }
         else
         {
             //Debug.Log("Not enough tokens!");
         }
+=======
+        SkillType newSkill = new SkillType(dropdown, 0, dropdown.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
+        unlockedSkillLevels.Add(newSkill);
+        parentButton.SetActive(true);
+
+        UpdateUIElements(dropdown, newSkill);
+>>>>>>> Stashed changes
         
         // UpdateUIElements() is not kept here
     }
@@ -272,6 +317,7 @@ public class PlayerSkills : MonoBehaviour
     public void AddPoints(GameObject childButton)
     {
         string nameOfSkill = childButton.transform.parent.name;
+<<<<<<< Updated upstream
 
         
         SkillType currentClass = null;
@@ -287,10 +333,23 @@ public class PlayerSkills : MonoBehaviour
         // I am fairly certain that the next line is what is causing my problems
         //SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
         
+=======
+<<<<<<< Updated upstream
+        SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
+        if (currentClass.GetCurrencyCost() > playerUpgradeCurrency)
+        {
+            Debug.Log("Not enough currency!");
+=======
+        SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Finds the SkillType class in the List through Lambdas.       Link: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944        
+>>>>>>> Stashed changes
         
         if (currentClass.GetCurrencyCost() > playerUpgradeCurrency || currentClass.IsMaxLevel() || currentClass == null)
         {
             Debug.Log("Not enough currency, stat already increased to max level, or the skill is null!");
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
         }
         else
         {
@@ -335,6 +394,11 @@ public class PlayerSkills : MonoBehaviour
     public void Awake()
     {
         gameManager = GameObject.FindWithTag("GameController");
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+        // I think I have to clear the list of everything when the game restarts, because it is saving values
+>>>>>>> Stashed changes
         ClearList();
 
         //filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
@@ -344,6 +408,17 @@ public class PlayerSkills : MonoBehaviour
 
         playerStats_script = gameManager.GetComponent<PlayerStats>();
 
+=======
+        playerStats_script = gameManager.GetComponent<PlayerStats>();
+        
+
+        //filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
+        //Save(currentBuildDropdownPath);
+
+        // TODO: I need to add player upgrades in here that were saved
+
+        PopulateList();
+>>>>>>> Stashed changes
         UpdateValues();
         UpdateUIElements();
     }
@@ -366,8 +441,17 @@ public class PlayerSkills : MonoBehaviour
 
     public void UpdateUIElements(GameObject parent, SkillType currentClass) // This one is for the Add and Subtract Points
     {
+<<<<<<< Updated upstream
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
+<<<<<<< Updated upstream
         playerStats_script.UpdateHealthEnduranceBars();
+=======
+        playerStats_script.UpdateHealthAbilityBars();
+=======
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency;
+        playerStats_script.UpdateHealthEnduranceBars();
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
         string colorVal = playerStats_script.GetColorForStat(currentClass.GetSkillType());
         parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{currentClass.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
@@ -376,42 +460,86 @@ public class PlayerSkills : MonoBehaviour
 
     public void UpdateUIElements()
     {
+<<<<<<< Updated upstream
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency + "\nUpgrade Unlocks: " + playerUpgradeTokens;
+<<<<<<< Updated upstream
+        playerStats_script.UpdateHealthEnduranceBars();
+=======
+        playerStats_script.UpdateHealthAbilityBars();
+=======
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency;
+        playerStats_script.UpdateHealthEnduranceBars();
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
+
+
+    }
+
+    public void UpdateAllUIElements()
+    {
+        playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency;
         playerStats_script.UpdateHealthEnduranceBars();
 
+        foreach(SkillType st in unlockedSkillLevels)
+        {
+            var parent = st.dropdown;
+            string colorVal = playerStats_script.GetColorForStat(st.GetSkillType());
+            parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{st.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
+        }
 
     }
 
+    void PopulateList()
+    {
+        foreach(GameObject g in playerUpgrades)
+        {
+            UnlockSkill(g);
+        }
+    }
 
-    private void ClearList()
+    public void ResetAllSaveFiles()
     {
         unlockedSkillLevels.Clear();
-    }
+        PopulateList();
 
-
-
-
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        filePath1 = Application.persistentDataPath + "/playerUpgradeInfo1.json"; // Build 1
-        filePath2 = Application.persistentDataPath + "/playerUpgradeInfo2.json"; // Build 2
-        filePath3 = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
-        currentBuildDropdownPath = filePath1;
-
-        // Initializes all the files
         Save(filePath1);
         Save(filePath2);
         Save(filePath3);
     }
 
-    // Update is called once per frame
-    void Update()
+
+    // Start is called before the first frame update
+    void Start()
     {
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
         
+=======
+>>>>>>> Stashed changes
+        filePath1 = Application.persistentDataPath + "/playerUpgradeInfo1.json"; // Build 1
+        filePath2 = Application.persistentDataPath + "/playerUpgradeInfo2.json"; // Build 2
+        filePath3 = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
+        currentBuildDropdownPath = filePath1;
+
+<<<<<<< Updated upstream
+        // Initializes all the files
+        Save(filePath1);
+        Save(filePath2);
+        Save(filePath3);
+=======
+        // Initializes all the files, but overwrites them in the process
+        Load(filePath1);
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     }
+
 }
+<<<<<<< Updated upstream
+=======
+<<<<<<< Updated upstream
+=======
+>>>>>>> Stashed changes
 
 [Serializable]
 public class Save 
@@ -423,7 +551,14 @@ public class Save
     public int totalCurrencyCost;
     public List<SkillType> upgrades = new List<SkillType>();
     public int playerUpgradeCurrency;
+<<<<<<< Updated upstream
     public int playerUpgradeTokens;
 }
 
 
+=======
+}
+
+
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
