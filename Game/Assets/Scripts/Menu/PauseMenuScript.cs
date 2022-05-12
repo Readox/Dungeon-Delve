@@ -9,6 +9,7 @@ public class PauseMenuScript : MonoBehaviour
     [SerializeField] GameObject pauseMenu;
 
     private Camera mainCam;
+    private PlayerSkills ps;
     public GameObject playerUpgradesPanel;
     public GameObject pauseMenuPanel;
     public GameObject settingsMenuPanel;
@@ -72,13 +73,13 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenPlayerUpgrades()
     {
         playerUpgradesPanel.SetActive(true);
-        GetComponent<PlayerSkills>().OpenUpgradesMenuStart();
         pauseMenuPanel.SetActive(false);
     }
 
     public void ReturnFromPlayerUpgrades()
     {
         pauseMenuPanel.SetActive(true);
+        ps.Save();
         playerUpgradesPanel.SetActive(false);
     }
 
@@ -100,6 +101,8 @@ public class PauseMenuScript : MonoBehaviour
 
     public void Awake()
     {
+        ps = GetComponent<PlayerSkills>();
+
         pauseMenuPanel.SetActive(false);
         playerUpgradesPanel.SetActive(false);
         settingsMenuPanel.SetActive(false);

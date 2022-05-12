@@ -50,6 +50,7 @@ public class MainMenu : MonoBehaviour
         else
         {
             playerSkills_script.ResetAllSaveFiles();
+            resetPresses = 0;
             Debug.Log("All player save files have been reset!");
         }
     }
@@ -66,10 +67,6 @@ public class MainMenu : MonoBehaviour
 
     IEnumerator SceneSwitch()
     {
-        
-        
-        
-
         if (SceneManager.GetSceneByName("Level 0").IsValid())
         {
             SceneManager.SetActiveScene(SceneManager.GetSceneByName("Level 0"));
@@ -88,7 +85,6 @@ public class MainMenu : MonoBehaviour
             yield return null;
             StartCoroutine(SceneSwitch());
         }
-        
     }
 
     public void ExitGame()

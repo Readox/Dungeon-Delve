@@ -135,7 +135,7 @@ public class SkillType
     {
         currencyCostIncrease = 10;
         int currencyCost = (GetSkillLevel() + 1) * currencyCostIncrease;
-        Debug.Log("Currency Cost: " + currencyCost + "    Skill Level: " + GetSkillLevel() + "    Currency Cost Increase: " + currencyCostIncrease);
+        //Debug.Log("Currency Cost: " + currencyCost + "    Skill Level: " + GetSkillLevel() + "    Currency Cost Increase: " + currencyCostIncrease);
         return currencyCost;
     }
 

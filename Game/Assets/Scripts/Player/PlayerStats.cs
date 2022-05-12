@@ -42,11 +42,9 @@ public class PlayerStats : MonoBehaviour
         currentHealth = maxHealth;
         currentEndurancePool = endurancePoolMax;
         currentHealthPotionAmount = healthPotionAmount;
-
-
         // healthRegenCoroutine = StartCoroutine(HealthRegeneration()); 
         // healthRegenIsRunning = true;
-        enduranceRegenCoroutine = StartCoroutine(EnduranceRegeneration());
+        enduranceRegenCoroutine = StartCoroutine(EnduranceRegeneration());  
     }
     public IEnumerator HealthRegeneration()
     {
