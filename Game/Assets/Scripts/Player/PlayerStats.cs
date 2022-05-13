@@ -120,7 +120,7 @@ public class PlayerStats : MonoBehaviour
             CheckHealthMax();
             SetHealthInfo();
             SetHealthPotionIndicatorInfo();
-            StartCoroutine(HealthPotionCooldown(1));
+            StartCoroutine(HealthPotionCooldown(0.25f));
         }
     }
     void HealthPotionButtonColorChange()
@@ -146,7 +146,6 @@ public class PlayerStats : MonoBehaviour
         onCooldown = true;
         yield return new WaitForSeconds(time);
         onCooldown = false;
-
     }
 
     public void DealDamage(float damage)

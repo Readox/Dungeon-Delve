@@ -8,6 +8,7 @@ using System;
 public class SkillType
 {
     public GameObject dropdown;
+    public int dropdownIndex;
     public string skillType;
     public int skillLevel; // Skills will have base level of zero
     public string skillID;
@@ -20,6 +21,7 @@ public class SkillType
     public SkillType(GameObject dropdown, int skillLevel, string skillID)
     {
         this.dropdown = dropdown;
+        this.dropdownIndex = dropdown.GetComponent<Dropdown>().value;
         this.skillType = GetFormattedSkillType(dropdown); // Need this function because some of the skills in the dropdowns have spaces in them
         this.skillLevel = skillLevel;
         this.skillID = skillID;

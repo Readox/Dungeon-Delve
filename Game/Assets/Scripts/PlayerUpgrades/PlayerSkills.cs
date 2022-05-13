@@ -94,14 +94,51 @@ public class PlayerSkills : MonoBehaviour
 
             playerUpgradeCurrency -= data.totalCurrencyCost; // Sets currency to proper amount
 
+            for (int x = 0; x < unlockedSkillLevels.Count; x++)
+            {
+                SkillType st = unlockedSkillLevels[x];
+                for (int i = 0; i < data.upgrades.Count; i++)
+                {
+                    if (st.skillID.Equals(data.upgrades[i].skillID))
+                    {
+                        st = data.upgrades[i];
+                        break;
+                    }
+                }
+                for (int j = 0; j < playerUpgrades.Count; j++)
+                {
+                    if (st.skillID.Equals(playerUpgrades[j].name))
+                    {
+                        st.dropdown = playerUpgrades[j].transform.GetChild(0).gameObject;
+                        break;
+                    }
+                }
+
+                unlockedSkillLevels[x] = st;
+            }
+
+            /*
             unlockedSkillLevels.Clear();
 
             for (int i = 0; i < data.upgrades.Count; i++)
             {
                 SkillType st = data.upgrades[i];
-                st.dropdown = playerUpgrades[i].transform.GetChild(0).gameObject; // Necessary because if scene is destroyed and recreated, values won't match and this fixes it
+                int temp = st.dropdown.GetComponent<Dropdown>().value;
+                for (int j = 0; j < playerUpgrades.Count; j++)
+                {
+                    if (playerUpgrades[j].name.Equals(data.upgrades[i].skillID))
+                    {
+                        st.dropdown = playerUpgrades[j].transform.GetChild(0).gameObject;
+                        break;
+                    }
+                }
+                //st.dropdown = playerUpgrades[i].transform.GetChild(0).gameObject; // Necessary because if scene is destroyed and recreated, values won't match and this fixes it
+                st.dropdown.GetComponent<Dropdown>().value = temp;
                 unlockedSkillLevels.Add(st);
             }
+
+
+            */
             PutInValues();
 
             UpdateAllUIElements();
@@ -328,11 +365,12 @@ public class PlayerSkills : MonoBehaviour
         //Save(currentBuildDropdownPath);
 
         PopulateList(); 
-        UpdateValues();
-        UpdateUIElements();
+        //UpdateValues();
+        
 
         // TODO: Load starting file here
         Load(filePath1);
+        UpdateUIElements();
     }
 
 }

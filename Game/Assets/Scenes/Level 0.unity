@@ -464,10 +464,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -1202,10 +1198,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -3037,10 +3029,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -3728,10 +3716,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -4195,10 +4179,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -5046,10 +5026,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -6316,7 +6292,61 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822c7af35cf149f4eb0f7da528b4b500, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unlockedSkillLevels: []
+  unlockedSkillLevels:
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
+  - dropdown: {fileID: 0}
+    dropdownIndex: 0
+    skillType: 
+    skillLevel: 0
+    skillID: 
+    skillAmountIncreased: 0
   playerUpgradeCurrency: 10000
   gameManager: {fileID: 378433348}
   upgradeList: {fileID: 278279235}
@@ -6343,10 +6373,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -8014,10 +8040,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 278279236}
     m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 1485151542589385004, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -8696,10 +8718,6 @@ PrefabInstance:
     - target: {fileID: 1485151544131111468, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
       propertyPath: m_FontData.m_FontSize
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: linkedGameObject
-      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d1e97f2f5e2bea64b97cfb7434ba49c9, type: 3}
