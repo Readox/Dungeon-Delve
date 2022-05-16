@@ -109,7 +109,7 @@ public class PlayerSkills : MonoBehaviour
                 {
                     if (st.skillID.Equals(playerUpgrades[j].name))
                     {
-                        st.dropdown = playerUpgrades[j].transform.GetChild(0).gameObject;
+                        st.assoc = playerUpgrades[j];
                         break;
                     }
                 }
@@ -175,43 +175,20 @@ public class PlayerSkills : MonoBehaviour
         }
     }
 
-    // Transitioning this so that it only occurs on + and - and switched dropdown, but will still exist for when Awake() happens
-    public void UpdateValues() // I'm not sure what exactly this does, but whatever
-    {
-        string skillType = "";
-
-        foreach (SkillType currentClass in unlockedSkillLevels)
-        {
-            skillType = currentClass.UpdateDropdownText();
-
-            float modifyBy = currentClass.GetModifyValue(false);
-
-            //float playerStatValue = gameManager.GetComponent<PlayerStats>().FindFromClassType(skillType);
-            playerStats_script.SetStat(ref skillType, modifyBy);
-        }
-
-        playerStats_script.UpdateHealthEnduranceBars(); // Update the health and ability bars now before the player exits the menu so that they are ready
-    }
-
 
     // Format for adding new skill types is: (Dropdown GameObject, skill level, Name of GameObject in editor)
-    public void UnlockSkill(GameObject parentButton) // Unlocks a skill, but this script mostly just creates the SkillType class instances
+    public void UnlockSkill(GameObject parent) // Unlocks a skill, but this script mostly just creates the SkillType class instances
     {
-        GameObject dropdown = parentButton.transform.GetChild(0).gameObject; // Get the dropdown to use for assignment for the skillType being added
-
-        dropdown.GetComponent<Dropdown>().captionText.text = dropdown.GetComponent<Dropdown>().options[0].text; // I need this here, because often the default value isn't what it should be, so this changes it so that it will be the first option in the dropdown
-
-        SkillType newSkill = new SkillType(dropdown, 0, dropdown.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
+        SkillType newSkill = new SkillType(parent, 0, parent.name); // It does not matter whether the name is this or that, it is not used, more for reference in code
         unlockedSkillLevels.Add(newSkill);
-        UpdateUIElements(dropdown, newSkill);
+        UpdateUIElements(parent, newSkill);
     }
 
+    /*
     public void SwitchedDropdown(GameObject dropdown) // When upgrade dropdown is switched, do all this
     {
         // Find the skill that the dropdown is associated with in unlockeSkillLevels
         SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(dropdown.name));
-
-        string skillType = currentClass.GetSkillType(); // Gets the skillType which has not been updated yet, but will be when UpdateValues() is called below
 
         float modifyBy = currentClass.GetSkillAmountIncreased() * -1;
         playerUpgradeCurrency += currentClass.GetTotalCurrencyCost(); // Gives back currency, because skill level is reset as well
@@ -224,13 +201,13 @@ public class PlayerSkills : MonoBehaviour
 
         UpdateUIElements(dropdown, replacementSkill);
     }
+    */
     
 
-
-    // get parent of gameobject, then find the name of the dropdown, then find the tier of the dropdown, then go into List and change class instance: public void AddPoints(GameObject childbutton)
-    public void AddPoints(GameObject childButton) // Adds points to an upgrade
+    // get gameObject, then find the name of the dropdown, then find the tier of the dropdown, then go into List and change class instance: public void AddPoints(GameObject childbutton)
+    public void AddPoints(GameObject parent) // Adds points to an upgrade
     {
-        string nameOfSkill = childButton.transform.parent.name;
+        string nameOfSkill = parent.name;
         SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID().Equals(nameOfSkill)); // Credit: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
         
         if (currentClass.GetCurrencyCost() > playerUpgradeCurrency || currentClass.IsMaxLevel() || currentClass == null)
@@ -240,21 +217,20 @@ public class PlayerSkills : MonoBehaviour
         else
         {
             int currencyCost = currentClass.AddSkillLevel(1); // Have to get the currency cost of the operation
-            
             playerUpgradeCurrency -= currencyCost;
-
-            string skillType = currentClass.UpdateDropdownText();
-            
             float modifyBy = currentClass.GetModifyValue(false);
-            playerStats_script.SetStat(ref skillType, modifyBy);
+
+            string upgradeType = currentClass.GetFormattedSkillType(parent);
+            Debug.Log("Upgrade Type: " + upgradeType);
+            playerStats_script.SetStat(ref upgradeType, modifyBy);
         }
 
-        UpdateUIElements(childButton.transform.parent.gameObject, currentClass);
+        UpdateUIElements(parent, currentClass);
     }
 
-    public void SubtractPoints(GameObject childButton) //Subtracts points from an upgrade
+    public void SubtractPoints(GameObject parent) //Subtracts points from an upgrade
     {
-        string nameOfSkill = childButton.transform.parent.name;
+        string nameOfSkill = parent.name;
         SkillType currentClass = unlockedSkillLevels.Find(x => x.GetSkillID() == nameOfSkill); // Credit: https://stackoverflow.com/questions/9854917/how-can-i-find-a-specific-element-in-a-listt/9854944
         
         if (currentClass.GetSkillLevel() < 1)
@@ -266,12 +242,12 @@ public class PlayerSkills : MonoBehaviour
             float modifyBy = currentClass.GetModifyValue(true) * -1; // Have to do this here, before I subtract the skill level below
             int currencyCost = currentClass.SubtractSkillLevel(1); // function returns the currency cost of the operation
             playerUpgradeCurrency += currencyCost;
-            string skillType = currentClass.UpdateDropdownText();
 
-            playerStats_script.SetStat(ref skillType, modifyBy);
+            string upgradeType = currentClass.GetFormattedSkillType(parent);
+            playerStats_script.SetStat(ref upgradeType, modifyBy);
         }
 
-        UpdateUIElements(childButton.transform.parent.gameObject, currentClass);
+        UpdateUIElements(parent, currentClass);
     }
 
     // I used to have it so that the player would have to unlock skills, but removed that in favor of having them be able to choose whatever
@@ -304,7 +280,8 @@ public class PlayerSkills : MonoBehaviour
         UpdateUIElements();
 
         string colorVal = playerStats_script.GetColorForStat(currentClass.GetSkillType());
-        parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{currentClass.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
+        parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>{currentClass.assoc.name}</color>";
+        parent.transform.GetChild(1).GetComponent<Text>().text = $"<color={colorVal}>+{currentClass.GetSkillAmountIncreased()}</color>";
         //gameManager.GetComponent<PlayerStats>().SetUpgradeText(currentClass.GetSkillType(), parent.transform.GetChild(0).gameObject, currentClass.GetSkillAmountIncreased());
     }
 
@@ -321,9 +298,10 @@ public class PlayerSkills : MonoBehaviour
 
         foreach(SkillType st in unlockedSkillLevels)
         {
-            var parent = st.dropdown;
+            GameObject parent = st.assoc;
             string colorVal = playerStats_script.GetColorForStat(st.GetSkillType());
-            parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>+{st.GetSkillAmountIncreased()} {parent.GetComponent<Dropdown>().captionText.text}</color>";
+            parent.transform.GetChild(0).GetComponent<Text>().text = $"<color={colorVal}>{parent.name}</color>";
+            parent.transform.GetChild(1).GetComponent<Text>().text = $"<color={colorVal}>+{st.GetSkillAmountIncreased()}</color>";
         }
 
     }
@@ -365,7 +343,6 @@ public class PlayerSkills : MonoBehaviour
         //Save(currentBuildDropdownPath);
 
         PopulateList(); 
-        //UpdateValues();
         
 
         // TODO: Load starting file here

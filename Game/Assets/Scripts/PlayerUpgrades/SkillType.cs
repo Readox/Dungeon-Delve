@@ -7,8 +7,7 @@ using System;
 [Serializable]
 public class SkillType
 {
-    public GameObject dropdown;
-    public int dropdownIndex;
+    public GameObject assoc;
     public string skillType;
     public int skillLevel; // Skills will have base level of zero
     public string skillID;
@@ -18,11 +17,10 @@ public class SkillType
 
     private GameObject gameManager;
 
-    public SkillType(GameObject dropdown, int skillLevel, string skillID)
+    public SkillType(GameObject assoc, int skillLevel, string skillID)
     {
-        this.dropdown = dropdown;
-        this.dropdownIndex = dropdown.GetComponent<Dropdown>().value;
-        this.skillType = GetFormattedSkillType(dropdown); // Need this function because some of the skills in the dropdowns have spaces in them
+        this.assoc = assoc;
+        this.skillType = GetFormattedSkillType(assoc); // Need this function because some of the upgrade types have spaces in them
         this.skillLevel = skillLevel;
         this.skillID = skillID;
         this.skillAmountIncreased = 0; // Starts at 0
@@ -31,9 +29,9 @@ public class SkillType
     }
 
     
-    public string GetFormattedSkillType(GameObject dropdown)
+    public string GetFormattedSkillType(GameObject assoc)
     {
-        string finalText = dropdown.GetComponent<Dropdown>().captionText.text;
+        string finalText = assoc.name; // assoc.transform.GetChild(0).GetComponent<Text>().text;
         if (finalText.Equals("Health"))
         {
             finalText = "maxHealth";
@@ -66,11 +64,12 @@ public class SkillType
         return finalText;
     }
 
-    // Changes the skillType based on the dropdown text
+    /*
+    // Changes the skillType based on the gameObject text
     public string UpdateDropdownText()
     {
-        string newText = GetFormattedSkillType(dropdown);
-        // Make if statement here to check whether dropdown has changed
+        string newText = GetFormattedSkillType(assoc);
+        // Make if statement here to check whether gameObject has changed
         if (!this.skillType.Equals(newText))
         {
             this.skillType = newText;
@@ -80,6 +79,7 @@ public class SkillType
 
         return this.skillType;
     }
+    */
 
     public bool IsMaxLevel()
     {
