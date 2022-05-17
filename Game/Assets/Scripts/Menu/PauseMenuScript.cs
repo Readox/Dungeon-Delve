@@ -73,6 +73,7 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenPlayerUpgrades()
     {
         playerUpgradesPanel.SetActive(true);
+        ps.OpenUpgradesMenuStart();
         pauseMenuPanel.SetActive(false);
     }
 

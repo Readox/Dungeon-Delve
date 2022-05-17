@@ -86,6 +86,23 @@ public class PlayerSkills : MonoBehaviour
         //Debug.Log("Data Saved into JSON: " + json);
     }
 
+    public void InitializeFile(string filePath) // Only call this upon game start
+    {
+        Save data = new Save();
+        data.name = currentBuildDropdownPath;
+        foreach (SkillType st in unlockedSkillLevels)
+        {
+            data.upgrades.Add(st);
+            data.totalCurrencyCost += st.GetTotalCurrencyCost();
+        }
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(filePath, json);
+
+        UpdateAllUIElements();
+        //Debug.Log("Data Saved into JSON: " + json);
+    }
+
     public void Load(string filePath) // Loads in a save file
     {
         if (File.Exists(filePath))
@@ -96,10 +113,11 @@ public class PlayerSkills : MonoBehaviour
 
             for (int x = 0; x < unlockedSkillLevels.Count; x++)
             {
+                
                 SkillType st = unlockedSkillLevels[x];
                 for (int i = 0; i < data.upgrades.Count; i++)
                 {
-                    if (st.skillID.Equals(data.upgrades[i].skillID))
+                    if (st.skillType.Equals(data.upgrades[i].skillType))
                     {
                         st = data.upgrades[i];
                         break;
@@ -156,7 +174,7 @@ public class PlayerSkills : MonoBehaviour
         {
             playerUpgradeCurrency += st.GetTotalCurrencyCost();
 
-            string skillType = st.GetSkillType();
+            string skillType = st.skillType;
             float modifyBy = st.GetSkillAmountIncreased() * -1;
             playerStats_script.SetStat(ref skillType, modifyBy);
         }
@@ -169,8 +187,9 @@ public class PlayerSkills : MonoBehaviour
     {
         foreach (SkillType st in unlockedSkillLevels)
         {
-            string skillType = st.GetSkillType();
+            string skillType = st.skillType;
             float modifyBy = st.GetSkillAmountIncreased();
+            //Debug.Log("Skill Type: " + skillType + " Modify By: " + modifyBy);
             playerStats_script.SetStat(ref skillType, modifyBy);
         }
     }
@@ -221,7 +240,7 @@ public class PlayerSkills : MonoBehaviour
             float modifyBy = currentClass.GetModifyValue(false);
 
             string upgradeType = currentClass.GetFormattedSkillType(parent);
-            Debug.Log("Upgrade Type: " + upgradeType);
+            //Debug.Log("Upgrade Type: " + upgradeType);
             playerStats_script.SetStat(ref upgradeType, modifyBy);
         }
 
@@ -264,15 +283,6 @@ public class PlayerSkills : MonoBehaviour
         UpdateUIElements();
     }
 
-    private void PrintAllInList() // Prints all unlocked upgrades (which is all of them)
-    {
-        foreach(SkillType currentClass in unlockedSkillLevels)
-        {
-            Debug.Log(currentClass.GetSkillID() + "\n");
-        }
-    }
-
-
     public Text playerUpgradeCurrencyTokensText; // Stores the text for playerUpgradeCurrency
 
     public void UpdateUIElements(GameObject parent, SkillType currentClass) // Calls UpdateUIElements() and updates a specific upgrade GameObject
@@ -296,7 +306,7 @@ public class PlayerSkills : MonoBehaviour
         playerUpgradeCurrencyTokensText.text = "Upgrade Currency: " + playerUpgradeCurrency;
         playerStats_script.UpdateHealthEnduranceBars();
 
-        foreach(SkillType st in unlockedSkillLevels)
+        foreach (SkillType st in unlockedSkillLevels)
         {
             GameObject parent = st.assoc;
             string colorVal = playerStats_script.GetColorForStat(st.GetSkillType());
@@ -313,9 +323,9 @@ public class PlayerSkills : MonoBehaviour
         PopulateList();
 
         // Puts the blank values that have been set above on all the save files
-        Save(filePath1);
-        Save(filePath2);
-        Save(filePath3);
+        InitializeFile(filePath1);
+        InitializeFile(filePath2);
+        InitializeFile(filePath3);
     }
 
     public void Awake()
@@ -327,10 +337,6 @@ public class PlayerSkills : MonoBehaviour
         filePath3 = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
         currentBuildDropdownPath = filePath1;
 
-        // Saves blank files to start with
-        //Save(filePath1);
-        //Save(filePath2);
-        //Save(filePath3);
     }
 
     // Start is called before the first frame update
@@ -341,9 +347,21 @@ public class PlayerSkills : MonoBehaviour
 
         //filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
         //Save(currentBuildDropdownPath);
-
+        unlockedSkillLevels.Clear();
         PopulateList(); 
-        
+
+        if (!File.Exists(filePath1))
+        {
+            InitializeFile(filePath1);
+        }
+        if (!File.Exists(filePath2))
+        {
+            InitializeFile(filePath2);
+        }
+        if (!File.Exists(filePath3))
+        {
+            InitializeFile(filePath3);
+        }
 
         // TODO: Load starting file here
         Load(filePath1);

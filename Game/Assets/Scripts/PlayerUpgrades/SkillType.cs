@@ -48,11 +48,11 @@ public class SkillType
         {
             finalText = "endurancePoolMax";
         }
-        else if (finalText.Equals("Endurance Regen"))
+        else if (finalText.Equals("Endurance Regeneration"))
         {
             finalText = "EnduranceRegen";
         }
-        else if (finalText.Equals("Health Regen"))
+        else if (finalText.Equals("Health Regeneration"))
         {
             finalText = "HealthRegen";
         }
@@ -124,21 +124,25 @@ public class SkillType
 
     public int GetTotalCurrencyCost()
     {
+        /*
         int finalVal = 0;
         for (int i = 0; i < skillLevel + 1; i++)
         {
             finalVal += (i) * currencyCostIncrease;
         }
         return finalVal;
+        */
+        currencyCostIncrease = 10;
+        return GetSkillLevel() * currencyCostIncrease;
     }
 
     // Only use this method for finding the currency cost for upgrading (eg, AddPoints())
     public int GetCurrencyCost()
     {
         currencyCostIncrease = 10;
-        int currencyCost = (GetSkillLevel() + 1) * currencyCostIncrease;
+        //int currencyCost = (GetSkillLevel() + 1) * currencyCostIncrease;
         //Debug.Log("Currency Cost: " + currencyCost + "    Skill Level: " + GetSkillLevel() + "    Currency Cost Increase: " + currencyCostIncrease);
-        return currencyCost;
+        return currencyCostIncrease;
     }
 
     // Also returns the cost in currency
@@ -146,13 +150,13 @@ public class SkillType
     {
         currencyCostIncrease = 10;
         this.skillLevel += x;
-        return GetSkillLevel() * currencyCostIncrease;
+        return currencyCostIncrease; // GetSkillLevel() * currencyCostIncrease;
     }
     public int SubtractSkillLevel(int x)
     {
         currencyCostIncrease = 10;
         this.skillLevel -= x;
-        return (GetSkillLevel() + 1) * currencyCostIncrease; // needs to be +1 account for subtraction (currency cost only for that operation)
+        return currencyCostIncrease; // (GetSkillLevel() + 1) * currencyCostIncrease; // needs to be +1 account for subtraction (currency cost only for that operation)
     }
 
 
@@ -170,7 +174,7 @@ public class SkillType
         }
         else // Default is 1 (Defaults: Defense, Strength, Critical Chance, Critical Damage, Ferocity, Magic Find)
         {
-            finalVal = 1 * skillLevel;
+            finalVal = 1; // 1 * skillLevel;
         }
 
 
