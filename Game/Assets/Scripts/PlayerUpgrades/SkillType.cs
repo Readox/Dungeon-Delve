@@ -150,18 +150,18 @@ public class SkillType
     {
         currencyCostIncrease = 10;
         this.skillLevel += x;
-        return currencyCostIncrease; // GetSkillLevel() * currencyCostIncrease;
+        return currencyCostIncrease * x; // GetSkillLevel() * currencyCostIncrease;
     }
     public int SubtractSkillLevel(int x)
     {
         currencyCostIncrease = 10;
         this.skillLevel -= x;
-        return currencyCostIncrease; // (GetSkillLevel() + 1) * currencyCostIncrease; // needs to be +1 account for subtraction (currency cost only for that operation)
+        return currencyCostIncrease * x; // (GetSkillLevel() + 1) * currencyCostIncrease; // needs to be +1 account for subtraction (currency cost only for that operation)
     }
 
 
     // Just a note, but the += used below increases the amount by that the first time, and then by that + that next time (pretty sure its exponential, but I'm tired)
-    public float GetModifyValue(bool subtract)
+    public float GetModifyValue(bool subtract, bool increaseBy10)
     {
         float finalVal = 0f;
         if (skillType.Equals("maxHealth")) // Health modifier = 10
@@ -177,6 +177,10 @@ public class SkillType
             finalVal = 1; // 1 * skillLevel;
         }
 
+        if (increaseBy10)
+        {
+            finalVal *= 10;
+        }
 
         // add/subtract to the amount skill has been increased by (depends on subtract field)
         if (subtract)
@@ -187,6 +191,8 @@ public class SkillType
         {
             skillAmountIncreased += finalVal;
         }
+
+        
         
         return finalVal;
     }

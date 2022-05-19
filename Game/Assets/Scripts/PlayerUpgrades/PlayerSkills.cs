@@ -235,13 +235,27 @@ public class PlayerSkills : MonoBehaviour
         }
         else
         {
-            int currencyCost = currentClass.AddSkillLevel(1); // Have to get the currency cost of the operation
-            playerUpgradeCurrency -= currencyCost;
-            float modifyBy = currentClass.GetModifyValue(false);
+            if (Input.GetKey(KeyCode.LeftShift) && currentClass.GetCurrencyCost() * 10 < playerUpgradeCurrency)
+            {
+                int currencyCost = currentClass.AddSkillLevel(10); // Have to get the currency cost of the operation
+                playerUpgradeCurrency -= currencyCost;
+                float modifyBy = currentClass.GetModifyValue(false, true);
 
-            string upgradeType = currentClass.GetFormattedSkillType(parent);
-            //Debug.Log("Upgrade Type: " + upgradeType);
-            playerStats_script.SetStat(ref upgradeType, modifyBy);
+                string upgradeType = currentClass.GetFormattedSkillType(parent);
+                //Debug.Log("Upgrade Type: " + upgradeType);
+                playerStats_script.SetStat(ref upgradeType, modifyBy);
+            }
+            else
+            {
+                int currencyCost = currentClass.AddSkillLevel(1); // Have to get the currency cost of the operation
+                playerUpgradeCurrency -= currencyCost;
+                float modifyBy = currentClass.GetModifyValue(false, false);
+
+                string upgradeType = currentClass.GetFormattedSkillType(parent);
+                //Debug.Log("Upgrade Type: " + upgradeType);
+                playerStats_script.SetStat(ref upgradeType, modifyBy);
+            }
+            
         }
 
         UpdateUIElements(parent, currentClass);
@@ -258,12 +272,25 @@ public class PlayerSkills : MonoBehaviour
         }
         else
         {
-            float modifyBy = currentClass.GetModifyValue(true) * -1; // Have to do this here, before I subtract the skill level below
-            int currencyCost = currentClass.SubtractSkillLevel(1); // function returns the currency cost of the operation
-            playerUpgradeCurrency += currencyCost;
+            if (Input.GetKey(KeyCode.LeftShift) && currentClass.GetSkillLevel() >= 10)
+            {
+                // This won't work with how GetModifyValue is coded currently
+                float modifyBy = currentClass.GetModifyValue(true, true) * -1; // Have to do this here, before I subtract the skill level below
+                int currencyCost = currentClass.SubtractSkillLevel(10); // function returns the currency cost of the operation
+                playerUpgradeCurrency += currencyCost;
 
-            string upgradeType = currentClass.GetFormattedSkillType(parent);
-            playerStats_script.SetStat(ref upgradeType, modifyBy);
+                string upgradeType = currentClass.GetFormattedSkillType(parent);
+                playerStats_script.SetStat(ref upgradeType, modifyBy);
+            }
+            else
+            {
+                float modifyBy = currentClass.GetModifyValue(true, false) * -1; // Have to do this here, before I subtract the skill level below
+                int currencyCost = currentClass.SubtractSkillLevel(1); // function returns the currency cost of the operation
+                playerUpgradeCurrency += currencyCost;
+
+                string upgradeType = currentClass.GetFormattedSkillType(parent);
+                playerStats_script.SetStat(ref upgradeType, modifyBy);
+            }
         }
 
         UpdateUIElements(parent, currentClass);

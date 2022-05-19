@@ -571,6 +571,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cairnProjectile: {fileID: 6647960612705429361, guid: ec2faa7b72e6d1748b5a7a9a2eac49c3, type: 3}
+  cairnRangedProjectile: {fileID: 7165187903456611250, guid: d37323014e675f549afd5cdca3877fe2, type: 3}
   cairnProjectileSpeed: 3
   projectileRemoveDelay: 5
   cairnAOE: {fileID: 1617391711301470735, guid: d9406c8271335e949a7616c67bc20e93, type: 3}

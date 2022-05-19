@@ -12,6 +12,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     AIPath AIPath_script;
     EnemyStats enemyStats_script;
     public GameObject cairnProjectile;
+    public GameObject cairnRangedProjectile;
     public float cairnProjectileSpeed;
     public float projectileRemoveDelay;
     public GameObject cairnAOE;
@@ -25,6 +26,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     public float attackRange;
     public float attackAnimationLength; // not quite sure if this is fully necessary
     private float savedSpeed;
+    private bool doRangedAttack;
 
     void Awake()
     {
@@ -51,6 +53,12 @@ public class CairnTheIndomitableAttack : MonoBehaviour
             //Debug.Log("In Range");
             yield return new WaitForSeconds(attackAnimationLength);
         }
+        else
+        {
+            anim.SetBool("Attack", true);
+            doRangedAttack = true;
+            yield return new WaitForSeconds(attackAnimationLength);
+        }
         yield return new WaitForSeconds(attackDelay); // Pretty sure that the Attack Delay goes here
 
         attackCheckCoroutine = StartCoroutine(CheckForAttacks());
@@ -59,49 +67,54 @@ public class CairnTheIndomitableAttack : MonoBehaviour
     public void AnimationEventDamage()
     {
         float dist = Vector3.Distance(transform.position, target.position);
-        if (attackCounter % 3 == 0) // this is used in addition to other attacks
+        if (doRangedAttack)
         {
-            for (int i = 0; i < 360; i += 45)
+            GameObject projectile = Instantiate(cairnRangedProjectile, transform.position, Quaternion.identity);
+            Vector2 direction = (target.position - transform.position).normalized;
+            projectile.GetComponent<Rigidbody2D>().velocity = direction * (cairnProjectileSpeed * 2);
+            projectile.GetComponent<EnemyProjectile>().damage = enemyStats_script.baseDamage;
+            projectile.GetComponent<EnemyProjectile>().applyCondition = true;
+            projectile.GetComponent<EnemyProjectile>().SetConditions("Burning", 5, 5);
+            projectile.GetComponent<EnemyProjectile>().removeDelay = 20f; // 20 second remove delay
+
+            doRangedAttack = false;
+        }
+        else // Do melee attacks
+        {
+            if (attackCounter % 3 == 0) // this is used in addition to other attacks
             {
-                GameObject projectile = Instantiate(cairnProjectile, transform.position, Quaternion.identity);
-                float pdxp = transform.position.x + Mathf.Sin((i * Mathf.PI) / 180) * 1;
-                float pdyp = transform.position.y + Mathf.Cos((i * Mathf.PI) / 180) * 1;
-                Vector2 self = transform.position;
-                Vector2 pVec = new Vector2 (pdxp, pdyp);
-                Vector2 direction = (pVec - self).normalized;
-                projectile.GetComponent<Rigidbody2D>().velocity = direction  * cairnProjectileSpeed;
-                projectile.GetComponent<TestEnemyProjectile>().damage = enemyStats_script.baseDamage;
-                projectile.GetComponent<TestEnemyProjectile>().removeDelay = projectileRemoveDelay;
-                projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+                for (int i = 0; i < 360; i += 45)
+                {
+                    GameObject projectile = Instantiate(cairnProjectile, transform.position, Quaternion.identity);
+                    float pdxp = transform.position.x + Mathf.Sin((i * Mathf.PI) / 180) * 1;
+                    float pdyp = transform.position.y + Mathf.Cos((i * Mathf.PI) / 180) * 1;
+                    Vector2 self = transform.position;
+                    Vector2 pVec = new Vector2 (pdxp, pdyp);
+                    Vector2 direction = (pVec - self).normalized;
+                    projectile.GetComponent<Rigidbody2D>().velocity = direction  * cairnProjectileSpeed;
+                    projectile.GetComponent<TestEnemyProjectile>().damage = enemyStats_script.baseDamage;
+                    projectile.GetComponent<TestEnemyProjectile>().removeDelay = projectileRemoveDelay;
+                    projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+                }
+            }
+            if (attackCounter % 8 == 0 && attackCounter != 0) // RockFall Attack
+            {
+                rockTicker = 0;
+                StartCoroutine(InvulnerabilityTimer(5f));
+                StartCoroutine(RockFallAttack(2)); // Takes in argument for rocks per tick
+                attackCounter += 1;
+            }
+            if (dist < attackRange * 1.5)
+            {
+                playerStats_script.DealDamage(damage);
+                attackCounter += 1; 
             }
         }
-        if (attackCounter % 8 == 0 && attackCounter != 0) // RockFall Attack
-        {
-            rockTicker = 0;
-            StartCoroutine(InvulnerabilityTimer(5f));
-            StartCoroutine(RockFallAttack(2)); // Takes in argument for rocks per tick
-            attackCounter += 1;
-        }
-        if (dist < attackRange * 1.5)
-        {
-            playerStats_script.DealDamage(damage);
-            attackCounter += 1; 
-        }
-        /*
-        else // Don't complete attack animation if player is not in range
-        {
-            anim.SetBool("Walk", true);
-            //anim.SetFloat("")
-            //anim.Play("Walk", 0, 0.1f); // This seems to just delay the animation from occuring and locks the entity from moving
-            anim.SetBool("Attack", false);
-            AnimationStartMovement();
-        }
-        */
     }
 
     void Update()
     {
-        /*
+        /* // Maybe do this for Hardmode Cairn
         if (enemyStats_script.currentHealth <= (enemyStats_script.maxHealth / 4) * 3) // At 75% health
         {
             // Play Animation
