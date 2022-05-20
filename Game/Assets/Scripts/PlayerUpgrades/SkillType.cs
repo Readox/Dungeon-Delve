@@ -83,20 +83,36 @@ public class SkillType
 
     public bool IsMaxLevel()
     {
-        if (skillType.Equals("HealthRegen") && skillLevel == 25) 
+        if ((skillType.Equals("HealthRegen") || skillType.Equals("EnduranceRegen")) && skillLevel >= 25) 
         {
             return true;
         }
-        else if (skillType.Equals("EnduranceRegen") && skillLevel == 25) 
+        else if ((skillType.Equals("Strength") || skillType.Equals("CritChance") || skillType.Equals("CritDamage") || skillType.Equals("Ferocity")) && skillLevel >= 500) 
         {
             return true;
         }
-        /*
-        else if (skillType.Equals("CritChance") && skillLevel == 20) 
+        else if ((skillType.Equals("maxHealth") || skillType.Equals("Defense")) && skillLevel >= 250) 
         {
             return true;
         }
-        */
+
+        return false;
+    }
+
+    public bool IsMaxLevel(int x)
+    {
+        if ((skillType.Equals("HealthRegen") || skillType.Equals("EnduranceRegen")) && skillLevel + x >= 25) 
+        {
+            return true;
+        }
+        else if ((skillType.Equals("Strength") || skillType.Equals("CritChance") || skillType.Equals("CritDamage") || skillType.Equals("Ferocity")) && skillLevel + x >= 500) 
+        {
+            return true;
+        }
+        else if ((skillType.Equals("maxHealth") || skillType.Equals("Defense")) && skillLevel + x >= 250) 
+        {
+            return true;
+        }
 
         return false;
     }
@@ -166,7 +182,7 @@ public class SkillType
         float finalVal = 0f;
         if (skillType.Equals("maxHealth")) // Health modifier = 10
         {
-            finalVal = 10 * skillLevel;
+            finalVal = 10;
         }
         else if (skillType.Equals("EnduranceRegen") || skillType.Equals("HealthRegen"))
         {

@@ -72,10 +72,7 @@ public class CairnTheIndomitableAttack : MonoBehaviour
             GameObject projectile = Instantiate(cairnRangedProjectile, transform.position, Quaternion.identity);
             Vector2 direction = (target.position - transform.position).normalized;
             projectile.GetComponent<Rigidbody2D>().velocity = direction * (cairnProjectileSpeed * 2);
-            projectile.GetComponent<EnemyProjectile>().damage = enemyStats_script.baseDamage;
-            projectile.GetComponent<EnemyProjectile>().applyCondition = true;
-            projectile.GetComponent<EnemyProjectile>().SetConditions("Burning", 5, 5);
-            projectile.GetComponent<EnemyProjectile>().removeDelay = 20f; // 20 second remove delay
+            projectile.transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
 
             doRangedAttack = false;
         }

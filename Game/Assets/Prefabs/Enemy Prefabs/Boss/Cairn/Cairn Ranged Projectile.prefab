@@ -89,7 +89,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: effectStacks
-      value: 10
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: applyCondition

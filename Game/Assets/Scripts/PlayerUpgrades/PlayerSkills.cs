@@ -52,6 +52,12 @@ public class PlayerSkills : MonoBehaviour
         Load(currentBuildDropdownPath);
     }
 
+    public void ResetBuild()
+    {
+        ResetAll();
+        Save(currentBuildDropdownPath);
+    }
+
     public void Save(string filePath) // Saves what is currently in the menu to a file
     {
         Save data = new Save();
@@ -235,7 +241,7 @@ public class PlayerSkills : MonoBehaviour
         }
         else
         {
-            if (Input.GetKey(KeyCode.LeftShift) && currentClass.GetCurrencyCost() * 10 < playerUpgradeCurrency)
+            if (Input.GetKey(KeyCode.LeftShift) && currentClass.GetCurrencyCost() * 10 < playerUpgradeCurrency && !currentClass.IsMaxLevel(10))
             {
                 int currencyCost = currentClass.AddSkillLevel(10); // Have to get the currency cost of the operation
                 playerUpgradeCurrency -= currencyCost;

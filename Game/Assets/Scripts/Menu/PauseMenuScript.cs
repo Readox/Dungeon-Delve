@@ -23,6 +23,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Pause()
     {
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().SetUIActiveState("false");
+        player.gameObject.GetComponent<PlayerMovement>().enabled = false; // Prevents dodging and movement while in menu
         pauseMenuPanel.SetActive(true);
         Time.timeScale = 0f;
         mainCam.transform.position = new Vector3(960, 540, -10);
@@ -31,6 +32,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Resume()
     {
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().SetUIActiveState("true");
+        player.gameObject.GetComponent<PlayerMovement>().enabled = true;
         mainCam.transform.position = player.position + offset;
         //mainCam.position = player.position + offset;
         //mainCam.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, -10);
