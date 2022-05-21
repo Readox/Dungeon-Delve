@@ -32,6 +32,7 @@ public class PauseMenuScript : MonoBehaviour
     public void Resume()
     {
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().SetUIActiveState("true");
+        GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().CheckHealthMax();
         player.gameObject.GetComponent<PlayerMovement>().enabled = true;
         mainCam.transform.position = player.position + offset;
         //mainCam.position = player.position + offset;
@@ -81,6 +82,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void ReturnFromPlayerUpgrades()
     {
+        GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().CheckHealthMax();
         pauseMenuPanel.SetActive(true);
         ps.Save();
         playerUpgradesPanel.SetActive(false);

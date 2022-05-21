@@ -161,9 +161,8 @@ public class PlayerStats : MonoBehaviour
         }
         else
         {
-            float dmgredper = Defense / (Defense + 100);
-            if (dmgredper == 0) { dmgredper = 1; }
-            float finalDamage = damage * dmgredper;
+            float dmgredper = Defense / (Defense + 150);
+            float finalDamage = damage * (1 - dmgredper);
             currentHealth -= finalDamage;
             CheckDeath();
             SetHealthInfo();

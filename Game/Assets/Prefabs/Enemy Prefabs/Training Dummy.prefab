@@ -90,6 +90,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4056261635122071530, guid: 194070465ddacb541b108882d6e3f55f, type: 3}
+      propertyPath: maxHealth
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 5032190486975432408, guid: 194070465ddacb541b108882d6e3f55f, type: 3}
       propertyPath: m_Name
       value: Training Dummy

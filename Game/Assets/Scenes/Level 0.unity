@@ -1690,7 +1690,7 @@ MonoBehaviour:
   currentHealth: 0
   maxHealth: 100
   Defense: 0
-  Strength: 1000
+  Strength: 0
   CritChance: 25
   CritDamage: 0
   Ferocity: 0
@@ -5403,7 +5403,7 @@ MonoBehaviour:
     skillLevel: 0
     skillID: 
     skillAmountIncreased: 0
-  playerUpgradeCurrency: 10000
+  playerUpgradeCurrency: 2500
   gameManager: {fileID: 378433348}
   upgradeList: {fileID: 278279235}
   playerUpgrades:
