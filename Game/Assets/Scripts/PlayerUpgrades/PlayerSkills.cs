@@ -11,7 +11,8 @@ public class PlayerSkills : MonoBehaviour
     private string filePath1; // = Application.persistentDataPath + "/playerUpgradeInfo1.json"; // Build 1
     private string filePath2; // = Application.persistentDataPath + "/playerUpgradeInfo2.json"; // Build 2
     private string filePath3; // = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
-    private string currentBuildDropdownPath;
+    private string gameStatePath; // = Application.persistentDataPath + "/gameStatePath.json"; // Stores game state info 
+    public string currentBuildDropdownPath;
 
     //private List<SkillType> unlockedSkillList;
     public List<SkillType> unlockedSkillLevels = new List<SkillType>();
@@ -21,6 +22,7 @@ public class PlayerSkills : MonoBehaviour
     public GameObject gameManager;
     public GameObject upgradeList;
     public List<GameObject> playerUpgrades = new List<GameObject>();
+    public GameObject buildDropdown;
     
     private PlayerStats playerStats_script;
 
@@ -56,6 +58,43 @@ public class PlayerSkills : MonoBehaviour
     {
         ResetAll();
         Save(currentBuildDropdownPath);
+    }
+
+    public void SaveGameState()
+    {
+        GlobalDataSave data = new GlobalDataSave();
+
+        if (File.Exists(currentBuildDropdownPath))
+        {
+            Save saveData = JsonUtility.FromJson<Save>(File.ReadAllText(currentBuildDropdownPath));
+            data.totalPlayerUpgradeCurrency = /*saveData.totalCurrencyCost + */playerUpgradeCurrency;
+        }
+        else
+        {
+            Debug.Log("The build file does not exist.");
+        }
+
+        string json = JsonUtility.ToJson(data);
+        File.WriteAllText(gameStatePath, json);
+
+        UpdateAllUIElements();
+        //Debug.Log("Data Saved into JSON: " + json);
+    }
+
+    public void LoadGameState()
+    {
+        if (File.Exists(gameStatePath))
+        {
+            GlobalDataSave data = JsonUtility.FromJson<GlobalDataSave>(File.ReadAllText(gameStatePath));
+
+            playerUpgradeCurrency -= data.totalPlayerUpgradeCurrency;
+
+            UpdateAllUIElements();
+        }
+        else
+        {
+            Debug.Log("File does not exist");
+        }
     }
 
     public void Save(string filePath) // Saves what is currently in the menu to a file
@@ -116,6 +155,10 @@ public class PlayerSkills : MonoBehaviour
             Save data = JsonUtility.FromJson<Save>(File.ReadAllText(filePath));
 
             playerUpgradeCurrency -= data.totalCurrencyCost; // Sets currency to proper amount
+            if (playerUpgradeCurrency < 0)
+            {
+                playerUpgradeCurrency = 0;
+            }
 
             for (int x = 0; x < unlockedSkillLevels.Count; x++)
             {
@@ -313,7 +356,7 @@ public class PlayerSkills : MonoBehaviour
 
     public void OpenUpgradesMenuStart() // When upgrade menu is opened, this updates the currency text
     {
-        UpdateUIElements();
+        UpdateAllUIElements();
     }
 
     public Text playerUpgradeCurrencyTokensText; // Stores the text for playerUpgradeCurrency
@@ -368,6 +411,7 @@ public class PlayerSkills : MonoBehaviour
         filePath1 = Application.persistentDataPath + "/playerUpgradeInfo1.json"; // Build 1
         filePath2 = Application.persistentDataPath + "/playerUpgradeInfo2.json"; // Build 2
         filePath3 = Application.persistentDataPath + "/playerUpgradeInfo3.json"; // Build 3
+        gameStatePath = Application.persistentDataPath + "/gameStatePath.json"; // Game State Path
         currentBuildDropdownPath = filePath1;
 
     }
@@ -381,7 +425,12 @@ public class PlayerSkills : MonoBehaviour
         //filePath = Application.persistentDataPath + "/playerUpgradeInfo.json";
         //Save(currentBuildDropdownPath);
         unlockedSkillLevels.Clear();
-        PopulateList(); 
+        PopulateList();
+
+        if (!File.Exists(gameStatePath))
+        {
+            SaveGameState();
+        }
 
         if (!File.Exists(filePath1))
         {
@@ -397,7 +446,9 @@ public class PlayerSkills : MonoBehaviour
         }
 
         // TODO: Load starting file here
-        Load(filePath1);
+        
+        //LoadGameState();
+        Load(filePath1); // Using the currentBuildDropdownPath leads to bad outcomes
         UpdateUIElements();
     }
 

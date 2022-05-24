@@ -19,9 +19,12 @@ public class PauseMenuScript : MonoBehaviour
     [SerializeField] Vector3 offset;
 
     bool isPauseActive;
+    private string currentMenu;
 
     public void Pause()
     {
+        isPauseActive = true;
+        currentMenu = "pause";
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().SetUIActiveState("false");
         player.gameObject.GetComponent<PlayerMovement>().enabled = false; // Prevents dodging and movement while in menu
         pauseMenuPanel.SetActive(true);
@@ -31,6 +34,8 @@ public class PauseMenuScript : MonoBehaviour
 
     public void Resume()
     {
+        isPauseActive = false;
+        currentMenu = null;
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().SetUIActiveState("true");
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().CheckHealthMax();
         player.gameObject.GetComponent<PlayerMovement>().enabled = true;
@@ -41,17 +46,18 @@ public class PauseMenuScript : MonoBehaviour
         playerUpgradesPanel.SetActive(false);
         settingsMenuPanel.SetActive(false);
         Time.timeScale = 1f;
-        
     }
 
     public void OpenSettings()
     {
+        currentMenu = "settings";
         settingsMenuPanel.SetActive(true);
         pauseMenuPanel.SetActive(false);
     }
 
     public void ReturnFromSettings()
     {
+        currentMenu = "pause";
         pauseMenuPanel.SetActive(true);
         settingsMenuPanel.SetActive(false);
     }
@@ -59,6 +65,7 @@ public class PauseMenuScript : MonoBehaviour
 
     public void MainMenu()
     {
+        isPauseActive = false;
         Time.timeScale = 0f;
         SceneManager.LoadScene("MainMenu", LoadSceneMode.Additive);
         StartCoroutine(SceneSwitch());
@@ -75,6 +82,9 @@ public class PauseMenuScript : MonoBehaviour
 
     public void OpenPlayerUpgrades()
     {
+        currentMenu = "upgrades";
+        //ps.LoadGameState();
+        //ps.Load(ps.currentBuildDropdownPath);
         playerUpgradesPanel.SetActive(true);
         ps.OpenUpgradesMenuStart();
         pauseMenuPanel.SetActive(false);
@@ -82,8 +92,10 @@ public class PauseMenuScript : MonoBehaviour
 
     public void ReturnFromPlayerUpgrades()
     {
+        currentMenu = "pause";
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().CheckHealthMax();
         pauseMenuPanel.SetActive(true);
+        //ps.SaveGameState();
         ps.Save();
         playerUpgradesPanel.SetActive(false);
     }
@@ -99,8 +111,19 @@ public class PauseMenuScript : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && isPauseActive)
         {
-            isPauseActive = false;
-            Resume();
+            if (currentMenu.Equals("upgrades"))
+            {
+                ReturnFromPlayerUpgrades();
+            }
+            else if (currentMenu.Equals("settings"))
+            {
+                ReturnFromSettings();
+            }
+            else if (currentMenu.Equals("pause"))// the user must be in the main pause menu, so take them back to the game
+            {
+                isPauseActive = false;
+                Resume();
+            }
         }
     }
 
