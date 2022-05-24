@@ -149,11 +149,15 @@ public class ConditionManager : MonoBehaviour
                 conditionsList[conditionsList.Count - 1].OnStart();
             }
         }
-        else
+        else if (c.effectName != null || !c.effectName.Equals("")) // Some stuff will apply no conditions
         {
             conditionsList.Add(c);
             CreateConditionEffectAnimationPrefab(c);
             conditionsList[conditionsList.Count - 1].OnStart();
+        }
+        else
+        {
+            Debug.Log("Applied Condition does not contain a name!");
         }
     }
 

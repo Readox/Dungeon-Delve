@@ -506,6 +506,12 @@ MonoBehaviour:
   attackDelay: 0.8
   attackRange: 1.5
   attackAnimationLength: 0.6
+  applyCondition: 0
+  effectName: Slowness
+  effectStacks: 1
+  effectDuration: 4
+  rangedProjectile: {fileID: 0}
+  projectileSpeed: 0
 --- !u!1 &230430999357528900
 GameObject:
   m_ObjectHideFlags: 0

@@ -19,6 +19,15 @@ public class EnemyMeleeAttack : MonoBehaviour
     public float attackAnimationLength; // not quite sure if this is fully necessary
     private float savedSpeed;
 
+    private bool doRangedAttack;
+
+    public bool applyCondition;
+    public string effectName; // "Poison", "Bleeding", "Slowness", "Aegis", etc.
+    public int effectStacks;
+    public float effectDuration;
+    public GameObject rangedProjectile;
+    public float projectileSpeed;
+
     void Awake()
     {
         damage = GetComponent<EnemyStats>().GetDamage();
@@ -42,6 +51,13 @@ public class EnemyMeleeAttack : MonoBehaviour
             //Debug.Log("In Range");
             yield return new WaitForSeconds(attackAnimationLength);
         }
+        else if (!gameObject.transform.parent.gameObject.GetComponent<WanderingDestinationSetter>().enabled && rangedProjectile != null) // If enemy "sees" player
+        {
+            doRangedAttack = true;
+            anim.SetBool("Attack", true);
+            yield return new WaitForSeconds(attackAnimationLength);
+            doRangedAttack = false;
+        }
         yield return new WaitForSeconds(attackDelay); // Pretty sure that the Attack Delay goes here
 
         StartCoroutine(CheckForAttacks());
@@ -50,33 +66,45 @@ public class EnemyMeleeAttack : MonoBehaviour
     public void AnimationEventDamage()
     {
         float dist = Vector3.Distance(transform.position, target.position);
-        if (dist < attackRange * 1.5)
+        if (doRangedAttack)
         {
-            playerStats_script.DealDamage(damage); 
-            if (gameObject.name.Substring(0,8).Equals("Scorpion"))
-            {
-                // new Conditions("Effect Name", # Effect Stacks, Duration)
-                // new Conditions("Effect Name", Duration)
-                conditionManager_Script.AddCondition(new Conditions("Poison", 3, 3));
-                //conditionManager_Script.AddCondition(new Conditions("Slowness", 3));
-                //conditionManager_Script.AddCondition(new Conditions("Bleeding", 5, 10));
-            }
+            GameObject projectile = Instantiate(rangedProjectile, transform.position, Quaternion.identity);
+            Vector2 direction = (target.position - transform.position).normalized;
+            projectile.GetComponent<Rigidbody2D>().velocity = direction * (projectileSpeed * 2);
+            //projectile.GetComponent<EnemyProjectile>().SetConditions(effectName, effectStacks, effectDuration); // Conditions are set in prefab object
+
+            // I have different prefab projectiles for each monster because the sprites are different, and I can set different conditions
+
+            projectile.transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
+
+            
         }
-        else // Don't complete attack animation if player is not in range
+        else
         {
-            anim.SetBool("Walk", true);
-            //anim.SetFloat("")
-            //anim.Play("Walk", 0, 0.1f); // This seems to just delay the animation from occuring and locks the entity from moving
-            //anim.Play("KlackonAltWalk", 0, 0); // This crashed Unity
-            anim.SetBool("Attack", false);
-            AnimationStartMovement();
+            if (dist < attackRange * 1.5)
+            {
+                playerStats_script.DealDamage(damage); 
+                conditionManager_Script.AddCondition(new Conditions(effectName, effectStacks, effectDuration));
+            }
+            else // Don't complete attack animation if player is not in range
+            {
+                anim.SetBool("Walk", true);
+                //anim.SetFloat("")
+                //anim.Play("Walk", 0, 0.1f); // This seems to just delay the animation from occuring and locks the entity from moving
+                //anim.Play("KlackonAltWalk", 0, 0); // This crashed Unity
+                anim.SetBool("Attack", false);
+                AnimationStartMovement();
+            }
         }
     }
 
     public void AnimationStopMovement()
     {
         savedSpeed = AIPath_script.maxSpeed;
-        AIPath_script.maxSpeed = 0;
+        if (!doRangedAttack)
+        {
+            AIPath_script.maxSpeed = 0;
+        }
     }
 
     public void AnimationStartMovement()
