@@ -68,16 +68,41 @@ public class EnemyMeleeAttack : MonoBehaviour
         float dist = Vector3.Distance(transform.position, target.position);
         if (doRangedAttack)
         {
-            GameObject projectile = Instantiate(rangedProjectile, transform.position, Quaternion.identity);
-            Vector2 direction = (target.position - transform.position).normalized;
-            projectile.GetComponent<Rigidbody2D>().velocity = direction * (projectileSpeed * 2);
-            //projectile.GetComponent<EnemyProjectile>().SetConditions(effectName, effectStacks, effectDuration); // Conditions are set in prefab object
+            if (!gameObject.name.Substring(0,6).Equals("Reaper")) // If not a reaper miniboss
+            {
+                GameObject projectile = Instantiate(rangedProjectile, transform.position, Quaternion.identity);
+                Vector2 direction = (target.position - transform.position).normalized;
+                projectile.GetComponent<Rigidbody2D>().velocity = direction * (projectileSpeed);
+                //projectile.GetComponent<EnemyProjectile>().SetConditions(effectName, effectStacks, effectDuration); // Conditions are set in prefab object
 
-            // I have different prefab projectiles for each monster because the sprites are different, and I can set different conditions
+                // I have different prefab projectiles for each monster because the sprites are different, and I can set different conditions
 
-            projectile.transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
-
-            
+                projectile.transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
+            }
+            else
+            {
+                Vector3 vec = Vector3.zero;
+                if (target.position.x > transform.position.x)
+                {
+                    vec = (target.position - transform.position).normalized;
+                }
+                else
+                {
+                    vec = (transform.position - target.position).normalized;
+                }
+                float ang = Vector3.Angle(Vector3.right, vec);
+                for (float i = ang - 45; i <= ang + 45; i += 45)
+                {
+                    GameObject projectile = Instantiate(rangedProjectile, transform.position, Quaternion.identity);
+                    float pdxp = transform.position.x + Mathf.Sin((i * Mathf.PI) / 180) * 1;
+                    float pdyp = transform.position.y + Mathf.Cos((i * Mathf.PI) / 180) * 1;
+                    Vector2 self = transform.position;
+                    Vector2 pVec = new Vector2 (pdxp, pdyp);
+                    Vector2 direction = (pVec - self).normalized;
+                    projectile.GetComponent<Rigidbody2D>().velocity = direction  * projectileSpeed;
+                    //projectile.transform.rotation = Quaternion.LookRotation(Vector3.back, direction);
+                }
+            }
         }
         else
         {

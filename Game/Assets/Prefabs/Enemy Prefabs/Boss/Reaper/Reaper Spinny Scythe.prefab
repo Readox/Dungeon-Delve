@@ -65,15 +65,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 187216607980279724, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: m_Name
-      value: Enemy Projectile
+      value: Reaper Projectile
       objectReference: {fileID: 0}
     - target: {fileID: 5780822025172813236, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: ef922bebd27182a4e85c231b848f962f, type: 2}
     - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: damage
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: effect
+      value: 
+      objectReference: {fileID: 4203382400405476611, guid: 62aa1a35d6692ad45a1cb3fa2bf70089, type: 3}
+    - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: effectName
+      value: Bleeding
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: removeDelay
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: effectStacks
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: applyCondition
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: effectDuration
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: playEffectOnHit
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}

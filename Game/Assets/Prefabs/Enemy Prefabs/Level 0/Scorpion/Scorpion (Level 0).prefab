@@ -484,7 +484,7 @@ MonoBehaviour:
   effectStacks: 3
   effectDuration: 3
   rangedProjectile: {fileID: 632225624335587404, guid: f10cd30a41f4483429208fbf998404ab, type: 3}
-  projectileSpeed: 4
+  projectileSpeed: 6
 --- !u!1 &7304143306871488342
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 413100083}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EntryPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1109226008}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EntryPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1961782150}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EntryPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -99,7 +99,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2061675514}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: EntryPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,7 +132,7 @@ GameObject:
   - component: {fileID: 171745799354947224}
   - component: {fileID: 171745799354947227}
   - component: {fileID: 171745799354947226}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: West
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 171745799365123058}
   - component: {fileID: 171745799365123061}
   - component: {fileID: 171745799365123060}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: East
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -394,7 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 171745799455395416}
   - component: {fileID: 171745799455395417}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Doorway
   m_TagString: Doorway
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 171745799912212519}
   - component: {fileID: 171745799912212517}
   - component: {fileID: 171745799912212516}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -563,7 +563,7 @@ GameObject:
   m_Component:
   - component: {fileID: 171745800181668678}
   - component: {fileID: 1495123169}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: 20x20 4 Door (Level 0)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -615,7 +615,7 @@ GameObject:
   - component: {fileID: 171745800488726918}
   - component: {fileID: 171745800488726916}
   - component: {fileID: 171745800488726919}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -724,7 +724,7 @@ GameObject:
   - component: {fileID: 171745800551074814}
   - component: {fileID: 171745800551074812}
   - component: {fileID: 171745800551074815}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -832,7 +832,7 @@ GameObject:
   m_Component:
   - component: {fileID: 171745800801244375}
   - component: {fileID: 171745800801244372}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Doorway
   m_TagString: Doorway
   m_Icon: {fileID: 0}
@@ -893,7 +893,7 @@ GameObject:
   - component: {fileID: 171745801080387140}
   - component: {fileID: 171745801080387138}
   - component: {fileID: 171745801080387141}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1003,7 +1003,7 @@ GameObject:
   - component: {fileID: 171745801336143826}
   - component: {fileID: 171745801336143829}
   - component: {fileID: 171745801336143828}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: North
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1135,7 +1135,7 @@ GameObject:
   - component: {fileID: 171745801416527264}
   - component: {fileID: 171745801416527267}
   - component: {fileID: 171745801416527278}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: South
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1265,7 +1265,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6249215973234392745}
   - component: {fileID: 7685752995219814669}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Doorway
   m_TagString: Doorway
   m_Icon: {fileID: 0}
@@ -1326,7 +1326,7 @@ GameObject:
   - component: {fileID: 4209257129392630053}
   - component: {fileID: 4309313099186053361}
   - component: {fileID: 9126026893273564331}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1434,7 +1434,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5421866503172602467}
   - component: {fileID: 4484421427644328320}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Doorway
   m_TagString: Doorway
   m_Icon: {fileID: 0}
@@ -1495,7 +1495,7 @@ GameObject:
   - component: {fileID: 5227650028535037160}
   - component: {fileID: 3912321510980984029}
   - component: {fileID: 4594263302901621325}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square (1)
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1604,7 +1604,7 @@ GameObject:
   - component: {fileID: 2657198696025960802}
   - component: {fileID: 1733951128101366255}
   - component: {fileID: 2177837394023661590}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -1713,7 +1713,7 @@ GameObject:
   - component: {fileID: 338638933903163567}
   - component: {fileID: 3884409248061083142}
   - component: {fileID: 7850292973097881044}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Square
   m_TagString: Wall
   m_Icon: {fileID: 0}

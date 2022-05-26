@@ -182,8 +182,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDelay: 0.8
-  attackRange: 0.3
+  attackRange: 0.5
   attackAnimationLength: 0.06
+  applyCondition: 0
+  effectName: 
+  effectStacks: 0
+  effectDuration: 0
+  rangedProjectile: {fileID: 2961565848530665211, guid: fba4788be29b94047b988ce2d5cac637, type: 3}
+  projectileSpeed: 3
 --- !u!1 &6398880586097730998
 GameObject:
   m_ObjectHideFlags: 0
