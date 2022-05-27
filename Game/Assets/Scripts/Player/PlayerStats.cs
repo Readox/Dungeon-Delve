@@ -15,6 +15,7 @@ public class PlayerStats : MonoBehaviour
     public GameObject player;
     public GameObject statsScrollRect;
     public GameObject screenText;
+    private Animator animator;
 
     public Slider healthBarSlider;
     public Text healthText;
@@ -39,6 +40,7 @@ public class PlayerStats : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GameObject.FindWithTag("Player").GetComponent<Animator>();
         currentHealth = maxHealth;
         currentEndurancePool = endurancePoolMax;
         currentHealthPotionAmount = healthPotionAmount;
@@ -166,6 +168,7 @@ public class PlayerStats : MonoBehaviour
             currentHealth -= finalDamage;
             CheckDeath();
             SetHealthInfo();
+            animator.SetTrigger("Hurt");
         }
         
     }

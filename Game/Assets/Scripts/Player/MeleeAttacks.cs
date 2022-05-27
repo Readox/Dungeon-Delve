@@ -12,7 +12,6 @@ public class MeleeAttacks : CommonAttack
     //float attackOffset = 25f;
     // public string attackType; // Maybe later
 
-    public GameObject playerSword;
     public float swordffsetDistance;
     public LayerMask enemyLayers;
 
@@ -20,14 +19,13 @@ public class MeleeAttacks : CommonAttack
     public float attackRange; 
     public float attackRate;
     float nextAttackTime = 0f;
-    private bool inCombat;
     Coroutine inCombatCoroutine;
     
     //Vector3 attackDir;
     //Vector3 attackPosition;
 
-    SpriteRenderer swordSR; // Sprite Renderer of sword for rendering sword on back of player properly
-    Animator anim; // Player's Animator for rendering sword on back of player properly
+    Animator anim;
+    PlayerMovement pm;
     Vector2 mousePos;
     Rigidbody2D rb;
     EnemyStats enemyStats_script;
@@ -37,11 +35,10 @@ public class MeleeAttacks : CommonAttack
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        swordSR = playerSword.GetComponent<SpriteRenderer>();
+        pm = GetComponent<PlayerMovement>();
+        rb = GetComponent<Rigidbody2D>();
         cam = Camera.main;
-        inCombat = false;
     }
 
     // Update is called once per frame
@@ -51,30 +48,13 @@ public class MeleeAttacks : CommonAttack
         mousePos = cam.ScreenToWorldPoint(Input.mousePosition);
         //mousePos = mousePos.normalized;
         //mousePos = mousePos * attackRange;
-        //Debug.DrawLine(rb.position, mousePos, Color.blue);
-        if (inCombat)
-        {
-            SwordRotation();
-        }
-        else
-        {
-            if (anim.GetFloat("YDir") > 0)
-            {
-                swordSR.sortingOrder = 3;
-            }
-            else
-            {
-                swordSR.sortingOrder = 1;
-            }
-            playerSword.transform.rotation = Quaternion.identity;
-            playerSword.transform.position = transform.position;
-        }
-        
+        //Debug.DrawLine(rb.position, mousePos, Color.blue);   
+
         if (Time.time >= nextAttackTime) // from https://www.youtube.com/watch?v=sPiVz1k-fEs
         {
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
             {
-                inCombat = true;
+                anim.SetTrigger("Attack");
                 if (inCombatCoroutine != null)
                 {
                     StopCoroutine(inCombatCoroutine);
@@ -87,16 +67,16 @@ public class MeleeAttacks : CommonAttack
                 nextAttackTime = Time.time + 1f / attackRate;
             }
         }
-
-        
     }
 
     IEnumerator ExitCombat(float time)
     {
+        pm.combatIdle = true;
         yield return new WaitForSeconds(time);
-        inCombat = false;
+        pm.combatIdle = false;
     }
 
+    /*
     private void SwordRotation()
     {
         Vector2 dir = mousePos - rb.position;
@@ -116,6 +96,7 @@ public class MeleeAttacks : CommonAttack
         //bool result  = (UnityEngine.Random.value > 0.5f); // https://gamedev.stackexchange.com/questions/110332/is-there-a-random-command-for-boolean-variables-in-unity-c
         playerSword.transform.position = origin;
     }
+    */
 
 
     public float radius;
@@ -183,9 +164,8 @@ public class MeleeAttacks : CommonAttack
         if (hit.collider.GetComponent<EnemyStats>() != null)
         {
             EnemyStats tempES = hit.collider.GetComponent<EnemyStats>();
-            //StartCoroutine(ShowSword(1f));
-            
-            SpawnMeleeAnimation(tempES.gameObject.transform, (mousePos - rb.position).normalized, calcAngle);
+
+            //SpawnMeleeAnimation(tempES.gameObject.transform, (mousePos - rb.position).normalized, calcAngle);
 
             if (!tempES.invulnerable)
             {
@@ -213,6 +193,7 @@ public class MeleeAttacks : CommonAttack
         }
     }
 
+    /*
     IEnumerator ShowSword(float time)
     {
         playerSword.SetActive(true);
@@ -220,6 +201,7 @@ public class MeleeAttacks : CommonAttack
         yield return new WaitForSeconds(time);
         playerSword.SetActive(false);
     }
+    */
 
     private Vector2 Vector2FromAngle(float a)
     {

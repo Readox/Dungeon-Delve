@@ -67,6 +67,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reaper Projectile
       objectReference: {fileID: 0}
+    - target: {fileID: 877384737533056608, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5780822025172813236, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5780822025172813236, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: m_Controller
       value: 

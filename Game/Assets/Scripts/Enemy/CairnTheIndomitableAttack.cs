@@ -75,6 +75,10 @@ public class CairnTheIndomitableAttack : MonoBehaviour
             projectile.transform.rotation = Quaternion.Euler(new Vector3(0,0,180));
 
             doRangedAttack = false;
+            if (attackCounter % 8 != 0) // Ranged attacks increase the attack counter so that when player gets into melee range, Cairn uses or is closer to using rockfall
+            {
+                attackCounter += 1;
+            }
         }
         else // Do melee attacks
         {

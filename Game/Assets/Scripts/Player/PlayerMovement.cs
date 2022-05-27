@@ -18,32 +18,28 @@ public class PlayerMovement : MonoBehaviour
     // Entity Values
     public float playerSpeed;
     public float originalSpeed; // for storing the original speed value for slowness condition
-    private bool frozen; // For freezing the animation 
     public float dodgeImmunityLength;
     public float dodgeCost;
     public float dodgeSpeed;
-    private bool dodgeAnimationLock = false;
 
     private Collider2D doorCol;
     private bool canInteract = true; // is true when the player CAN interact with things
     public GameObject UIInteractTextObject;
-    // Move Vector
-    private Vector2 animationVec;
-    public Animator animator;
 
-    public Rigidbody2D rb;
+    public Animator animator;
+    private Rigidbody2D rb;
     private Vector3 moveDirection;
     private Vector3 dodgeDirection;
 
+    [HideInInspector] public bool combatIdle = false;
 
-    // Start is called before the first frame update
-    void Awake()
+
+    void Start()
     {
-        // Get animator component from player
         playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
         animator = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
         originalSpeed = playerSpeed;
-        //StartCoroutine(Timer(1f));
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -74,54 +70,40 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame (depends on current framerate), less consistent than FixedUpdate(), better for processing inputs
     void Update()
     {
-        ProcessInputs();
-        if (dodgeAnimationLock)
+        // -- Handle input and movement --
+        float moveX = Input.GetAxis("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+
+        // Swap direction of sprite depending on walk direction
+        if (moveX > 0)
         {
-            rb.velocity = dodgeDirection.normalized * dodgeSpeed;
+            transform.localScale = new Vector3(-0.6f, 0.6f, 0.6f); // Make sure that this is set to the player's scale
         }
+        else if (moveX < 0)
+        {
+            transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        }
+        // Move
+        rb.velocity = new Vector2(moveX, moveY).normalized;
+        rb.velocity *= playerSpeed;
+           
+        //Run
+        if (Mathf.Abs(moveX) > Mathf.Epsilon || Mathf.Abs(moveY) > Mathf.Epsilon)
+        {
+            animator.SetInteger("AnimState", 2);
+        }
+        //Combat Idle
+        else if (combatIdle)
+        {
+            animator.SetInteger("AnimState", 1);
+        }
+        //Idle
         else
         {
-            Move();
-        }
-    }
+            animator.SetInteger("AnimState", 0);
+        }   
 
-    /*
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        animationVec = Vector2.zero;
-    }
-    */
 
-    void ProcessInputs()
-    {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-        
-        moveDirection = new Vector3(moveX, moveY, 0).normalized; // To fix diagonal movement
-
-        animationVec = Vector2.zero;
-        if (Input.GetKey(KeyCode.W))
-        {
-            animationVec += Vector2.up;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            animationVec += Vector2.down;
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            animationVec += Vector2.left;
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            animationVec += Vector2.right;
-        }
-        if (Input.GetKey(KeyCode.Space))
-        {
-            UseFighterAbility();
-            // Instantiate(puffAnimation, gameObject.transform.position, Quaternion.identity);
-            // Uncommenting the code makes a trail of animations, which could probably be used to deal damage as a fire trail or something
-        }
         if (Input.GetKey(KeyCode.LeftShift) && playerStats_script.getCurrentEndurancePool() >= dodgeCost && !playerStats_script.GetEvadingStatus())
         {
             StartCoroutine(Dodge());            
@@ -132,6 +114,13 @@ public class PlayerMovement : MonoBehaviour
             StartCoroutine(InteractionTimer(1f));
         }
     }
+
+    /*
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        animationVec = Vector2.zero;
+    }
+    */
 
     IEnumerator InteractionTimer(float time)
     {
@@ -149,16 +138,14 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator DodgeAnimationLock(float time)
     {
-        dodgeAnimationLock = true;
         yield return new WaitForSeconds(time);
-        dodgeAnimationLock = false;
     }
 
     IEnumerator Dodge()
     {
         if (moveDirection == Vector3.zero) // If player is not currently moving
         {
-            dodgeDirection = new Vector3(0, -1, 0);
+            dodgeDirection = new Vector3(0, -1, 0); 
         }
         else
         {
@@ -186,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /*
     void Move()
     {
         rb.velocity = new Vector3(moveDirection.x * playerSpeed, moveDirection.y * playerSpeed, 0);
@@ -209,6 +197,7 @@ public class PlayerMovement : MonoBehaviour
 
         
     }
+    */
 
     public void FreezePlayerForTime(float time)
     {
@@ -217,26 +206,10 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator FreezeForTime(float time)
     {
-        frozen = true;
         float tempSpeed = playerSpeed;
         playerSpeed = 0;
         yield return new WaitForSeconds(time);
-        frozen = false;
         playerSpeed = tempSpeed;
-    }
-
-    private void AnimatorMovement(Vector2 animationVec)
-    {
-        if (!frozen)
-        {
-            animator.SetLayerWeight(1, 1);
-            animator.SetFloat("XDir", animationVec.x);
-            animator.SetFloat("YDir", animationVec.y);
-        }
-        else
-        {
-            animator.SetLayerWeight(1, 0); // Set to idle animation
-        }
     }
 
     public void DoSlowness()
@@ -292,10 +265,6 @@ public class PlayerMovement : MonoBehaviour
 
 
 }
-
-
-
-
 
 
 /*
