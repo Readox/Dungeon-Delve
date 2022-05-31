@@ -120,7 +120,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.000030517578, y: 0.0015869141}
+  m_Offset: {x: -0.02, y: 0.662}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
@@ -131,7 +131,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.62371826, y: 1.0791016}
+  m_Size: {x: 0.8, y: 1.2}
   m_EdgeRadius: 0
 --- !u!114 &2595190397696036502
 MonoBehaviour:
@@ -173,6 +173,7 @@ MonoBehaviour:
   weaponDamage: 2
   removeDelay: 1.5
   attackRate: 1
+  offsetFromPlayer: {x: 0, y: 1}
 --- !u!50 &7098851657178935603
 Rigidbody2D:
   serializedVersion: 4
@@ -218,9 +219,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   weaponDamage: 8
-  attackRange: 0.8
+  attackRange: 1
   attackRate: 2
   feroAudioClip: {fileID: 8300000, guid: c43debaba4741ee48b4924c2ab20214e, type: 3}
+  offsetFromPlayer: {x: 0, y: 0.8, z: 0}
   radius: 3.5
   segments: 10
   curveDegrees: 120

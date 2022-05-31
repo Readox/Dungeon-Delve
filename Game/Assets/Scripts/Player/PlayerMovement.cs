@@ -28,6 +28,7 @@ public class PlayerMovement : MonoBehaviour
 
     public Animator animator;
     private Rigidbody2D rb;
+    private SpriteRenderer sr;
     private Vector3 moveDirection;
     private Vector3 dodgeDirection;
 
@@ -39,6 +40,7 @@ public class PlayerMovement : MonoBehaviour
         playerStats_script = GameObject.FindWithTag("GameController").GetComponent<PlayerStats>();
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         originalSpeed = playerSpeed;
     }
 
@@ -77,11 +79,13 @@ public class PlayerMovement : MonoBehaviour
         // Swap direction of sprite depending on walk direction
         if (moveX > 0)
         {
-            transform.localScale = new Vector3(-0.6f, 0.6f, 0.6f); // Make sure that this is set to the player's scale
+            sr.flipX = true;
+            //transform.localScale = new Vector3(-0.6f, 0.6f, 0.6f); // Make sure that this is set to the player's scale
         }
         else if (moveX < 0)
         {
-            transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+            sr.flipX = false;
+            //transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         }
         // Move
         rb.velocity = new Vector2(moveX, moveY).normalized;

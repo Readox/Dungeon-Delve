@@ -12,6 +12,7 @@ public class TestSpell : MonoBehaviour
     public float removeDelay;
     public float attackRate;
     float nextAttackTime;
+    public Vector2 offsetFromPlayer;
 
     // Start is called before the first frame update
     void Start()
@@ -33,10 +34,10 @@ public class TestSpell : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(1) /*&& SceneManager.GetActiveScene().name.Equals("Level 0")*/ && Time.timeScale != 0)
             {
-                GameObject spell = Instantiate(projectile, transform.position, Quaternion.identity);
-                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 Vector2 playerPos = transform.position;
-                Vector2 direction = (mousePos - playerPos).normalized;
+                GameObject spell = Instantiate(projectile, playerPos + offsetFromPlayer, Quaternion.identity);
+                Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                Vector2 direction = (mousePos - playerPos + offsetFromPlayer).normalized;
                 spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
                 spell.GetComponent<CommonProjectile>().weaponDamage = this.weaponDamage;
                 nextAttackTime = Time.time + 1f / attackRate;

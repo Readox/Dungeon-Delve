@@ -31,6 +31,9 @@ public class MeleeAttacks : CommonAttack
     EnemyStats enemyStats_script;
     public AudioClip feroAudioClip;
     private Camera cam;
+    public Vector3 offsetFromPlayer;
+    public GameObject directionIndicatorObject;
+    public float indicatorOffsetDistance;
 
     // Start is called before the first frame update
     void Start()
@@ -50,6 +53,8 @@ public class MeleeAttacks : CommonAttack
         //mousePos = mousePos * attackRange;
         //Debug.DrawLine(rb.position, mousePos, Color.blue);   
 
+        DirectionIndicatorRotation();
+
         if (Time.time >= nextAttackTime) // from https://www.youtube.com/watch?v=sPiVz1k-fEs
         {
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
@@ -61,7 +66,7 @@ public class MeleeAttacks : CommonAttack
                 }
                 inCombatCoroutine = StartCoroutine(ExitCombat(8f));
                 CalculatePoints();
-                //DrawLines(); // For debugging
+                DrawLines(); // For debugging
                 CheckForHits();
                 //OldAttack();
                 nextAttackTime = Time.time + 1f / attackRate;
@@ -76,27 +81,17 @@ public class MeleeAttacks : CommonAttack
         pm.combatIdle = false;
     }
 
-    /*
-    private void SwordRotation()
+    private void DirectionIndicatorRotation()
     {
-        Vector2 dir = mousePos - rb.position;
+        Vector2 dir = mousePos - (Vector2) transform.position;
         float rads = Mathf.Atan2(dir.y, dir.x);
         float angle = rads * Mathf.Rad2Deg;
-        playerSword.transform.localPosition = new Vector3(Mathf.Cos(rads) * swordffsetDistance, Mathf.Sin(rads) * swordffsetDistance, 0);
-        Quaternion rotation = Quaternion.AngleAxis(angle - 135, Vector3.forward);
-        playerSword.transform.rotation = rotation;
+        //directionIndicatorObject.transform.localPosition = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads) * indicatorOffsetDistance, 0);
+        directionIndicatorObject.transform.localPosition = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads) + indicatorOffsetDistance, 0);
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        directionIndicatorObject.transform.rotation = rotation;
         //ConfigureSwordOffset(dir);
     }
-
-    public void ConfigureSwordOffset(Vector2 dir)
-    {
-        Vector3 origin = transform.position; // + additional stuff?
-        Vector3 direction = dir;
-        origin += direction * 1f;
-        //bool result  = (UnityEngine.Random.value > 0.5f); // https://gamedev.stackexchange.com/questions/110332/is-there-a-random-command-for-boolean-variables-in-unity-c
-        playerSword.transform.position = origin;
-    }
-    */
 
 
     public float radius;
@@ -136,7 +131,7 @@ public class MeleeAttacks : CommonAttack
         RaycastHit2D hit;
         for (int i = 0; i <= nodes.Count - 1; i++)
         {
-            hit = Physics2D.Raycast(rb.position, nodes[i], attackRange, enemyLayers.value);
+            hit = Physics2D.Raycast(transform.position + offsetFromPlayer, nodes[i], attackRange, enemyLayers.value);
             
             //hit = Physics2D.CircleCast(rb.position, 1f, (mousePos - rb.position).normalized, attackRange, enemyLayers.value);
             //hit = Physics2D.Linecast(rb.position, (mousePos - rb.position).normalized, enemyLayers.value);
@@ -154,7 +149,7 @@ public class MeleeAttacks : CommonAttack
     {
         for (int i = 0; i <= nodes.Count - 1; i++)
         {
-            Debug.DrawRay(rb.position, nodes[i], Color.red, 1f);
+            Debug.DrawRay(transform.position + offsetFromPlayer, nodes[i], Color.red, attackRange);
             //Debug.DrawLine(nodes[i], nodes[i + 1], Color.red, 1.5f);
         }
     }
