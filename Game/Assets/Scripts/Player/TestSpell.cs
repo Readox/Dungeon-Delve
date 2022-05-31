@@ -37,7 +37,7 @@ public class TestSpell : MonoBehaviour
                 Vector2 playerPos = transform.position;
                 GameObject spell = Instantiate(projectile, playerPos + offsetFromPlayer, Quaternion.identity);
                 Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Vector2 direction = (mousePos - playerPos + offsetFromPlayer).normalized;
+                Vector2 direction = (mousePos - (playerPos + offsetFromPlayer)).normalized;
                 spell.GetComponent<Rigidbody2D>().velocity = direction * projectileSpeed;
                 spell.GetComponent<CommonProjectile>().weaponDamage = this.weaponDamage;
                 nextAttackTime = Time.time + 1f / attackRate;

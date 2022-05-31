@@ -6,12 +6,6 @@ using TMPro;
 
 public class MeleeAttacks : CommonAttack
 {
-    //public float attackCooldownTime;
-    //float attackTime;
-    
-    //float attackOffset = 25f;
-    // public string attackType; // Maybe later
-
     public float swordffsetDistance;
     public LayerMask enemyLayers;
 
@@ -59,6 +53,7 @@ public class MeleeAttacks : CommonAttack
         {
             if (Input.GetMouseButtonDown(0) && Time.timeScale != 0)
             {
+                pm.DoPlayerCombatSpeed(0.4f);
                 anim.SetTrigger("Attack");
                 if (inCombatCoroutine != null)
                 {
@@ -83,13 +78,12 @@ public class MeleeAttacks : CommonAttack
 
     private void DirectionIndicatorRotation()
     {
-        Vector2 dir = mousePos - (Vector2) transform.position;
+        Vector2 dir = mousePos - (Vector2) (transform.position + offsetFromPlayer);
         float rads = Mathf.Atan2(dir.y, dir.x);
         float angle = rads * Mathf.Rad2Deg;
-        //directionIndicatorObject.transform.localPosition = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads) * indicatorOffsetDistance, 0);
-        directionIndicatorObject.transform.localPosition = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads) + indicatorOffsetDistance, 0);
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
-        directionIndicatorObject.transform.rotation = rotation;
+        //directionIndicatorObject.transform.localPosition = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads) + indicatorOffsetDistance, 0);
+        //Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+        directionIndicatorObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // rotation;
         //ConfigureSwordOffset(dir);
     }
 
@@ -103,10 +97,10 @@ public class MeleeAttacks : CommonAttack
     private void CalculatePoints()
     {
         nodes.Clear();
-        Vector2 mouseDirection = (mousePos - rb.position);
+        Vector2 mouseDirection = (mousePos - (Vector2)(transform.position + offsetFromPlayer));
         //nodes.Add(mouseDirection);
 
-        calcAngle = Vector2.SignedAngle(transform.right, mouseDirection.normalized);
+        calcAngle = Vector2.SignedAngle(transform.right + offsetFromPlayer, mouseDirection.normalized);
         Vector2 startDir = Vector2FromAngle(calcAngle);
 
 

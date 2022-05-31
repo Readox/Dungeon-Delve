@@ -79,7 +79,7 @@ public class PlayerMovement : MonoBehaviour
         // Swap direction of sprite depending on walk direction
         if (moveX > 0)
         {
-            sr.flipX = true;
+            sr.flipX = true; 
             //transform.localScale = new Vector3(-0.6f, 0.6f, 0.6f); // Make sure that this is set to the player's scale
         }
         else if (moveX < 0)
@@ -87,10 +87,11 @@ public class PlayerMovement : MonoBehaviour
             sr.flipX = false;
             //transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         }
+
         // Move
         rb.velocity = new Vector2(moveX, moveY).normalized;
         rb.velocity *= playerSpeed;
-           
+        
         //Run
         if (Mathf.Abs(moveX) > Mathf.Epsilon || Mathf.Abs(moveY) > Mathf.Epsilon)
         {
@@ -202,6 +203,19 @@ public class PlayerMovement : MonoBehaviour
         
     }
     */
+
+    public void DoPlayerCombatSpeed(float t)
+    {
+        StartCoroutine(DoCombatSpeed(t));
+    }
+
+    IEnumerator DoCombatSpeed(float t)
+    {
+        float tempSpeed = playerSpeed;
+        playerSpeed = 2;
+        yield return new WaitForSeconds(t);
+        playerSpeed = tempSpeed;
+    }
 
     public void FreezePlayerForTime(float time)
     {
