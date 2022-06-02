@@ -14,6 +14,11 @@ public class PlayerSkills : MonoBehaviour
     private string gameStatePath; // = Application.persistentDataPath + "/gameStatePath.json"; // Stores game state info 
     public string currentBuildDropdownPath;
 
+    private int file1BufferedCoins;
+    private int file2BufferedCoins;
+    private int file3BufferedCoins;
+
+
     //private List<SkillType> unlockedSkillList;
     public List<SkillType> unlockedSkillLevels = new List<SkillType>();
 
@@ -68,6 +73,9 @@ public class PlayerSkills : MonoBehaviour
         {
             Save saveData = JsonUtility.FromJson<Save>(File.ReadAllText(currentBuildDropdownPath));
             data.totalPlayerUpgradeCurrency = /*saveData.totalCurrencyCost + */playerUpgradeCurrency;
+            data.filePath1BufferedCurrency = file1BufferedCoins;
+            data.filePath2BufferedCurrency = file2BufferedCoins;
+            data.filePath3BufferedCurrency = file3BufferedCoins;
         }
         else
         {
@@ -81,26 +89,11 @@ public class PlayerSkills : MonoBehaviour
         //Debug.Log("Data Saved into JSON: " + json);
     }
 
-    public void LoadGameState()
-    {
-        if (File.Exists(gameStatePath))
-        {
-            GlobalDataSave data = JsonUtility.FromJson<GlobalDataSave>(File.ReadAllText(gameStatePath));
-
-            playerUpgradeCurrency -= data.totalPlayerUpgradeCurrency;
-
-            UpdateAllUIElements();
-        }
-        else
-        {
-            Debug.Log("File does not exist");
-        }
-    }
-
     public void Save(string filePath) // Saves what is currently in the menu to a file
     {
         Save data = new Save();
         data.name = filePath;
+        data.remainingCurrency = playerUpgradeCurrency;
         foreach (SkillType st in unlockedSkillLevels)
         {
             data.upgrades.Add(st);
@@ -118,6 +111,7 @@ public class PlayerSkills : MonoBehaviour
     {
         Save data = new Save();
         data.name = currentBuildDropdownPath;
+        data.remainingCurrency = playerUpgradeCurrency;
         foreach (SkillType st in unlockedSkillLevels)
         {
             data.upgrades.Add(st);
@@ -135,6 +129,7 @@ public class PlayerSkills : MonoBehaviour
     {
         Save data = new Save();
         data.name = currentBuildDropdownPath;
+        data.remainingCurrency = 0;
         foreach (SkillType st in unlockedSkillLevels)
         {
             data.upgrades.Add(st);
@@ -154,11 +149,16 @@ public class PlayerSkills : MonoBehaviour
         {
             Save data = JsonUtility.FromJson<Save>(File.ReadAllText(filePath));
 
+            playerUpgradeCurrency = data.remainingCurrency;
+            playerUpgradeCurrency += GetBufferedCurrencyFromFilePath(filePath);
+            /*
             playerUpgradeCurrency -= data.totalCurrencyCost; // Sets currency to proper amount
+            playerUpgradeCurrency += GetBufferedCurrencyFromFilePath(filePath);
             if (playerUpgradeCurrency < 0)
             {
                 playerUpgradeCurrency = 0;
             }
+            */
 
             for (int x = 0; x < unlockedSkillLevels.Count; x++)
             {
@@ -345,6 +345,13 @@ public class PlayerSkills : MonoBehaviour
         UpdateUIElements(parent, currentClass);
     }
 
+    public void AddUpgradeCurrency(int amount)
+    {
+        file1BufferedCoins += amount;
+        file2BufferedCoins += amount;
+        file3BufferedCoins += amount;
+    }
+
     // I used to have it so that the player would have to unlock skills, but removed that in favor of having them be able to choose whatever
     void PopulateList() // Initializes and unlocks all the upgrades
     {
@@ -357,6 +364,32 @@ public class PlayerSkills : MonoBehaviour
     public void OpenUpgradesMenuStart() // When upgrade menu is opened, this updates the currency text
     {
         UpdateAllUIElements();
+    }
+
+    private int GetBufferedCurrencyFromFilePath(string filePath) // Gets buffered currency and sets that variable to 0
+    {
+        int val = 0;
+        if (filePath.Equals(filePath1))
+        {
+            val = file1BufferedCoins;
+            file1BufferedCoins = 0;
+        }
+        else if (filePath.Equals(filePath2))
+        {
+            val = file2BufferedCoins;
+            file2BufferedCoins = 0;
+        }
+        else if (filePath.Equals(filePath3))
+        {
+            val = file3BufferedCoins;
+            file3BufferedCoins = 0;
+        }
+        else
+        {
+            Debug.Log("Bad String Value");
+        }
+
+        return val;
     }
 
     public Text playerUpgradeCurrencyTokensText; // Stores the text for playerUpgradeCurrency
@@ -452,6 +485,25 @@ public class PlayerSkills : MonoBehaviour
         UpdateUIElements();
     }
 
+
+
+    /*
+    public void LoadGameState()
+    {
+        if (File.Exists(gameStatePath))
+        {
+            GlobalDataSave data = JsonUtility.FromJson<GlobalDataSave>(File.ReadAllText(gameStatePath));
+
+            playerUpgradeCurrency -= data.totalPlayerUpgradeCurrency;
+
+            UpdateAllUIElements();
+        }
+        else
+        {
+            Debug.Log("File does not exist");
+        }
+    }
+    */
 }
 
 [Serializable]
@@ -462,6 +514,7 @@ public class Save
     public List<int> Amounts = new List<int>();
     public string name;
     public int totalCurrencyCost;
+    public int remainingCurrency;
     public List<SkillType> upgrades = new List<SkillType>();
 }
 
@@ -469,6 +522,9 @@ public class Save
 public class GlobalDataSave
 {
     public int totalPlayerUpgradeCurrency;
+    public int filePath1BufferedCurrency;
+    public int filePath2BufferedCurrency;
+    public int filePath3BufferedCurrency;
 }
 
 

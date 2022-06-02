@@ -306,7 +306,7 @@ public class PlayerStats : MonoBehaviour
     }
     public void AddUpgradeCurrency(int amount)
     {
-        playerSkills_script.playerUpgradeCurrency += amount;
+        playerSkills_script.AddUpgradeCurrency(amount);
     }
     
     public void FlipEvading()

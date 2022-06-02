@@ -6,7 +6,6 @@ using TMPro;
 
 public class MeleeAttacks : CommonAttack
 {
-    public float swordffsetDistance;
     public LayerMask enemyLayers;
 
     public float weaponDamage;
@@ -28,6 +27,7 @@ public class MeleeAttacks : CommonAttack
     public Vector3 offsetFromPlayer;
     public GameObject directionIndicatorObject;
     public float indicatorOffsetDistance;
+    public float attackAngleOffset;
 
     // Start is called before the first frame update
     void Start()
@@ -81,14 +81,13 @@ public class MeleeAttacks : CommonAttack
         Vector2 dir = mousePos - (Vector2) (transform.position + offsetFromPlayer);
         float rads = Mathf.Atan2(dir.y, dir.x);
         float angle = rads * Mathf.Rad2Deg;
-        //directionIndicatorObject.transform.localPosition = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads) + indicatorOffsetDistance, 0);
+        directionIndicatorObject.transform.localPosition = new Vector3(Mathf.Cos(rads), Mathf.Sin(rads) + indicatorOffsetDistance, 0);
         //Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         directionIndicatorObject.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle)); // rotation;
         //ConfigureSwordOffset(dir);
     }
 
 
-    public float radius;
     public int segments;
     public float curveDegrees;
     private float calcAngle;
@@ -101,11 +100,21 @@ public class MeleeAttacks : CommonAttack
         //nodes.Add(mouseDirection);
 
         calcAngle = Vector2.SignedAngle(transform.right + offsetFromPlayer, mouseDirection.normalized);
-        Vector2 startDir = Vector2FromAngle(calcAngle);
+        float offsetAngle = calcAngle + attackAngleOffset;
+        Vector2 startDir = Vector2FromAngle(offsetAngle);
 
+        // Flips player sprite in direction of attack
+        if (calcAngle <= 90 && calcAngle >= -90)
+        {
+            pm.FlipPlayerSpriteTo(true);
+        }
+        else
+        {
+            pm.FlipPlayerSpriteTo(false);
+        }
 
-        float startAngle = calcAngle - (curveDegrees / 2);
-        float endAngle = calcAngle + (curveDegrees / 2);
+        float startAngle = offsetAngle - (curveDegrees / 2);
+        float endAngle = offsetAngle + (curveDegrees / 2);
         /*
         nodes.Add(Vector2FromAngle(startAngle));
         nodes.Add(Vector2FromAngle(endAngle));
@@ -117,11 +126,11 @@ public class MeleeAttacks : CommonAttack
         }
     }
 
-    private List<GameObject> attackedEnemies = new List<GameObject>();
+    //private List<GameObject> attackedEnemies = new List<GameObject>(); // For cleaving attacks, add enemies to this and use hits on them
 
     private void CheckForHits()
     {
-        attackedEnemies.Clear();
+        //attackedEnemies.Clear();
         RaycastHit2D hit;
         for (int i = 0; i <= nodes.Count - 1; i++)
         {
@@ -201,7 +210,7 @@ public class MeleeAttacks : CommonAttack
 
 
 
-
+    /*
     public float attackSizeX;
     public float attackSizeY;
     public float attackWidth; // Circlecast radius
@@ -243,7 +252,6 @@ public class MeleeAttacks : CommonAttack
             }
         }
 
-        /*
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         attackDir = (mousePos - transform.position).normalized;
         
@@ -259,9 +267,8 @@ public class MeleeAttacks : CommonAttack
         }
 
         attackTime = attackCooldownTime;
-        */
     }
-
+    */
 
     /*
     void PiercingAttack()

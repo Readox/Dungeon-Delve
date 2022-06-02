@@ -150,7 +150,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 358587404442533851, guid: c3509d9101b4f1044a79d0e836fa541f, type: 3}
       propertyPath: attackRange
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 358587404442533851, guid: c3509d9101b4f1044a79d0e836fa541f, type: 3}
       propertyPath: attackAnimationLength

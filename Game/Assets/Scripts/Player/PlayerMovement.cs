@@ -21,6 +21,7 @@ public class PlayerMovement : MonoBehaviour
     public float dodgeImmunityLength;
     public float dodgeCost;
     public float dodgeSpeed;
+    private bool usingCombatSpeed;
 
     private Collider2D doorCol;
     private bool canInteract = true; // is true when the player CAN interact with things
@@ -72,17 +73,17 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame (depends on current framerate), less consistent than FixedUpdate(), better for processing inputs
     void Update()
     {
-        // -- Handle input and movement --
-        float moveX = Input.GetAxis("Horizontal");
+        // -- Handle input and movement -- // Use GetAxisRaw() to stop player immediately once key is unpressed and use GetAxis() to have a slow down time
+        float moveX = Input.GetAxisRaw("Horizontal");
         float moveY = Input.GetAxisRaw("Vertical");
 
         // Swap direction of sprite depending on walk direction
-        if (moveX > 0)
+        if (moveX > 0 && !usingCombatSpeed)
         {
             sr.flipX = true; 
             //transform.localScale = new Vector3(-0.6f, 0.6f, 0.6f); // Make sure that this is set to the player's scale
         }
-        else if (moveX < 0)
+        else if (moveX < 0 && !usingCombatSpeed)
         {
             sr.flipX = false;
             //transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
@@ -118,6 +119,11 @@ public class PlayerMovement : MonoBehaviour
             doorCol.gameObject.transform.parent.parent.gameObject.GetComponent<RoomManager>().IsDoorwayAccessible(doorCol.gameObject);
             StartCoroutine(InteractionTimer(1f));
         }
+    }
+
+    public void FlipPlayerSpriteTo(bool val)
+    {
+        sr.flipX = val;
     }
 
     /*
@@ -213,8 +219,10 @@ public class PlayerMovement : MonoBehaviour
     {
         float tempSpeed = playerSpeed;
         playerSpeed = 2;
+        usingCombatSpeed = true;
         yield return new WaitForSeconds(t);
         playerSpeed = tempSpeed;
+        usingCombatSpeed = false;
     }
 
     public void FreezePlayerForTime(float time)

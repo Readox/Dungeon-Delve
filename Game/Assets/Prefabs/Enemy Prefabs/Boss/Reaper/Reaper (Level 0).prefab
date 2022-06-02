@@ -126,10 +126,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 585359099e1b8f5468b0a8cf58e0c207, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
+  maxHealth: 250
   currentHealth: 0
   invulnerable: 0
-  baseDamage: 20
+  baseDamage: 15
   healthBar: {fileID: 6398880587462945279}
   healthBarSlider: {fileID: 6398880587462945277}
   upgradeCurrencyDrop: {fileID: 6532993714681381135, guid: 6ff97e3eba51f274983722f5bdcf4944, type: 3}
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackDelay: 0.8
-  attackRange: 0.5
+  attackRange: 2
   attackAnimationLength: 0.06
   applyCondition: 0
   effectName: 

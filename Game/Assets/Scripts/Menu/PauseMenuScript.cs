@@ -84,7 +84,8 @@ public class PauseMenuScript : MonoBehaviour
     {
         currentMenu = "upgrades";
         //ps.LoadGameState();
-        //ps.Load(ps.currentBuildDropdownPath);
+        ps.ResetAll();
+        ps.Load(ps.currentBuildDropdownPath);
         playerUpgradesPanel.SetActive(true);
         ps.OpenUpgradesMenuStart();
         pauseMenuPanel.SetActive(false);
@@ -95,7 +96,7 @@ public class PauseMenuScript : MonoBehaviour
         currentMenu = "pause";
         GameObject.FindWithTag("GameController").GetComponent<PlayerStats>().CheckHealthMax();
         pauseMenuPanel.SetActive(true);
-        //ps.SaveGameState();
+        ps.SaveGameState();
         ps.Save();
         playerUpgradesPanel.SetActive(false);
     }

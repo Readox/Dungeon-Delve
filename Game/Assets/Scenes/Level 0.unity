@@ -5404,7 +5404,7 @@ MonoBehaviour:
     skillLevel: 0
     skillID: 
     skillAmountIncreased: 0
-  playerUpgradeCurrency: 100000
+  playerUpgradeCurrency: 0
   gameManager: {fileID: 378433348}
   upgradeList: {fileID: 278279235}
   playerUpgrades:
@@ -7175,6 +7175,10 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 378433348}
+    - target: {fileID: 581722072307884181, guid: d381f912946d63f45a396bb21af0c973, type: 3}
+      propertyPath: weaponDamage
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2595190397696036500, guid: d381f912946d63f45a396bb21af0c973, type: 3}
       propertyPath: m_Name
       value: Player
@@ -7187,6 +7191,10 @@ PrefabInstance:
       propertyPath: UIInteractTextObject
       value: 
       objectReference: {fileID: 1377730236}
+    - target: {fileID: 2595190397696036504, guid: d381f912946d63f45a396bb21af0c973, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2595190397696036506, guid: d381f912946d63f45a396bb21af0c973, type: 3}
       propertyPath: m_RootOrder
       value: 1

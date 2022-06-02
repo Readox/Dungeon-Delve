@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 187216607980279724, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: m_Name
-      value: Reaper Projectile
+      value: Reaper Spinny Scythe
       objectReference: {fileID: 0}
     - target: {fileID: 877384737533056608, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: m_Enabled
@@ -81,7 +81,7 @@ PrefabInstance:
       objectReference: {fileID: 9100000, guid: ef922bebd27182a4e85c231b848f962f, type: 2}
     - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: damage
-      value: 10
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: effect
@@ -105,7 +105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: effectDuration
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8296358145135606488, guid: 7abe7358df5df144486dfd2ff26e2f18, type: 3}
       propertyPath: playEffectOnHit
