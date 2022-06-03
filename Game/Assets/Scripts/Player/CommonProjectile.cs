@@ -31,7 +31,7 @@ public class CommonProjectile : CommonAttack
             if (collision.GetComponent<EnemyStats>() != null && !collision.gameObject.name.Equals("Cairn the Indomitable")) // Do this multiple times for ferocity procs
             {
                 enemyStats_script = collision.GetComponent<EnemyStats>();
-                float finalDamage = CalculateDamage(weaponDamage, collision.GetComponent<EnemyStats>().gameObject.transform); // Send in collision too for damageIndicator position
+                float finalDamage = CalculateDamage(weaponDamage, enemyStats_script.gameObject.transform, enemyStats_script.defense); // Send in collision too for damageIndicator position
                 enemyStats_script.DealDamage(finalDamage); // initial attack
                 
                 //GameObject dI = Instantiate(damageIndicator, collision.GetComponent<EnemyStats>().gameObject.transform.position, Quaternion.identity);
@@ -41,9 +41,9 @@ public class CommonProjectile : CommonAttack
                 for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
                 {
             
-                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage, collision.GetComponent<EnemyStats>().gameObject.transform));
+                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage, enemyStats_script.gameObject.transform, enemyStats_script.defense));
                     //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
-                    SpawnFerocityAnimation(collision.GetComponent<EnemyStats>().gameObject.transform);
+                    SpawnFerocityAnimation(enemyStats_script.gameObject.transform);
 
                     AudioSource.PlayClipAtPoint(feroAudioClip, collision.transform.position, 1); // plays ferocity proc audio
                     //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);

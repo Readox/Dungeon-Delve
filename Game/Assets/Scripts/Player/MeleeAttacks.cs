@@ -104,7 +104,7 @@ public class MeleeAttacks : CommonAttack
         Vector2 startDir = Vector2FromAngle(offsetAngle);
 
         // Flips player sprite in direction of attack
-        if (calcAngle <= 90 && calcAngle >= -90)
+        if ((calcAngle + attackAngleOffset) <= 90 && (calcAngle + attackAngleOffset) >= -90)
         {
             pm.FlipPlayerSpriteTo(true);
         }
@@ -168,21 +168,16 @@ public class MeleeAttacks : CommonAttack
             if (!tempES.invulnerable)
             {
                 enemyStats_script = tempES;
-                float finalDamage = CalculateDamage(weaponDamage, tempES.gameObject.transform);
-                enemyStats_script.DealDamage(finalDamage); // initial attack
+                enemyStats_script.DealDamage(CalculateDamage(weaponDamage, tempES.gameObject.transform, tempES.defense)); // initial attack
 
                 for (int i = GetFerocityProcs(); i > 0; i--) // All ferocity procs
                 {   
-                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage, tempES.gameObject.transform));
+                    enemyStats_script.DealDamage(CalculateDamage(weaponDamage, tempES.gameObject.transform, tempES.defense));
                     //GameObject ferocityLine = Instantiate(ferocityLineObject, collision.transform.position, Quaternion.identity);
                     SpawnFerocityAnimation(tempES.gameObject.transform);
 
                     AudioSource.PlayClipAtPoint(feroAudioClip, hit.collider.gameObject.transform.position, 1); // plays ferocity proc audio
                     //ferocityLine.transform.SetParent(enemyStats_script.gameObject.transform);
-                    
-                    
-                    
-                    // Sets Ferocity Line to be a child so that it gets hidden when enemy gets killed, so it doesn't stick around
             
 
                 }

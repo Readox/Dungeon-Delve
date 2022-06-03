@@ -15,7 +15,7 @@ public class CommonAttack : MonoBehaviour
     public GameObject meleeAnimation;
     public Transform storage;
 
-    public float CalculateDamage(float weaponDamage, Transform targetPos) // Takes in Transform for damage indicator location
+    public float CalculateDamage(float weaponDamage, Transform targetPos, float enemyDefense) // Takes in Transform for damage indicator location
     {
         float damage = 10 + weaponDamage; // Base Weapon Damage = 10
         bool criticalHit = false;
@@ -35,7 +35,10 @@ public class CommonAttack : MonoBehaviour
         }
         //Debug.Log("Final Damage: " + damage);
 
-        float finalDamage =float.Parse(damage.ToString("N0")); // Truncates Decimals
+        float finalDamage = float.Parse(damage.ToString("N0")); // Truncates Decimals
+
+        float dmgredper = enemyDefense / (enemyDefense + 150);
+        finalDamage = finalDamage * (1 - dmgredper);
 
         GameObject di = Instantiate(damageIndicator, targetPos.position, Quaternion.identity);
         ConfigureDamageIndicator(di, targetPos, finalDamage, criticalHit);

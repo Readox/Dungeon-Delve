@@ -8,6 +8,7 @@ public class EnemyStats : MonoBehaviour
 
     public float maxHealth;
     public float currentHealth;
+    public float defense;
     public bool invulnerable;
 
     public float baseDamage;
@@ -36,6 +37,10 @@ public class EnemyStats : MonoBehaviour
             CheckDeath();
             healthBarSlider.value = CalculateHealthPercentage();
             //StartCoroutine(InvulnerabilityFrameCoroutine(0.1f)); // Invul frames
+        }
+        if (gameObject.name.Equals("Eye Base") || gameObject.name.Equals("Mouth Base"))
+        {
+            GetComponent<VoidEntity>().coreGameObject.GetComponent<VoidEntityCore>().DealDamage(damage);
         }
     }
 
