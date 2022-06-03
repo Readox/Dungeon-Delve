@@ -516,7 +516,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 500
   currentHealth: 0
-  defense: 100
+  defense: 0
   invulnerable: 0
   baseDamage: 15
   healthBar: {fileID: 5056030672156018843}
