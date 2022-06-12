@@ -1826,8 +1826,8 @@ MonoBehaviour:
   - {fileID: 5145878177655460719, guid: 916f7e900db12a84ab843b3bb68e7944, type: 3}
   - {fileID: 7321879165430718138, guid: 825e6ee3766ebfa4589dabf9673f8030, type: 3}
   - {fileID: 7988362663323718246, guid: 8ee7d742c178c554bb2d0b6b4939d036, type: 3}
-  maximumMapX: 2
-  maximumMapY: 1
+  maximumMapX: 3
+  maximumMapY: 2
   startingRoomX: 1
   startingRoomY: 1
   cairnTheIndomitable: {fileID: 4799500891954043627, guid: 006fbb4b8714b114ca9346be171cf300, type: 3}
